@@ -1,0 +1,18 @@
+sever:
+  port: 8080
+
+spring:
+  profiles:
+    active: dev #默认为开发环境
+
+mybatis:
+  mapper-locations: classpath:mapper/*.xml #mapper配置文件
+  configuration:
+     map-underscore-to-camel-case: true  #开启驼峰命名
+
+jwt:
+  tokenHeader: Authorization
+  secret: mySecret
+  expiration: 604800
+  tokenHead: Bearer
+

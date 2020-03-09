@@ -1,0 +1,86 @@
+package com.apriltechnology.achieveit.shiro;
+
+import com.apriltechnology.achieveit.entity.Permission;
+import com.apriltechnology.achieveit.entity.Role;
+import com.apriltechnology.achieveit.entity.User;
+import com.apriltechnology.achieveit.service.PermissionService;
+import com.apriltechnology.achieveit.service.RoleService;
+import com.apriltechnology.achieveit.service.UserService;
+import com.apriltechnology.achieveit.util.JWTUtil;
+import org.apache.shiro.authc.*;
+import org.apache.shiro.authz.AuthorizationInfo;
+import org.apache.shiro.authz.SimpleAuthorizationInfo;
+import org.apache.shiro.realm.AuthorizingRealm;
+import org.apache.shiro.subject.PrincipalCollection;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
+
+import java.util.List;
+
+/**
+ * @Description 自定义JWT realm
+ * @Author fjm
+ * @Date 2020/3/8
+ */
+@Component
+public class JWTRealm extends AuthorizingRealm {
+
+    @Autowired
+    private UserService userService;
+
+    @Autowired
+    private RoleService roleService;
+
+    @Autowired
+    private PermissionService permissionService;
+
+    @Override
+    public boolean supports(AuthenticationToken token){
+        return token instanceof JWTToken;
+    }
+
+    /**
+     * 用户名正确与否验证
+     * @param authenticationToken
+     * @return
+     * @throws AuthenticationException
+     */
+    @Override
+    protected AuthenticationInfo doGetAuthenticationInfo(AuthenticationToken authenticationToken) throws AuthenticationException {
+
+        String token = (String) authenticationToken.getCredentials();
+        String username = JWTUtil.getUsername(token);
+
+        User user = userService.getUserByUsername(username);
+        if(null != user){
+            if(!JWTUtil.verify(token,username,user.getPassword())){
+                throw new IncorrectCredentialsException("验证失败");
+            }
+            return new SimpleAuthenticationInfo(token,token,getName());
+        }else{
+            throw new UnknownAccountException("用户不存在");
+        }
+    }
+
+    @Override
+    protected AuthorizationInfo doGetAuthorizationInfo(PrincipalCollection principals) {
+        String username = JWTUtil.getUsername(principals.toString());
+        User user = userService.getUserByUsername(username);
+        SimpleAuthorizationInfo info = new SimpleAuthorizationInfo();
+        if(null != user){
+            //角色信息
+            List<Role> roles = roleService.getUserRoles(user.getId());
+            for(Role role : roles){
+                info.addRole(role.getRoleName());
+            }
+
+            //权限信息
+            List<Permission> permissions = permissionService.getRolePermissions(roles);
+            for(Permission permission : permissions){
+                info.addStringPermission(permission.getPermissionsName());
+            }
+        }
+
+        return info;
+    }
+}
