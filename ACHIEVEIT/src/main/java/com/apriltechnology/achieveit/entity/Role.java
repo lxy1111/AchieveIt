@@ -1,6 +1,6 @@
 package com.apriltechnology.achieveit.entity;
 
-import java.util.Set;
+import java.sql.Timestamp;
 
 /**
  * @Description 角色实体类
@@ -9,44 +9,53 @@ import java.util.Set;
  */
 public class Role {
 
-    private Integer id;
+    private Long id;
 
-    private Integer userId;
+    private Long roleName;
 
-    private String roleName;
+    private String description;
 
-    //角色对应权限集合
-    private Set<Permission> permissions;
+    private Timestamp createTime;
 
-    public Integer getId() {
+    private Timestamp changeTime;
+
+    public Long getId() {
         return id;
     }
 
-    public void setId(Integer id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
-    public Integer getUserId() {
-        return userId;
-    }
-
-    public void setUserId(Integer userId) {
-        this.userId = userId;
-    }
-
-    public String getRoleName() {
+    public Long getRoleName() {
         return roleName;
     }
 
-    public void setRoleName(String roleName) {
+    public void setRoleName(Long roleName) {
         this.roleName = roleName;
     }
 
-    public Set<Permission> getPermissions() {
-        return permissions;
+    public String getDescription() {
+        return description;
     }
 
-    public void setPermissions(Set<Permission> permissions) {
-        this.permissions = permissions;
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public Timestamp getCreateTime() {
+        return createTime;
+    }
+
+    public void setCreateTime(Timestamp createTime) {
+        this.createTime = createTime;
+    }
+
+    public Timestamp getChangeTime() {
+        return changeTime;
+    }
+
+    public void setChangeTime(Timestamp changeTime) {
+        this.changeTime = changeTime;
     }
 }

@@ -1,6 +1,6 @@
 package com.apriltechnology.achieveit.entity;
 
-import java.util.Set;
+import java.sql.Timestamp;
 
 /**
  * @Description 用户信息类
@@ -9,20 +9,23 @@ import java.util.Set;
  */
 public class User {
 
-    private Integer id;
+    private Long id;
 
     private String username;
 
     private String password;
 
-    //用户对应的角色集合
-    private Set<Role> roles;
+    private String roles;
 
-    public Integer getId() {
+    private Timestamp createTime;
+
+    private Timestamp changeTime;
+
+    public Long getId() {
         return id;
     }
 
-    public void setId(Integer id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
@@ -42,11 +45,27 @@ public class User {
         this.password = password;
     }
 
-    public Set<Role> getRoles() {
+    public String getRoles() {
         return roles;
     }
 
-    public void setRoles(Set<Role> roles) {
+    public void setRoles(String roles) {
         this.roles = roles;
+    }
+
+    public Timestamp getCreateTime() {
+        return createTime;
+    }
+
+    public void setCreateTime(Timestamp createTime) {
+        this.createTime = createTime;
+    }
+
+    public Timestamp getChangeTime() {
+        return changeTime;
+    }
+
+    public void setChangeTime(Timestamp changeTime) {
+        this.changeTime = changeTime;
     }
 }

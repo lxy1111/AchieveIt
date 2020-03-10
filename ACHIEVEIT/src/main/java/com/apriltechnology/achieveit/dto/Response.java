@@ -1,6 +1,6 @@
 package com.apriltechnology.achieveit.dto;
 
-import java.util.List;
+import java.util.Map;
 
 /**
  * @Description json返回类型
@@ -19,7 +19,7 @@ public class Response {
     private Integer count;
 
     //返回的数据
-    private List<?> data;
+    private Map<String,?> data;
 
     public String getCode() {
         return code;
@@ -52,11 +52,11 @@ public class Response {
         this.count = count;
     }
 
-    public List<?> getData() {
+    public Map<String, ?> getData() {
         return data;
     }
 
-    public void setData(List<?> data) {
+    public void setData(Map<String, ?> data) {
         this.data = data;
     }
 }

@@ -1,7 +1,6 @@
 package com.apriltechnology.achieveit.service;
 
 import com.apriltechnology.achieveit.entity.Permission;
-import com.apriltechnology.achieveit.entity.Role;
 
 import java.util.List;
 
@@ -17,6 +16,6 @@ public interface PermissionService {
      * @param roles
      * @return
      */
-    List<Permission> getRolePermissions(List<Role> roles);
+    List<Permission> getRolePermissions(String roleName);
 
 }

@@ -1,10 +1,8 @@
 package com.apriltechnology.achieveit.shiro;
 
 import com.apriltechnology.achieveit.entity.Permission;
-import com.apriltechnology.achieveit.entity.Role;
 import com.apriltechnology.achieveit.entity.User;
 import com.apriltechnology.achieveit.service.PermissionService;
-import com.apriltechnology.achieveit.service.RoleService;
 import com.apriltechnology.achieveit.service.UserService;
 import com.apriltechnology.achieveit.util.JWTUtil;
 import org.apache.shiro.authc.*;
@@ -14,6 +12,7 @@ import org.apache.shiro.realm.AuthorizingRealm;
 import org.apache.shiro.subject.PrincipalCollection;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+import org.springframework.util.StringUtils;
 
 import java.util.List;
 
@@ -27,9 +26,6 @@ public class JWTRealm extends AuthorizingRealm {
 
     @Autowired
     private UserService userService;
-
-    @Autowired
-    private RoleService roleService;
 
     @Autowired
     private PermissionService permissionService;
@@ -68,17 +64,22 @@ public class JWTRealm extends AuthorizingRealm {
         User user = userService.getUserByUsername(username);
         SimpleAuthorizationInfo info = new SimpleAuthorizationInfo();
         if(null != user){
-            //角色信息
-            List<Role> roles = roleService.getUserRoles(user.getId());
-            for(Role role : roles){
-                info.addRole(role.getRoleName());
+            String userRoles = user.getRoles();
+            if(!StringUtils.isEmpty(userRoles)){
+                //角色信息
+                String[] roles = user.getRoles().split(",");
+                for(String role : roles){
+                    info.addRole(role);
+                }
+                //权限信息
+                for(String roleName : roles){
+                    List<Permission> permissions = permissionService.getRolePermissions(roleName);
+                    for(Permission permission : permissions){
+                        info.addStringPermission(permission.getPermissionName());
+                    }
+                }
             }
 
-            //权限信息
-            List<Permission> permissions = permissionService.getRolePermissions(roles);
-            for(Permission permission : permissions){
-                info.addStringPermission(permission.getPermissionsName());
-            }
         }
 
         return info;

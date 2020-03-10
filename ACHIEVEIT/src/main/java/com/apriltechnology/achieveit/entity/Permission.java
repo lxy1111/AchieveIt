@@ -1,5 +1,7 @@
 package com.apriltechnology.achieveit.entity;
 
+import java.sql.Timestamp;
+
 /**
  * @Description 权限实体类
  * @Author fjm
@@ -7,33 +9,63 @@ package com.apriltechnology.achieveit.entity;
  */
 public class Permission {
 
-    private Integer id;
+    private Long id;
 
-    private Integer roleId;
+    private Long roleId;
 
-    private String permissionsName;
+    private String permissionName;
 
-    public Integer getId() {
+    private String description;
+
+    private Timestamp createTime;
+
+    private Timestamp changeTime;
+
+    public Long getId() {
         return id;
     }
 
-    public void setId(Integer id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
-    public Integer getRoleId() {
+    public Long getRoleId() {
         return roleId;
     }
 
-    public void setRoleId(Integer roleId) {
+    public void setRoleId(Long roleId) {
         this.roleId = roleId;
     }
 
-    public String getPermissionsName() {
-        return permissionsName;
+    public String getPermissionName() {
+        return permissionName;
     }
 
-    public void setPermissionsName(String permissionsName) {
-        this.permissionsName = permissionsName;
+    public void setPermissionName(String permissionName) {
+        this.permissionName = permissionName;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public Timestamp getCreateTime() {
+        return createTime;
+    }
+
+    public void setCreateTime(Timestamp createTime) {
+        this.createTime = createTime;
+    }
+
+    public Timestamp getChangeTime() {
+        return changeTime;
+    }
+
+    public void setChangeTime(Timestamp changeTime) {
+        this.changeTime = changeTime;
     }
 }

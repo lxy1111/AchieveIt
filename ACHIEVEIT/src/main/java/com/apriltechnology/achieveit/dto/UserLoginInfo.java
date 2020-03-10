@@ -10,17 +10,17 @@ import javax.validation.constraints.NotBlank;
 public class UserLoginInfo {
 
     @NotBlank(message = "请输入用户名")
-    private String usrname;
+    private String username;
 
     @NotBlank(message = "请输入密码")
     private String password;
 
-    public String getUsrname() {
-        return usrname;
+    public String getUsername() {
+        return username;
     }
 
-    public void setUsrname(String usrname) {
-        this.usrname = usrname;
+    public void setUsername(String username) {
+        this.username = username;
     }
 
     public String getPassword() {

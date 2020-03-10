@@ -1,6 +1,7 @@
 package com.apriltechnology.achieveit.mapper;
 
 import com.apriltechnology.achieveit.entity.User;
+import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
 
 /**
@@ -16,6 +17,6 @@ public interface UserMapper {
      * @param username
      * @return
      */
-    User getUserByUsername(String username);
+    User getUserByUsername(@Param("username") String username);
 
 }

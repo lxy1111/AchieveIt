@@ -12,9 +12,8 @@ import java.util.List;
 public interface RoleService {
 
     /**
-     * 根据userId获取用户角色信息
-     * @param userId
+     * 获取所有角色信息
      * @return
      */
-    List<Role> getUserRoles(Integer userId);
+    List<Role> getAllRoles();
 }

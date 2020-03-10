@@ -15,7 +15,7 @@ import java.util.List;
 public class RoleServiceImpl implements RoleService {
 
     @Override
-    public List<Role> getUserRoles(Integer userId) {
+    public List<Role> getAllRoles() {
         return null;
     }
 }

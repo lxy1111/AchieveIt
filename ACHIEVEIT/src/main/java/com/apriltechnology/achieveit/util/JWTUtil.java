@@ -5,11 +5,8 @@ import com.auth0.jwt.JWTVerifier;
 import com.auth0.jwt.algorithms.Algorithm;
 import com.auth0.jwt.exceptions.JWTDecodeException;
 import com.auth0.jwt.interfaces.DecodedJWT;
-import io.jsonwebtoken.Claims;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.exception.ExceptionUtils;
-import org.apache.ibatis.annotations.Param;
-import org.apache.ibatis.reflection.ExceptionUtil;
 
 import java.io.UnsupportedEncodingException;
 import java.util.Date;
