@@ -7,6 +7,7 @@ import java.sql.Timestamp;
  * @Author fjm
  * @Date 2020/3/9
  */
+
 public class User {
 
     private Long id;

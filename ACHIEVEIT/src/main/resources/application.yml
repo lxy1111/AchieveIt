@@ -16,4 +16,3 @@ jwt:
   secret: mySecret
   expiration: 604800
   tokenHead: Bearer
-

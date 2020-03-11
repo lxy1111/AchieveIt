@@ -4,6 +4,8 @@ import com.apriltechnology.achieveit.dto.Response;
 import com.apriltechnology.achieveit.dto.UserLoginInfo;
 import com.apriltechnology.achieveit.service.LoginService;
 import com.apriltechnology.achieveit.util.JWTUtil;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 import javafx.util.Pair;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -24,6 +26,7 @@ import java.util.Map;
 
 @Controller
 @RequestMapping("/Login")
+@Api(tags = "登录接口")
 public class LoginController {
 
     @Autowired
@@ -31,6 +34,7 @@ public class LoginController {
 
     @RequestMapping("/LogOn")
     @ResponseBody
+    @ApiOperation("用户登陆")
     public Response logOn(@Valid @RequestBody UserLoginInfo userLoginInfo, BindingResult results){
 
         if(results.hasErrors()){

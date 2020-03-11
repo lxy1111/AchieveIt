@@ -1,11 +1,16 @@
 package com.apriltechnology.achieveit.controller;
 
 import com.apriltechnology.achieveit.dto.Response;
-import org.apache.shiro.authz.annotation.RequiresAuthentication;
+import com.apriltechnology.achieveit.dto.UserLoginInfo;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiImplicitParam;
+import io.swagger.annotations.ApiOperation;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.apache.shiro.authz.annotation.RequiresRoles;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 /**
@@ -15,6 +20,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
  */
 @Controller
 @RequestMapping("/Project")
+@Api(tags = "项目信息接口")
 public class ProjectController {
 
 
@@ -22,6 +28,7 @@ public class ProjectController {
     @RequiresPermissions("personManage")
     @RequestMapping("/NewProject")
     @ResponseBody
+    @ApiOperation("创建新项目")
     public Response newProject(){
         Response response = new Response();
         return response;
