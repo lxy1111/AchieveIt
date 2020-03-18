@@ -4,10 +4,10 @@ import com.apriltechnology.achieveit.dto.ProjectInfoSearch;
 import com.apriltechnology.achieveit.entity.ProjectInfo;
 import com.apriltechnology.achieveit.mapper.ProjectInfoMapper;
 import com.apriltechnology.achieveit.service.ProjectInfoService;
+import javafx.util.Pair;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.sql.Timestamp;
 import java.util.List;
 
 /**
@@ -41,4 +41,17 @@ public class ProjectInfoServiceImpl implements ProjectInfoService {
                 projectInfoSearch.getScheduleTime(), projectInfoSearch.getDeliveryTime());
         return count;
     }
+
+    @Override
+    public Pair<Boolean,String> editProjectInfo(ProjectInfoSearch projectInfoSearch) {
+
+        Integer result = projectInfoMapper.updateProjectInfo(projectInfoSearch);
+        if(null == result || result <= 0){
+            return new Pair<>(false,"更新失败！");
+        }else{
+            return new Pair<>(true,"更新成功！");
+        }
+    }
+
+
 }

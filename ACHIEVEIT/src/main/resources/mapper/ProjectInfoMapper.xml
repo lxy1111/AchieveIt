@@ -26,6 +26,9 @@
         <if test="businessArea!=null and businessArea!=''">
             AND business_area = #{businessArea}
         </if>
+        <if test="technology!=null and technology!=''">
+            AND technology = #{technology}
+        </if>
         <if test="scheduleTime!=null">
             AND schedule_time = #{scheduleTime}
         </if>
@@ -60,13 +63,34 @@
         <if test="businessArea!=null and businessArea!=''">
             AND business_area = #{businessArea}
         </if>
+        <if test="technology!=null and technology!=''">
+            AND technology = #{technology}
+        </if>
         <if test="scheduleTime!=null">
             AND schedule_time = #{scheduleTime}
         </if>
         <if test="deliveryTime!=null">
             AND delivery_time = #{deliveryTime}
         </if>
-
     </select>
+
+    <update id="updateProjectInfo"  parameterType="com.apriltechnology.achieveit.dto.ProjectInfoSearch">
+         update projectinfo
+         SET project_name = #{projectName},
+             customer_info = #{customerInfo},
+             leader = #{leader},
+             milepost = #{milepost},
+             project_function = #{projectFunction},
+             business_area = #{businessArea},
+        <if test="scheduleTime!=null">
+             schedule_time = #{scheduleTime},
+        </if>
+        <if test="deliveryTime!=null">
+             delivery_time = #{deliveryTime},
+        </if>
+             technology = #{technology}
+         where id = #{id}
+    </update>
+
 
 </mapper>

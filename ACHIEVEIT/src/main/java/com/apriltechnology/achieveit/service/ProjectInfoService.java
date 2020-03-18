@@ -2,6 +2,7 @@ package com.apriltechnology.achieveit.service;
 
 import com.apriltechnology.achieveit.dto.ProjectInfoSearch;
 import com.apriltechnology.achieveit.entity.ProjectInfo;
+import javafx.util.Pair;
 
 import java.util.List;
 
@@ -25,5 +26,12 @@ public interface ProjectInfoService {
      * @return
      */
     Integer getProjectInfoCount(ProjectInfoSearch projectInfoSearch);
+
+    /**
+     * 更新项目信息
+     * @param projectInfoSearch
+     * @return
+     */
+    Pair<Boolean,String> editProjectInfo(ProjectInfoSearch projectInfoSearch);
 
 }

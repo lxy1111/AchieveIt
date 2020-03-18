@@ -6,6 +6,7 @@ import com.apriltechnology.achieveit.entity.ProjectInfo;
 import com.apriltechnology.achieveit.service.ProjectInfoService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
+import javafx.util.Pair;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -32,7 +33,7 @@ public class ProjectInfoController {
     @RequestMapping("/Search")
     @ResponseBody
     @ApiOperation("查询项目信息")
-    Response ProjectInfoSearch(@RequestBody ProjectInfoSearch projectInfoSearch){
+    Response projectInfoSearch(@RequestBody ProjectInfoSearch projectInfoSearch){
 
         if(null == projectInfoSearch.getPageNum()){
             projectInfoSearch.setPageNum(0);
@@ -56,6 +57,23 @@ public class ProjectInfoController {
         response.setData(map);
 
         return response;
+    }
+
+    @RequestMapping("/Edit")
+    @ResponseBody
+    @ApiOperation("更新项目信息")
+    Response editProjectInfo(@RequestBody ProjectInfoSearch projectInfoSearch){
+
+        Response response = new Response();
+
+        Pair<Boolean,String> result = projectInfoService.editProjectInfo(projectInfoSearch);
+        if(result.getKey()){
+            response.setCode("0");
+            response.setMsg(result.getValue());
+            return response;
+        }else{
+            return Response.createError("`1",result.getValue());
+        }
     }
 
 

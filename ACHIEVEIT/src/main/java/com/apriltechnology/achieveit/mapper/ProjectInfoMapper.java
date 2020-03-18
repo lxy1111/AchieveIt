@@ -30,4 +30,12 @@ public interface ProjectInfoMapper {
     Integer getProjectInfoCount(Long id, String projectName, String customerInfo, String leader, String milepost, String projectFunction,
                                 String technology, String businessArea, Timestamp scheduleTime, Timestamp deliveryTime);
 
+
+    /**
+     * 更新项目信息
+     * @param projectInfoSearch
+     * @return
+     */
+    Integer updateProjectInfo(ProjectInfoSearch projectInfoSearch);
+
 }
