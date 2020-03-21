@@ -12,10 +12,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.exception.ExceptionUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.HashMap;
 import java.util.List;
@@ -35,7 +32,7 @@ public class ProjectInfoController {
     @Autowired
     private ProjectInfoService projectInfoService;
 
-    @RequestMapping("/Search")
+    @PostMapping("/Search")
     @ResponseBody
     @ApiOperation("查询项目信息")
     Response projectInfoSearch(@RequestBody ProjectInfoSearch projectInfoSearch){
@@ -64,7 +61,7 @@ public class ProjectInfoController {
         return response;
     }
 
-    @RequestMapping("/Edit")
+    @PostMapping("/Edit")
     @ResponseBody
     @ApiOperation("更新项目信息")
     Response editProjectInfo(@RequestBody ProjectInfoSearch projectInfoSearch){
@@ -81,7 +78,7 @@ public class ProjectInfoController {
         }
     }
 
-    @RequestMapping("/Delete")
+    @PostMapping("/Delete")
     @ResponseBody
     @ApiOperation("删除项目信息")
     Response deleteProjectInfo(@RequestParam("ids[]") List<Long> ids){
