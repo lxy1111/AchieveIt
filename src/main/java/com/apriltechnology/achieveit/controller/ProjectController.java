@@ -6,6 +6,7 @@ import io.swagger.annotations.ApiOperation;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.apache.shiro.authz.annotation.RequiresRoles;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
@@ -22,7 +23,7 @@ public class ProjectController {
 
     @RequiresRoles("PM")
     @RequiresPermissions("personManage")
-    @RequestMapping("/NewProject")
+    @PostMapping("/NewProject")
     @ResponseBody
     @ApiOperation("创建新项目")
     public Response newProject(){

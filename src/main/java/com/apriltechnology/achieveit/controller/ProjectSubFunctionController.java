@@ -11,10 +11,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 
 @Controller
 @RequestMapping("/ProjectSubFunction")
@@ -26,7 +23,7 @@ public class ProjectSubFunctionController {
     private ProjectSubFunctionService projectSubFunctionService;
 
 
-    @RequestMapping("/SubEdit")
+    @PostMapping("/SubEdit")
     @ResponseBody
     @ApiOperation("编辑项目子功能信息")
     public Response editProjectSubFunction(@RequestBody ProjectSubFunctionEdit projectSubFunctionEdit, BindingResult results){
@@ -47,7 +44,7 @@ public class ProjectSubFunctionController {
         }
     }
 
-    @RequestMapping("/SubDelete")
+    @PostMapping("/SubDelete")
     @ResponseBody
     @ApiOperation("删除项目子功能信息")
     public Response deleteProjectSubFunction(@RequestParam(value = "id")Long id){
@@ -69,7 +66,7 @@ public class ProjectSubFunctionController {
         }
     }
 
-    @RequestMapping("/SubAdd")
+    @PostMapping("/SubAdd")
     @ResponseBody
     @ApiOperation("添加项目子功能信息")
     public Response addProjectSubFunction(@RequestBody ProjectSubFunctionAdd projectSubFunctionAdd, BindingResult results){

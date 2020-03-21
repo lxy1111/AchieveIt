@@ -9,10 +9,7 @@ import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 
 /**
  * @Description 项目功能controller层
@@ -28,7 +25,7 @@ public class ProjectFunctionController {
     @Autowired
     private ProjectFunctionService projectFunctionService;
 
-    @RequestMapping("/Search")
+    @PostMapping("/Search")
     @ResponseBody
     @ApiOperation("查询项目功能信息")
     public Response searchProjectFunctionList(@RequestParam(value = "id") Long id){
@@ -39,7 +36,7 @@ public class ProjectFunctionController {
     }
 
 
-    @RequestMapping("/Edit")
+    @PostMapping("/Edit")
     @ResponseBody
     @ApiOperation("编辑项目功能信息")
     public Response editProjectFunction(@RequestBody ProjectFunctionEdit projectFunctionEdit){
@@ -49,7 +46,7 @@ public class ProjectFunctionController {
     }
 
 
-    @RequestMapping("/Delete")
+    @PostMapping("/Delete")
     @ResponseBody
     @ApiOperation("删除项目功能信息")
     public Response deleteProjectFunction(@RequestParam(value = "id")Long id){
@@ -58,7 +55,7 @@ public class ProjectFunctionController {
     }
 
 
-    @RequestMapping("/Add")
+    @PostMapping("/Add")
     @ResponseBody
     @ApiOperation("添加项目功能信息")
     public Response addProjectFunction(@RequestBody ProjectFunctionAdd projectFunctionAdd){
