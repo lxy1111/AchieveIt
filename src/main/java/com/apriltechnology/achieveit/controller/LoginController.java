@@ -62,6 +62,7 @@ public class LoginController {
 
             Map<String,String> map = new HashMap<>();
             map.put("token",token);
+            map.put("role",user.getRoles());
 
             response.setData(map);
             return response;
