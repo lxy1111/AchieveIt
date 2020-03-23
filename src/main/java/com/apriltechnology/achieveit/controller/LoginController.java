@@ -2,7 +2,9 @@ package com.apriltechnology.achieveit.controller;
 
 import com.apriltechnology.achieveit.dto.Response;
 import com.apriltechnology.achieveit.dto.UserLoginInfo;
+import com.apriltechnology.achieveit.entity.User;
 import com.apriltechnology.achieveit.service.LoginService;
+import com.apriltechnology.achieveit.service.UserService;
 import com.apriltechnology.achieveit.util.JWTUtil;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -35,6 +37,9 @@ public class LoginController {
     @Autowired
     private LoginService loginService;
 
+    @Autowired
+    private UserService userService;
+
     @PostMapping("/LogOn")
     @ResponseBody
     @ApiOperation("用户登陆")
@@ -46,13 +51,18 @@ public class LoginController {
         }
 
         Response response = new Response();
-        Pair<Boolean,String> result = loginService.logOn(userLoginInfo.getUsername(),userLoginInfo.getPassword());
+        User user = userService.getUserByUsername(userLoginInfo.getUsername());
+        Pair<Boolean,String> result = loginService.logOn(userLoginInfo.getUsername(),userLoginInfo.getPassword(),user);
+
         if(result.getKey()){
             response.setCode("0");
             response.setMsg(result.getValue());
+
             String token = JWTUtil.sign(userLoginInfo.getUsername(),userLoginInfo.getPassword());
+
             Map<String,String> map = new HashMap<>();
             map.put("token",token);
+
             response.setData(map);
             return response;
         }else{

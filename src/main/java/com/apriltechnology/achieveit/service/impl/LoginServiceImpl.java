@@ -16,13 +16,9 @@ import org.springframework.stereotype.Service;
 @Service
 public class LoginServiceImpl implements LoginService {
 
-    @Autowired
-    private UserMapper userMapper;
-
     @Override
-    public Pair<Boolean, String> logOn(String username, String password) {
+    public Pair<Boolean, String> logOn(String username, String password,User user) {
 
-        User user = userMapper.getUserByUsername(username);
         if(null != user){
             if(user.getPassword().equals(password)){
                 return new Pair<>(true,"登录成功");

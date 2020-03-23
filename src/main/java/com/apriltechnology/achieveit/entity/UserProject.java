@@ -3,17 +3,19 @@ package com.apriltechnology.achieveit.entity;
 import java.sql.Timestamp;
 
 /**
- * @Description 角色实体类
+ * @Description 用户关联项目信息
  * @Author fjm
- * @Date 2020/3/9
+ * @Date 2020/3/23
  */
-public class Role {
+public class UserProject {
 
     private Long id;
 
-    private Long roleName;
+    private Long userId;
 
-    private String description;
+    private Long projectId;
+
+    private String projectRole;
 
     private Timestamp createTime;
 
@@ -27,20 +29,28 @@ public class Role {
         this.id = id;
     }
 
-    public Long getRoleName() {
-        return roleName;
+    public Long getUserId() {
+        return userId;
     }
 
-    public void setRoleName(Long roleName) {
-        this.roleName = roleName;
+    public void setUserId(Long userId) {
+        this.userId = userId;
     }
 
-    public String getDescription() {
-        return description;
+    public Long getProjectId() {
+        return projectId;
     }
 
-    public void setDescription(String description) {
-        this.description = description;
+    public void setProjectId(Long projectId) {
+        this.projectId = projectId;
+    }
+
+    public String getProjectRole() {
+        return projectRole;
+    }
+
+    public void setProjectRole(String projectRole) {
+        this.projectRole = projectRole;
     }
 
     public Timestamp getCreateTime() {

@@ -8,6 +8,10 @@ import javax.validation.constraints.NotNull;
  * @Date 2020/3/20
  */
 public class ProjectSubFunctionEdit {
+
+    @NotNull(message = "关联项目id为空")
+    private Long projectId;
+
     @NotNull(message = "id为空")
     private Long id;
 
@@ -37,5 +41,13 @@ public class ProjectSubFunctionEdit {
 
     public void setPersonCharge(String personCharge) {
         this.personCharge = personCharge;
+    }
+
+    public Long getProjectId() {
+        return projectId;
+    }
+
+    public void setProjectId(Long projectId) {
+        this.projectId = projectId;
     }
 }

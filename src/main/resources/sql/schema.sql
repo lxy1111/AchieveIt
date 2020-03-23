@@ -13,7 +13,7 @@ create table user(
    UNIQUE INDEX username_index(user_name)
 )ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8mb4 COMMENT='用户信息表';
 
-create table role(
+create table projectRole(
    id bigint NOT NULL AUTO_INCREMENT COMMENT '角色id',
    role_name varchar(120) NOT NULL  DEFAULT '' COMMENT '角色名',
    description varchar(300) NOT NULL DEFAULT '' COMMENT '角色描述',
@@ -21,7 +21,20 @@ create table role(
    change_time TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更改时间',
    PRIMARY KEY (id),
    UNIQUE INDEX role_name_index(role_name)
-)ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8mb4 COMMENT='角色信息表';
+)ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8mb4 COMMENT='项目角色信息表';
+
+create table userProject(
+   id bigint NOT NULL AUTO_INCREMENT COMMENT '自增id',
+   user_id bigint NOT NULL DEFAULT '0' COMMENT '用户id',
+   project_id bigint NOT NULL DEFAULT '0' COMMENT '关联项目id',
+   project_role varchar(200) NOT NULL DEFAULT '' COMMENT '项目角色',
+   create_time TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
+   change_time TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更改时间',
+   PRIMARY KEY (id),
+   FOREIGN KEY (user_id) references user(id) on delete cascade on update cascade,
+   FOREIGN KEY (project_id) references projectInfo(id) on delete cascade on update cascade
+)ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8mb4 COMMENT='用户项目关联表';
+
 
 create table permission(
    id bigint NOT NULL AUTO_INCREMENT COMMENT '权限id',
@@ -76,6 +89,15 @@ create table projectSubFunc(
 )ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8mb4 COMMENT='项目子功能表';
 
 
+
+
+#插入用户项目关联信息
+insert into userProject(user_id,project_id,project_role) values
+(1,1,'PM'),
+(2,1,'TM,QA'),
+(1,2,'PM');
+
+
 #插入项目功能信息
 insert into projectFunc(project_id,function_name,person_charge) values
 (1,'项目信息','fjm'),
@@ -107,13 +129,13 @@ insert into user(user_name,password,roles) values ('fjm','123','PM');
 insert into user(user_name,password,roles) values ('br','123','');
 
 #插入角色信息
-insert into role(role_name,description) values('PS','项目上级');
-insert into role(role_name,description) values('CMO','组织级配置管理员');
-insert into role(role_name,description) values('EPG','项目改进小组');
-insert into role(role_name,description) values('QA','质量监控');
-insert into role(role_name,description) values('PM','项目经理');
-insert into role(role_name,description) values('AM','项目资产管理员');
-insert into role(role_name,description) values('TM','项目成员');
+insert into projectRole(role_name,description) values('PS','项目上级');
+insert into projectRole(role_name,description) values('CMO','组织级配置管理员');
+insert into projectRole(role_name,description) values('EPG','项目改进小组');
+insert into projectRole(role_name,description) values('QA','质量监控');
+insert into projectRole(role_name,description) values('PM','项目经理');
+insert into projectRole(role_name,description) values('AM','项目资产管理员');
+insert into projectRole(role_name,description) values('TM','项目成员');
 
 #插入权限信息
 insert into permission(role_name,permission_name,description) values ('PS','','');

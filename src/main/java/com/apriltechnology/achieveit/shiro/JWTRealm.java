@@ -1,6 +1,5 @@
 package com.apriltechnology.achieveit.shiro;
 
-import com.apriltechnology.achieveit.entity.Permission;
 import com.apriltechnology.achieveit.entity.User;
 import com.apriltechnology.achieveit.service.PermissionService;
 import com.apriltechnology.achieveit.service.UserService;
@@ -13,8 +12,6 @@ import org.apache.shiro.subject.PrincipalCollection;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.util.StringUtils;
-
-import java.util.List;
 
 /**
  * @Description 自定义JWT realm
@@ -67,17 +64,10 @@ public class JWTRealm extends AuthorizingRealm {
             String userRoles = user.getRoles();
             if(!StringUtils.isEmpty(userRoles)){
                 //角色信息
-                String[] roles = user.getRoles().split(",");
-                for(String role : roles){
-                    info.addRole(role);
-                }
-                //权限信息
-                for(String roleName : roles){
-                    List<Permission> permissions = permissionService.getRolePermissions(roleName);
-                    for(Permission permission : permissions){
-                        info.addStringPermission(permission.getPermissionName());
-                    }
-                }
+                info.addRole(userRoles);
+
+                //todo 权限信息，由人事系统决定
+
             }
 
         }
