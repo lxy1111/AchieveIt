@@ -41,6 +41,9 @@ public class ProjectSubFunctionController {
     public Response editProjectSubFunction(@RequestBody ProjectSubFunctionEdit projectSubFunctionEdit, BindingResult results){
 
         Pair<Boolean,String> auth = userProjectService.judgeUserProjectPermission(projectSubFunctionEdit.getProjectId(),"personManage");
+        if(!auth.getKey()){
+            return Response.createError("1",auth.getValue());
+        }
 
         if(results.hasErrors()){
             log.error("editProjectSubFunction bindingResult",results.getFieldError().getField());

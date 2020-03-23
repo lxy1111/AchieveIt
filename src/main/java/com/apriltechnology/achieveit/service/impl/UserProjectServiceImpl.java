@@ -59,13 +59,30 @@ public class UserProjectServiceImpl implements UserProjectService {
 
         String[] roles = userProject.getProjectRole().split(",");
 
+
         for(String role : roles){
             List<Permission> userPermissions = permissionMapper.getPermissionByRoleName(role);
-            if(userPermissions.contains(permission)){
+            if(this.hasPermission(userPermissions,permission)){
                 return new Pair<>(true,"权限认证通过！");
             }
         }
 
         return new Pair<>(false,"没有操作权限！");
+    }
+
+    /**
+     * 判断角色是否有给定的权限
+     * @param permissions
+     * @return
+     */
+    private Boolean hasPermission(List<Permission> permissions,String permission){
+
+        for(Permission item : permissions){
+            if(item.getPermissionName().equals(permission)){
+                return true;
+            }
+        }
+
+        return false;
     }
 }
