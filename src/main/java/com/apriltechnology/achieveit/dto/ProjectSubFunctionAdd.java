@@ -9,12 +9,23 @@ import javax.validation.constraints.NotNull;
  */
 public class ProjectSubFunctionAdd {
 
+    @NotNull(message = "关联项目id为空")
+    private Long projectId;
+
     @NotNull(message = "关联功能id为空")
     private Long funcId;
 
     private String functionName;
 
     private String personCharge;
+
+    public Long getProjectId() {
+        return projectId;
+    }
+
+    public void setProjectId(Long projectId) {
+        this.projectId = projectId;
+    }
 
     public Long getFuncId() {
         return funcId;
