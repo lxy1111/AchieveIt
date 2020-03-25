@@ -88,8 +88,25 @@ create table projectSubFunc(
    foreign key (func_id) references projectFunc(id) on delete cascade on update cascade
 )ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8mb4 COMMENT='项目子功能表';
 
+create table workHourInfo(
+    id BIGINT NOT NULL AUTO_INCREMENT COMMENT '工时id',
+    user_id BIGINT NOT NULL DEFAULT '0' COMMENT '用户id',
+    user_name VARCHAR(120) NOT NULL DEFAULT'' COMMENT '姓名',
+    user_role VARCHAR(120) NOT NULL DEFAULT'' COMMENT '角色',
+    finished_function VARCHAR(120) NOT NULL DEFAULT'' COMMENT '完成功能',
+    finished_activity VARCHAR(120) NOT NULL DEFAULT'' COMMENT '完成活动',
+    start_time TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '开始时间',
+    finish_time TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '结束时间',
+    create_time TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
+    change_time TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更改时间',
+    PRIMARY KEY(id),
+    FOREIGN KEY(user_id) REFERENCES user(id) ON DELETE CASCADE ON UPDATE CASCADE
+)ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8mb4 COMMENT='工时管理表';
 
-
+#插入工时信息
+insert INTO workhourinfo(user_id,user_name,user_role,finished_function,finished_activity) VALUES
+(2,'br','TM','nothing','nothing'),
+(1,'fjm','PM','manything','manything');
 
 #插入用户项目关联信息
 insert into userProject(user_id,project_id,project_role) values
