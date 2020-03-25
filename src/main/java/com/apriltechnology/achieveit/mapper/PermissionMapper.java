@@ -16,8 +16,8 @@ public interface PermissionMapper {
 
     /**
      * 通过角色名获取权限信息
-     * @param roleName
+     * @param roleId
      * @return
      */
-    List<Permission> getPermissionByRoleName(@Param("roleName") String roleName);
+    List<Permission> getPermissionByRoleId(@Param("roleId") Long roleId);
 }

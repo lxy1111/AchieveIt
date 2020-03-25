@@ -13,9 +13,9 @@ public interface PermissionService {
 
     /**
      * 根据role获取用户角色权限信息
-     * @param roles
+     * @param roleId
      * @return
      */
-    List<Permission> getRolePermissions(String roleName);
+    List<Permission> getRolePermissions(Long roleId);
 
 }

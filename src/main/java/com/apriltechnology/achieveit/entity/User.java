@@ -16,6 +16,12 @@ public class User {
 
     private String password;
 
+    private String mail;
+
+    private String tel;
+
+    private String department;
+
     private String roles;
 
     private Timestamp createTime;
@@ -44,6 +50,30 @@ public class User {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    public String getMail() {
+        return mail;
+    }
+
+    public void setMail(String mail) {
+        this.mail = mail;
+    }
+
+    public String getTel() {
+        return tel;
+    }
+
+    public void setTel(String tel) {
+        this.tel = tel;
+    }
+
+    public String getDepartment() {
+        return department;
+    }
+
+    public void setDepartment(String department) {
+        this.department = department;
     }
 
     public String getRoles() {

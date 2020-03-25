@@ -1,8 +1,10 @@
 package com.apriltechnology.achieveit.mapper;
 
-import com.apriltechnology.achieveit.entity.UserProject;
+import com.apriltechnology.achieveit.entity.UserProjectRole;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
+
+import java.util.List;
 
 /**
  * @Description UserProject类mapper接口
@@ -10,7 +12,7 @@ import org.springframework.stereotype.Repository;
  * @Date 2020/3/23
  */
 @Repository
-public interface UserProjectMapper {
+public interface UserProjectRoleMapper {
 
     /**
      * 获取用户关联项目信息
@@ -18,6 +20,6 @@ public interface UserProjectMapper {
      * @param projectId
      * @return
      */
-    UserProject getUserProject(@Param("userId") Long userId, @Param("projectId") Long projectId);
+    List<UserProjectRole> getUserProjectRole(@Param("userId") Long userId, @Param("projectId") Long projectId);
 
 }

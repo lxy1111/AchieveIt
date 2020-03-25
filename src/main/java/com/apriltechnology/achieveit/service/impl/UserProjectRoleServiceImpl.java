@@ -1,20 +1,19 @@
 package com.apriltechnology.achieveit.service.impl;
 
 import com.apriltechnology.achieveit.entity.Permission;
+import com.apriltechnology.achieveit.entity.ProjectRole;
 import com.apriltechnology.achieveit.entity.User;
-import com.apriltechnology.achieveit.entity.UserProject;
+import com.apriltechnology.achieveit.entity.UserProjectRole;
 import com.apriltechnology.achieveit.mapper.PermissionMapper;
 import com.apriltechnology.achieveit.mapper.UserMapper;
-import com.apriltechnology.achieveit.mapper.UserProjectMapper;
-import com.apriltechnology.achieveit.service.UserProjectService;
-import com.apriltechnology.achieveit.shiro.JWTToken;
+import com.apriltechnology.achieveit.mapper.UserProjectRoleMapper;
+import com.apriltechnology.achieveit.service.UserProjectRoleService;
 import com.apriltechnology.achieveit.util.JWTUtil;
 import javafx.util.Pair;
 import org.apache.shiro.SecurityUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -23,10 +22,10 @@ import java.util.List;
  * @Date 2020/3/9
  */
 @Service
-public class UserProjectServiceImpl implements UserProjectService {
+public class UserProjectRoleServiceImpl implements UserProjectRoleService {
 
     @Autowired
-    private UserProjectMapper userProjectMapper;
+    private UserProjectRoleMapper userProjectRoleMapper;
 
     @Autowired
     private PermissionMapper permissionMapper;
@@ -35,11 +34,11 @@ public class UserProjectServiceImpl implements UserProjectService {
     private UserMapper userMapper;
 
     @Override
-    public UserProject getUserProject(User user,Long id) {
+    public List<UserProjectRole> getUserProjectRole(User user, Long id) {
 
-        UserProject userProject = userProjectMapper.getUserProject(user.getId(),id);
+        List<UserProjectRole> userProjectRoles = userProjectRoleMapper.getUserProjectRole(user.getId(),id);
 
-        return userProject;
+        return userProjectRoles;
     }
 
     @Override
@@ -52,16 +51,14 @@ public class UserProjectServiceImpl implements UserProjectService {
             return new Pair<>(false,"没有项目信息！");
         }
 
-        UserProject userProject = this.getUserProject(user,id);
-        if(null == userProject){
+        List<UserProjectRole> userProjectRoles = this.getUserProjectRole(user,id);
+        if(null == userProjectRoles || userProjectRoles.size() <= 0){
             return new Pair<>(false,"没有该项目权限！");
         }
 
-        String[] roles = userProject.getProjectRole().split(",");
 
-
-        for(String role : roles){
-            List<Permission> userPermissions = permissionMapper.getPermissionByRoleName(role);
+        for(UserProjectRole userProjectRole : userProjectRoles){
+            List<Permission> userPermissions = permissionMapper.getPermissionByRoleId(userProjectRole.getRoleId());
             if(this.hasPermission(userPermissions,permission)){
                 return new Pair<>(true,"权限认证通过！");
             }

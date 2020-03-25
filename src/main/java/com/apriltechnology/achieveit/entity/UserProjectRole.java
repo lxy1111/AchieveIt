@@ -1,33 +1,24 @@
 package com.apriltechnology.achieveit.entity;
 
 import java.sql.Timestamp;
+import java.util.List;
 
 /**
  * @Description 用户关联项目信息
  * @Author fjm
  * @Date 2020/3/23
  */
-public class UserProject {
-
-    private Long id;
+public class UserProjectRole {
 
     private Long userId;
 
     private Long projectId;
 
-    private String projectRole;
+    private Long roleId;
 
     private Timestamp createTime;
 
     private Timestamp changeTime;
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
 
     public Long getUserId() {
         return userId;
@@ -45,12 +36,12 @@ public class UserProject {
         this.projectId = projectId;
     }
 
-    public String getProjectRole() {
-        return projectRole;
+    public Long getRoleId() {
+        return roleId;
     }
 
-    public void setProjectRole(String projectRole) {
-        this.projectRole = projectRole;
+    public void setRoleId(Long roleId) {
+        this.roleId = roleId;
     }
 
     public Timestamp getCreateTime() {

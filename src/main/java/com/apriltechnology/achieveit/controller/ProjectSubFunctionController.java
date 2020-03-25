@@ -5,21 +5,18 @@ import com.apriltechnology.achieveit.dto.ProjectSubFunctionEdit;
 import com.apriltechnology.achieveit.dto.Response;
 import com.apriltechnology.achieveit.entity.ProjectSubFunc;
 import com.apriltechnology.achieveit.service.ProjectSubFunctionService;
-import com.apriltechnology.achieveit.service.UserProjectService;
+import com.apriltechnology.achieveit.service.UserProjectRoleService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import javafx.util.Pair;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.shiro.authz.annotation.RequiresRoles;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Role;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -40,7 +37,7 @@ public class ProjectSubFunctionController {
     private ProjectSubFunctionService projectSubFunctionService;
 
     @Autowired
-    private UserProjectService userProjectService;
+    private UserProjectRoleService userProjectRoleService;
 
     @PostMapping("/SubEdit")
     @ResponseBody
@@ -48,7 +45,7 @@ public class ProjectSubFunctionController {
     @RequiresRoles("PM")
     public Response editProjectSubFunction(@RequestBody ProjectSubFunctionEdit projectSubFunctionEdit, BindingResult results){
 
-        Pair<Boolean,String> auth = userProjectService.judgeUserProjectPermission(projectSubFunctionEdit.getProjectId(),"personManage");
+        Pair<Boolean,String> auth = userProjectRoleService.judgeUserProjectPermission(projectSubFunctionEdit.getProjectId(),"personManage");
         if(!auth.getKey()){
             return Response.createError("1",auth.getValue());
         }

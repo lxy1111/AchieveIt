@@ -20,9 +20,9 @@ public class PermissionServiceImpl implements PermissionService {
     private PermissionMapper permissionMapper;
 
     @Override
-    public List<Permission> getRolePermissions(String roleName) {
+    public List<Permission> getRolePermissions(Long roleId) {
 
-        List<Permission> permissions = permissionMapper.getPermissionByRoleName(roleName);
+        List<Permission> permissions = permissionMapper.getPermissionByRoleId(roleId);
 
         return permissions;
     }

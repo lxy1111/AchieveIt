@@ -6,6 +6,9 @@ create table user(
    id bigint NOT NULL AUTO_INCREMENT COMMENT '用户id',
    user_name varchar(120) NOT NULL  DEFAULT '' COMMENT '用户名',
    password varchar(120) NOT NULL  DEFAULT '' COMMENT '密码',
+   mail varchar(120) NOT NULL Default '' COMMENT '邮箱',
+   department varchar(100) NOT NULL DEFAULT '' COMMENT '部门',
+   tel varchar(120) NOT NULL DEFAULT '' COMMENT '电话',
    roles varchar(120) NOT NULL  DEFAULT '' COMMENT '用户角色',
    create_time TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
    change_time TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更改时间',
@@ -23,28 +26,29 @@ create table projectRole(
    UNIQUE INDEX role_name_index(role_name)
 )ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8mb4 COMMENT='项目角色信息表';
 
-create table userProject(
-   id bigint NOT NULL AUTO_INCREMENT COMMENT '自增id',
+create table userProjectRole(
    user_id bigint NOT NULL DEFAULT '0' COMMENT '用户id',
    project_id bigint NOT NULL DEFAULT '0' COMMENT '关联项目id',
-   project_role varchar(200) NOT NULL DEFAULT '' COMMENT '项目角色',
+   role_id bigint NOT NULL DEFAULT '0' COMMENT '项目角色id',
    create_time TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
    change_time TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更改时间',
-   PRIMARY KEY (id),
+   PRIMARY KEY (user_id,project_id,role_id),
    FOREIGN KEY (user_id) references user(id) on delete cascade on update cascade,
-   FOREIGN KEY (project_id) references projectInfo(id) on delete cascade on update cascade
-)ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8mb4 COMMENT='用户项目关联表';
+   FOREIGN KEY (project_id) references projectInfo(id) on delete cascade on update cascade,
+   FOREIGN KEY (role_id) references projectRole(id) on delete cascade on update cascade
+)ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='用户项目角色信息关联表';
 
 
 create table permission(
    id bigint NOT NULL AUTO_INCREMENT COMMENT '权限id',
-   role_name varchar(120) NOT NULL  DEFAULT '' COMMENT '关联角色名',
+   role_id bigint NOT NULL  DEFAULT '0' COMMENT '关联角色id',
    permission_name varchar(120) NOT NULL  DEFAULT '' COMMENT '权限名',
    description varchar(300) NOT NULL DEFAULT '' COMMENT '权限描述',
    create_time TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
    change_time TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更改时间',
-   PRIMARY KEY (id)
-)ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8mb4 COMMENT='角色信息表';
+   PRIMARY KEY (id),
+   foreign key (role_id) references projectRole(id) on delete cascade on update cascade
+)ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8mb4 COMMENT='权限信息表';
 
 create table projectInfo(
    id bigint NOT NULL AUTO_INCREMENT COMMENT '项目id',
@@ -109,10 +113,10 @@ insert INTO workhourinfo(user_id,user_name,user_role,finished_function,finished_
 (1,'fjm','PM','manything','manything');
 
 #插入用户项目关联信息
-insert into userProject(user_id,project_id,project_role) values
-(1,1,'PM'),
-(2,1,'TM,QA'),
-(1,2,'PM');
+insert into userProjectRole(user_id,project_id,role_id) values
+(1,1,1),
+(1,1,2),
+(2,1,1);
 
 
 #插入项目功能信息
@@ -142,8 +146,9 @@ insert into projectInfo(creater_id,project_name,customer_info,leader,milepost,pr
 
 
 #插入用户信息
-insert into user(user_name,password,roles) values ('fjm','123','PM');
-insert into user(user_name,password,roles) values ('br','123','');
+insert into user(user_name,password,mail,department,tel,roles) values
+('fjm','123','563249983@qq.com','技术部','13501894012','PM'),
+('br','123','821655671@qq.com','技术部','12345678901','PM');
 
 #插入角色信息
 insert into projectRole(role_name,description) values('PS','项目上级');
@@ -155,23 +160,5 @@ insert into projectRole(role_name,description) values('AM','项目资产管理�
 insert into projectRole(role_name,description) values('TM','项目成员');
 
 #插入权限信息
-insert into permission(role_name,permission_name,description) values ('PS','','');
-insert into permission(role_name,permission_name,description) values ('CMO','','');
-insert into permission(role_name,permission_name,description) values ('CMO','','');
-insert into permission(role_name,permission_name,description) values ('EPG','','');
-insert into permission(role_name,permission_name,description) values ('QA','','');
-insert into permission(role_name,permission_name,description) values ('PM','personManage','项目组员管理，可添加或者修改');
-insert into permission(role_name,permission_name,description) values ('PM','','');
-insert into permission(role_name,permission_name,description) values ('PM','','');
-insert into permission(role_name,permission_name,description) values ('PM','','');
-insert into permission(role_name,permission_name,description) values ('PM','','');
-insert into permission(role_name,permission_name,description) values ('PM','','');
-insert into permission(role_name,permission_name,description) values ('PM','','');
-insert into permission(role_name,permission_name,description) values ('PM','','');
-insert into permission(role_name,permission_name,description) values ('AM','','');
-insert into permission(role_name,permission_name,description) values ('TM','','');
-insert into permission(role_name,permission_name,description) values ('TM','','');
-insert into permission(role_name,permission_name,description) values ('TM','','');
-insert into permission(role_name,permission_name,description) values ('TM','','');
-insert into permission(role_name,permission_name,description) values ('TM','','');
-insert into permission(role_name,permission_name,description) values ('TM','','');
+
+insert into permission(role_id,permission_name,description) values (5,'personManage','项目组员管理，可添加或者修改');

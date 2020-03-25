@@ -5,12 +5,11 @@ import com.apriltechnology.achieveit.dto.ProjectFunctionEdit;
 import com.apriltechnology.achieveit.dto.Response;
 import com.apriltechnology.achieveit.entity.ProjectFunc;
 import com.apriltechnology.achieveit.service.ProjectFunctionService;
-import com.apriltechnology.achieveit.service.UserProjectService;
+import com.apriltechnology.achieveit.service.UserProjectRoleService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import javafx.util.Pair;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.shiro.authz.annotation.RequiresRoles;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
@@ -35,7 +34,7 @@ public class ProjectFunctionController {
     private ProjectFunctionService projectFunctionService;
 
     @Autowired
-    private UserProjectService userProjectService;
+    private UserProjectRoleService userProjectRoleService;
 
     @PostMapping("/Edit")
     @ResponseBody
