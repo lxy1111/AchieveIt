@@ -2,5 +2,27 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.apriltechnology.achieveit.mapper.ProjectFunctionMapper">
 
+    <insert id="projectFunctionAdd" parameterType="com.apriltechnology.achieveit.dto.ProjectFunctionAdd">
+        insert into projectFunc (project_id,function_name,person_charge)
+        values (#{projectId},#{functionName},#{personCharge})
+    </insert>
+
+    <delete id="projectFunctionDelete" parameterType="Long">
+        DELETE FROM projectFunc
+        WHERE id = #{id}
+    </delete>
+
+    <update id="projectFunctionEdit" parameterType="com.apriltechnology.achieveit.dto.ProjectFunctionEdit">
+        update projectFunc
+        set function_name = #{functionName},
+             person_charge = #{personCharge}
+        where id = #{id}
+    </update>
+
+    <select id="projectFunctionSearch"  resultType="ProjectFunc">
+        SELECT *
+        FROM projectfunc
+        where project_id = #{id}
+    </select>
 
 </mapper>

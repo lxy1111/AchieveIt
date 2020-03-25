@@ -2,7 +2,10 @@ package com.apriltechnology.achieveit.service;
 
 import com.apriltechnology.achieveit.dto.ProjectSubFunctionAdd;
 import com.apriltechnology.achieveit.dto.ProjectSubFunctionEdit;
+import com.apriltechnology.achieveit.entity.ProjectSubFunc;
 import javafx.util.Pair;
+
+import java.util.List;
 
 /**
  * @Description 项目子功能service接口类
@@ -31,4 +34,11 @@ public interface ProjectSubFunctionService {
      * @return
      */
     Pair<Boolean,String> projectSubFunctionDelete(Long id);
+
+    /**
+     * 查询项目子功能列表
+     * @param id
+     * @return
+     */
+    List<ProjectSubFunc> projectSubFunctionSearch(Long id);
 }

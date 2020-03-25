@@ -2,11 +2,14 @@ package com.apriltechnology.achieveit.service.impl;
 
 import com.apriltechnology.achieveit.dto.ProjectSubFunctionAdd;
 import com.apriltechnology.achieveit.dto.ProjectSubFunctionEdit;
+import com.apriltechnology.achieveit.entity.ProjectSubFunc;
 import com.apriltechnology.achieveit.mapper.ProjectSubFunctionMapper;
 import com.apriltechnology.achieveit.service.ProjectSubFunctionService;
 import javafx.util.Pair;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 /**
  * @Description 项目子功能service实现类
@@ -51,5 +54,12 @@ public class ProjectSubFunctionServiceImpl implements ProjectSubFunctionService 
         }
 
         return new Pair<>(true,"删除成功！");
+    }
+
+    @Override
+    public List<ProjectSubFunc> projectSubFunctionSearch(Long id) {
+
+        List<ProjectSubFunc> projectSubFuncs = projectSubFunctionMapper.projectSunFunctionSearch(id);
+        return projectSubFuncs;
     }
 }

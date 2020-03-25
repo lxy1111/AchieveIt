@@ -18,4 +18,10 @@
              person_charge = #{personCharge}
         where id = #{id}
     </update>
+
+    <select id="projectSunFunctionSearch"  resultType="ProjectSubFunc">
+        SELECT *
+        FROM projectsubfunc
+        where func_id = #{id}
+    </select>
 </mapper>
