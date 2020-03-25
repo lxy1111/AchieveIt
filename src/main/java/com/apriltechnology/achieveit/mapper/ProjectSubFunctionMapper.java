@@ -3,6 +3,7 @@ package com.apriltechnology.achieveit.mapper;
 import com.apriltechnology.achieveit.dto.ProjectSubFunctionAdd;
 import com.apriltechnology.achieveit.dto.ProjectSubFunctionEdit;
 import com.apriltechnology.achieveit.entity.ProjectSubFunc;
+import com.apriltechnology.achieveit.model.ProjectSubFunctionModel;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
 
@@ -43,4 +44,19 @@ public interface ProjectSubFunctionMapper {
      * @return
      */
     List<ProjectSubFunc> projectSunFunctionSearch(@Param("id") Long id);
+
+    /**
+     * excel导入
+     * @param modelLists
+     * @param id
+     * @return
+     */
+    int projectSubFunctionExcelImport(@Param("list") List<ProjectSubFunctionModel> modelLists,@Param("id") Long id);
+
+    /**
+     * 删除功能所有子功能
+     * @param id
+     * @return
+     */
+    int deleteAllSubFunctionById(@Param("id") Long id);
 }

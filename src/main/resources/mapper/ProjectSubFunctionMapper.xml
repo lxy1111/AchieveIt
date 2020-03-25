@@ -24,4 +24,22 @@
         FROM projectsubfunc
         where func_id = #{id}
     </select>
+
+    <insert id="projectSubFunctionExcelImport" >
+        insert into projectsubfunc
+        (func_id,function_name,person_charge)
+        values
+        <foreach collection="list" item="item"  separator=",">
+            (
+               #{id},
+               #{item.functionName},
+               #{item.personCharge}
+            )
+        </foreach>
+    </insert>
+
+    <delete id="deleteAllSubFunctionById">
+        DELETE FROM projectsubfunc
+        WHERE func_id = #{id}
+    </delete>
 </mapper>

@@ -16,7 +16,10 @@ import org.springframework.context.annotation.Role;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -135,4 +138,58 @@ public class ProjectSubFunctionController {
 
         return response;
     }
+
+    @PostMapping("/ExcelImport")
+    @ApiOperation("Excel导入项目子功能信息")
+    @ResponseBody
+    public Response subFunctionExcelImport(@RequestParam(value = "file")MultipartFile file,@RequestParam(value = "id")Long id){
+
+        Response response = new Response();
+        if(file.isEmpty()){
+            response.setCode("1");
+            response.setMsg("文件为空！");
+            return response;
+        }
+
+        if(!this.judgeExcelFile(file)){
+            response.setCode("1");
+            response.setMsg("文件格式错误！");
+            return response;
+        }
+
+        Long size = file.getSize();
+        if(size > 1024 * 1024 * 10){
+            response.setCode("1");
+            response.setMsg("文件大小超过10M!");
+            return response;
+        }
+
+        Pair<Boolean,String> result = projectSubFunctionService.projectSubFunctionExcelImport(file,id);
+        if(result.getKey()){
+            response.setCode("0");
+            response.setMsg(result.getValue());
+            return response;
+        }else{
+            response.setCode("1");
+            response.setMsg(result.getValue());
+            return response;
+        }
+
+    }
+
+    private Boolean judgeExcelFile(MultipartFile file){
+
+        String extName = "";
+
+        if(file.getOriginalFilename().lastIndexOf(".") != -1){
+            extName = file.getOriginalFilename().substring(file.getOriginalFilename().lastIndexOf("."),
+                    file.getOriginalFilename().length());
+            if(extName.equals(".xlsx") || extName.equals(".xls")){
+                return true;
+            }
+        }
+
+        return false;
+    }
+
 }

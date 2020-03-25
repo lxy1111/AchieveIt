@@ -4,6 +4,7 @@ import com.apriltechnology.achieveit.dto.ProjectSubFunctionAdd;
 import com.apriltechnology.achieveit.dto.ProjectSubFunctionEdit;
 import com.apriltechnology.achieveit.entity.ProjectSubFunc;
 import javafx.util.Pair;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 
@@ -41,4 +42,14 @@ public interface ProjectSubFunctionService {
      * @return
      */
     List<ProjectSubFunc> projectSubFunctionSearch(Long id);
+
+
+    /**
+     * 根据excel文件插入子功能信息
+     * @param file
+     * @return
+     */
+    Pair<Boolean,String> projectSubFunctionExcelImport(MultipartFile file,Long id);
+
+
 }
