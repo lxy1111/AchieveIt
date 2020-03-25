@@ -51,7 +51,7 @@ public class ProjectInfoController {
 
         List<ProjectInfo> projectInfos = projectInfoService.getProjectInfo(projectInfoSearch);
         Map<String,List<ProjectInfo>> map = new HashMap<>();
-        map.put("infoList",projectInfos);
+        map.put("data",projectInfos);
 
         response.setCode("0");
         response.setMsg("查询成功");
