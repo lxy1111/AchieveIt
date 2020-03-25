@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.apriltechnology.achieveit.mapper.DeviceMapper">
+    <select id="getDeviceList" parameterType="String" resultType="Device">
+        SELECT *
+        FROM device
+        WHERE 1=1
+        <if test="id!=null">
+            AND id = #{id}
+        </if>
+        <if test="projectID!=null and projectID!=''">
+            AND projectID = #{projectID}
+        </if>
+        <if test="deviceowner!=null and deviceowner!=''">
+            AND deviceowner = #{deviceowner}
+        </if>
+        <if test="deadline!=null and deadline!=''">
+            AND deadline = #{deadline}
+        </if>
+        <if test="status!=null and status!=''">
+            AND status = #{status}
+        </if>
+        LIMIT #{pageFirst},#{pageLast}
+    </select>
+
+    <select id="getDeviceCount" parameterType="String" resultType="Integer">
+        SELECT count(*)
+        FROM device
+        WHERE 1=1
+        <if test="id!=null">
+            AND id = #{id}
+        </if>
+        <if test="projectID!=null and projectID!=''">
+            AND projectID = #{projectID}
+        </if>
+        <if test="deviceowner!=null and deviceowner!=''">
+            AND deviceowner = #{deviceowner}
+        </if>
+        <if test="deadline!=null and deadline!=''">
+            AND deadline = #{deadline}
+        </if>
+        <if test="status!=null and status!=''">
+            AND status = #{status}
+        </if>
+    </select>
+
+
+    <update id="updateDevice"  parameterType="com.apriltechnology.achieveit.dto.DeviceSearch">
+        update device
+        SET projectID = #{projectID},
+        deviceowner = #{deviceowner},
+        deadline = #{deadline},
+        status = #{status}
+        where id = #{id}
+    </update>
+
+
+</mapper>
