@@ -12,5 +12,5 @@ import java.util.List;
  */
 
 public interface WorkHourInfoService {
-    List<WorkHourInfo> getWorkHourInfo(String date);
+    List<WorkHourInfo> getWorkHourInfo(Long projectId, String date);
 }

@@ -39,14 +39,14 @@ public class WorkHourInfoController {
     @PostMapping("/Search")
     @ResponseBody
     @ApiOperation("查询工时信息")
-    public Response workHourInfoSearch(@RequestParam(value = "id") String id){
+    public Response workHourInfoSearch(@RequestParam(value = "projectId") Long projectId,@RequestParam(value = "id") String id){
 
         if (!isValidDate(id)){
             return Response.createError("1","输入日期格式不对(yyyy-mm-dd)");
         }
 
         Response response = new Response();
-        List<WorkHourInfo> workHourInfos = workHourInfoService.getWorkHourInfo(id);
+        List<WorkHourInfo> workHourInfos = workHourInfoService.getWorkHourInfo(projectId,id);
 
         response.setCode("0");
         response.setMsg("查询成功！");
@@ -61,7 +61,7 @@ public class WorkHourInfoController {
     }
 
     //判断输入字符串是否符合日期格式
-    public static boolean isValidDate(String date){
+    private static boolean isValidDate(String date){
         boolean convertSuccess = true;
         SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
         try {
