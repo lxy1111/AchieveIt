@@ -20,8 +20,8 @@ public class WorkHourInfoServiceImpl implements WorkHourInfoService {
     private WorkHourInfoMapper workHourInfoMapper;
 
     @Override
-    public List<WorkHourInfo> getWorkHourInfo(String date){
-        List<WorkHourInfo> workHourInfos = workHourInfoMapper.getWorkHourInfoList(date);
+    public List<WorkHourInfo> getWorkHourInfo(Long projectId, String date){
+        List<WorkHourInfo> workHourInfos = workHourInfoMapper.getWorkHourInfoList(projectId,date);
         return workHourInfos;
     }
 }

@@ -18,5 +18,5 @@ public interface WorkHourInfoMapper {
      * 通过date查询工时信息
      * @return
      */
-    List<WorkHourInfo> getWorkHourInfoList (@Param("date") String date);
+    List<WorkHourInfo> getWorkHourInfoList (@Param("projectId") Long projectId, @Param("date") String date);
 }
