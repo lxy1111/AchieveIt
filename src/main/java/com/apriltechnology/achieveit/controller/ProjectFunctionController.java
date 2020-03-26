@@ -105,7 +105,7 @@ public class ProjectFunctionController {
 
     @PostMapping("/Search")
     @ResponseBody
-    @ApiOperation("添加项目功能信息")
+    @ApiOperation("查询项目功能信息")
     public Response searchProjectFunction(@RequestParam(value = "id")Long id){
 
         if(null == id || id <= 0){

@@ -10,10 +10,10 @@ import com.alibaba.excel.metadata.BaseRowModel;
  */
 public class ProjectSubFunctionModel extends BaseRowModel {
 
-    @ExcelProperty(index = 0)
+    @ExcelProperty(index = 0,value = "功能名称")
     private String functionName;
 
-    @ExcelProperty(index = 1)
+    @ExcelProperty(index = 1,value = "负责人")
     private String personCharge;
 
     public String getFunctionName() {

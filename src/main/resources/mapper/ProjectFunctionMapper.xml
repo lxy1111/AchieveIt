@@ -25,4 +25,10 @@
         where project_id = #{id}
     </select>
 
+    <select id="projectFunctionSearchById"  resultType="ProjectFunc">
+        SELECT *
+        FROM projectfunc
+        where id = #{id}
+    </select>
+
 </mapper>

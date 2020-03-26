@@ -38,9 +38,16 @@ public interface ProjectFunctionMapper {
     int projectFunctionDelete(Long id);
 
     /**
-     * 根据功能id查询功能列表
+     * 根据项目id查询功能列表
      * @param id
      * @return
      */
     List<ProjectFunc> projectFunctionSearch(@Param("id") Long id);
+
+    /**
+     * 根据id查项目功能信息
+     * @param id
+     * @return
+     */
+    ProjectFunc projectFunctionSearchById(@Param("id") Long id);
 }

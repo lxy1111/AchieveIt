@@ -42,4 +42,10 @@
         DELETE FROM projectsubfunc
         WHERE func_id = #{id}
     </delete>
+
+    <select id="projectSubFunctionExcelExport" resultType="com.apriltechnology.achieveit.model.ProjectSubFunctionModel">
+        select function_name,person_charge
+        from projectSubFunc
+        where func_id = #{id}
+    </select>
 </mapper>

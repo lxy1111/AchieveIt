@@ -1,12 +1,17 @@
 package com.apriltechnology.achieveit.service.impl;
 
 import com.alibaba.excel.EasyExcelFactory;
+import com.alibaba.excel.ExcelWriter;
 import com.alibaba.excel.metadata.Sheet;
+import com.alibaba.excel.support.ExcelTypeEnum;
 import com.apriltechnology.achieveit.dto.ProjectSubFunctionAdd;
 import com.apriltechnology.achieveit.dto.ProjectSubFunctionEdit;
+import com.apriltechnology.achieveit.entity.ProjectFunc;
 import com.apriltechnology.achieveit.entity.ProjectSubFunc;
+import com.apriltechnology.achieveit.mapper.ProjectFunctionMapper;
 import com.apriltechnology.achieveit.mapper.ProjectSubFunctionMapper;
 import com.apriltechnology.achieveit.model.ProjectSubFunctionModel;
+import com.apriltechnology.achieveit.service.ProjectFunctionService;
 import com.apriltechnology.achieveit.service.ProjectSubFunctionService;
 import javafx.util.Pair;
 import lombok.extern.slf4j.Slf4j;
@@ -19,8 +24,8 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.BufferedInputStream;
-import java.io.FileInputStream;
 import java.io.IOException;
+import java.io.OutputStream;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -36,6 +41,8 @@ public class ProjectSubFunctionServiceImpl implements ProjectSubFunctionService 
     @Autowired
     private ProjectSubFunctionMapper projectSubFunctionMapper;
 
+    @Autowired
+    private ProjectFunctionMapper projectFunctionMapper;
 
     @Override
     public Pair<Boolean, String> projectSubFunctionAdd(ProjectSubFunctionAdd projectSubFunctionAdd) {
@@ -109,6 +116,29 @@ public class ProjectSubFunctionServiceImpl implements ProjectSubFunctionService 
 
     }
 
+    @Override
+    public String projectSubFunctionExcelExport(OutputStream out , Long id) {
+
+        List<ProjectSubFunctionModel> projectSubFunctionModelList = projectSubFunctionMapper.projectSubFunctionExcelExport(id);
+        ExcelWriter writer = new ExcelWriter(out, ExcelTypeEnum.XLSX,true);
+
+        ProjectFunc projectFunc = projectFunctionMapper.projectFunctionSearchById(id);
+        String fileName = "子功能列表";
+        if(null != projectFunc){
+            fileName = projectFunc.getFunctionName() + "子功能列表";
+        }
+
+        Sheet sheet = new Sheet(1,0,ProjectSubFunctionModel.class);
+        sheet.setAutoWidth(Boolean.TRUE);
+
+        writer.write(projectSubFunctionModelList,sheet);
+        writer.finish();
+
+        return fileName;
+
+
+
+    }
 
 
 }

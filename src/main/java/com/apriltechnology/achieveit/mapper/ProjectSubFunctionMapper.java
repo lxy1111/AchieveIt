@@ -59,4 +59,11 @@ public interface ProjectSubFunctionMapper {
      * @return
      */
     int deleteAllSubFunctionById(@Param("id") Long id);
+
+    /**
+     * excel导出
+     * @param id
+     * @return
+     */
+    List<ProjectSubFunctionModel> projectSubFunctionExcelExport(@Param("id")Long id);
 }

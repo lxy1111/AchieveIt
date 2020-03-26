@@ -4,12 +4,14 @@ import com.apriltechnology.achieveit.dto.ProjectSubFunctionAdd;
 import com.apriltechnology.achieveit.dto.ProjectSubFunctionEdit;
 import com.apriltechnology.achieveit.dto.Response;
 import com.apriltechnology.achieveit.entity.ProjectSubFunc;
+import com.apriltechnology.achieveit.model.ProjectSubFunctionModel;
 import com.apriltechnology.achieveit.service.ProjectSubFunctionService;
 import com.apriltechnology.achieveit.service.UserProjectRoleService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import javafx.util.Pair;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.lang3.exception.ExceptionUtils;
 import org.apache.shiro.authz.annotation.RequiresRoles;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -17,6 +19,9 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import javax.servlet.ServletOutputStream;
+import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -188,6 +193,33 @@ public class ProjectSubFunctionController {
         }
 
         return false;
+    }
+
+
+    @PostMapping("/ExcelExport")
+    @ApiOperation("Excel导出项目子功能信息")
+    @ResponseBody
+    public Response subFunctionExcelExport(@RequestParam(value = "id") Long id, HttpServletResponse httpServletResponse){
+
+        Response response = new Response();
+
+        try {
+
+            ServletOutputStream outputStream = httpServletResponse.getOutputStream();
+            String fileName = projectSubFunctionService.projectSubFunctionExcelExport(outputStream,id);
+
+            httpServletResponse.setHeader("Content-disposition", "attachment;filename=" + fileName + ".xlsx");
+            httpServletResponse.setContentType("application/msexcel");
+
+            response.setCode("0");
+            return response;
+        } catch (IOException e) {
+            log.error("subFunctionExcelExport", ExceptionUtils.getStackTrace(e));
+            response.setCode("1");
+            response.setMsg("IO 异常");
+            return response;
+        }
+
     }
 
 }
