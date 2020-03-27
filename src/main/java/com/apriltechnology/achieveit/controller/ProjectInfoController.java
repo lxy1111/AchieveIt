@@ -38,7 +38,7 @@ public class ProjectInfoController {
     Response projectInfoSearch(@RequestBody ProjectInfoSearch projectInfoSearch){
 
         if(null == projectInfoSearch.getPageNum()){
-            projectInfoSearch.setPageNum(0);
+            projectInfoSearch.setPageNum(1);
         }
 
         if(null == projectInfoSearch.getPageSize()){

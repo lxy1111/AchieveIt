@@ -9,25 +9,25 @@
             AND id = #{id}
         </if>
         <if test="projectName!=null and projectName!=''">
-            AND project_name = #{projectName}
+            AND project_name like concat('%',#{projectName},'%')
         </if>
         <if test="customerInfo!=null and customerInfo!=''">
-            AND customer_info = #{customerInfo}
+            AND customer_info like concat('%',#{customerInfo},'%')
         </if>
         <if test="leader!=null and leader!=''">
-            AND leader = #{leader}
+            AND leader like concat('%',#{leader},'%')
         </if>
         <if test="milepost!=null and milepost!=''">
-            AND milepost = #{milepost}
+            AND milepost like concat('%',#{milepost},'%')
         </if>
         <if test="projectFunction!=null and projectFunction!=''">
-            AND project_function = #{projectFunction}
+            AND project_function like concat('%',#{projectFunction},'%')
         </if>
         <if test="businessArea!=null and businessArea!=''">
-            AND business_area = #{businessArea}
+            AND business_area like concat('%',#{businessArea},'%')
         </if>
         <if test="technology!=null and technology!=''">
-            AND technology = #{technology}
+            AND technology like concat('%',#{technology},'%')
         </if>
         <if test="scheduleTime!=null">
             AND schedule_time = #{scheduleTime}
@@ -46,25 +46,25 @@
             AND id = #{id}
         </if>
         <if test="projectName!=null and projectName!=''">
-            AND project_name = #{projectName}
+            AND project_name like concat('%',#{projectName},'%')
         </if>
         <if test="customerInfo!=null and customerInfo!=''">
-            AND customer_info = #{customerInfo}
+            AND customer_info like concat('%',#{customerInfo},'%')
         </if>
         <if test="leader!=null and leader!=''">
-            AND leader = #{leader}
+            AND leader like concat('%',#{leader},'%')
         </if>
         <if test="milepost!=null and milepost!=''">
-            AND milepost = #{milepost}
+            AND milepost like concat('%',#{milepost},'%')
         </if>
         <if test="projectFunction!=null and projectFunction!=''">
-            AND project_function = #{projectFunction}
+            AND project_function like concat('%',#{projectFunction},'%')
         </if>
         <if test="businessArea!=null and businessArea!=''">
-            AND business_area = #{businessArea}
+            AND business_area like concat('%',#{businessArea},'%')
         </if>
         <if test="technology!=null and technology!=''">
-            AND technology = #{technology}
+            AND technology like concat('%',#{technology},'%')
         </if>
         <if test="scheduleTime!=null">
             AND schedule_time = #{scheduleTime}
