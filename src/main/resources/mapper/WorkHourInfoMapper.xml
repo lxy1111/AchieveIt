@@ -2,7 +2,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.apriltechnology.achieveit.mapper.WorkHourInfoMapper">
     <select id="getWorkHourInfoList"  resultType="WorkHourInfo">
-        select result.id,result.user_id,result.user_name,projectrole.role_name as user_role,result.finished_function,
+        select result.id,result.user_id,result.user_name,projectrole.description as user_role,result.finished_function,
         result.finished_activity,result.start_time,result.finish_time,result.create_time as creatTime,result.change_time
         from
         (select a.id,a.user_id,a.user_name,a.finished_function,a.finished_activity,a.start_time,a.finish_time,
