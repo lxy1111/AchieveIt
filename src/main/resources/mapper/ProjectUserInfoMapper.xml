@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.apriltechnology.achieveit.mapper.ProjectUserInfoMapper">
+    <select id="getProjectUserInfoList"  parameterType="Long" resultType="ProjectUserInfo">
+        select result.id as user_id,result.user_name,result.description as user_role,result.mail as user_mail,
+                result.department as user_department,user.mail as projectcharger_mail,result.tel as user_tel
+        from (select user.id,user.user_name,user.mail,user.department,user.tel,projectrole.description
+                from  user  left join  userprojectrole left join projectrole
+                on userprojectrole.role_id = projectrole.id
+                on user.id = userprojectrole.user_id
+                where userprojectrole.project_id=#{projectId}
+                and userprojectrole.role_id != 1) as result,
+        user left join userprojectrole u on user.id = u.user_id
+        where u.project_id =#{projectId} and u.role_id=1
+    </select>
+
+</mapper>
