@@ -7,10 +7,14 @@ import com.apriltechnology.achieveit.entity.Device;
 import com.apriltechnology.achieveit.entity.Risk;
 import com.apriltechnology.achieveit.service.DeviceService;
 import com.apriltechnology.achieveit.service.RiskService;
+import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import java.util.HashMap;
@@ -21,6 +25,11 @@ import java.util.Map;
  * @Author: lxy
  * @Date: 2020/3/30 18:20
  */
+
+@Controller
+@RequestMapping("/Risk")
+@Api(tags = "风险信息接口")
+@Slf4j
 public class RiskController {
 
     @Autowired

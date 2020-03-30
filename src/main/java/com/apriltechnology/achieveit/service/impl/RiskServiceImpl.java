@@ -7,6 +7,7 @@ import com.apriltechnology.achieveit.entity.Risk;
 import com.apriltechnology.achieveit.mapper.RiskMapper;
 import com.apriltechnology.achieveit.service.RiskService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 
@@ -14,6 +15,7 @@ import java.util.List;
  * @Author: lxy
  * @Date: 2020/3/30 18:15
  */
+@Service
 public class RiskServiceImpl implements RiskService {
 
 
