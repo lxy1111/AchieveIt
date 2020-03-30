@@ -4,6 +4,7 @@ import com.apriltechnology.achieveit.entity.User;
 import com.apriltechnology.achieveit.service.PermissionService;
 import com.apriltechnology.achieveit.service.UserService;
 import com.apriltechnology.achieveit.util.JWTUtil;
+import com.apriltechnology.achieveit.util.UserUtil;
 import org.apache.shiro.authc.*;
 import org.apache.shiro.authz.AuthorizationInfo;
 import org.apache.shiro.authz.SimpleAuthorizationInfo;
@@ -49,6 +50,7 @@ public class JWTRealm extends AuthorizingRealm {
             if(!JWTUtil.verify(token,username,user.getPassword())){
                 throw new IncorrectCredentialsException("验证失败");
             }
+            UserUtil.set(user);
             return new SimpleAuthenticationInfo(token,token,getName());
         }else{
             throw new UnknownAccountException("用户不存在");

@@ -1,5 +1,6 @@
 package com.apriltechnology.achieveit.service.impl;
 
+import com.apriltechnology.achieveit.dto.ProjectInfoAdd;
 import com.apriltechnology.achieveit.dto.ProjectInfoSearch;
 import com.apriltechnology.achieveit.entity.ProjectInfo;
 import com.apriltechnology.achieveit.exception.BatchDeleteException;
@@ -72,6 +73,35 @@ public class ProjectInfoServiceImpl implements ProjectInfoService {
         }
 
         return new Pair<>(false,"请选择需要删除的项目！");
+    }
+
+    @Override
+    public Pair<Boolean, String> insertProjectInfo(ProjectInfoAdd projectInfoAdd, Long createId, int status) {
+
+        ProjectInfo projectInfo = this.dataChange(projectInfoAdd,createId,status);
+        int count = projectInfoMapper.insertProjectInfo(projectInfo);
+        if(count > 0){
+            return new Pair<>(true,"新增成功！");
+        }else{
+            return new Pair<>(false,"新增失败！");
+        }
+
+    }
+
+    private ProjectInfo dataChange(ProjectInfoAdd projectInfoAdd,Long createId,int status){
+        ProjectInfo projectInfo = new ProjectInfo();
+        projectInfo.setCreaterId(createId);
+        projectInfo.setProjectName(projectInfoAdd.getProjectName());
+        projectInfo.setCustomerInfo(projectInfoAdd.getCustomerInfo());
+        projectInfo.setLeader(projectInfoAdd.getLeader());
+        projectInfo.setMilepost(projectInfoAdd.getMilepost());
+        projectInfo.setProjectFunction(projectInfoAdd.getProjectFunction());
+        projectInfo.setTechnology(projectInfoAdd.getTechnology());
+        projectInfo.setBusinessArea(projectInfoAdd.getBusinessArea());
+        projectInfo.setScheduleTime(projectInfoAdd.getScheduleTime());
+        projectInfo.setDeliveryTime(projectInfoAdd.getDeliveryTime());
+        projectInfo.setStatus(status);
+        return projectInfo;
     }
 
 

@@ -100,4 +100,9 @@
         </foreach>
     </delete>
 
+    <insert id="insertProjectInfo" parameterType="com.apriltechnology.achieveit.entity.ProjectInfo">
+        insert into projectInfo(creater_id,project_name,customer_info,leader,milepost,project_function,technology,business_area,status)
+        values (#{createrId},#{projectName},#{customerInfo},#{leader},#{milepost},#{projectFunction},#{technology},#{businessArea},#{status})
+    </insert>
+
 </mapper>

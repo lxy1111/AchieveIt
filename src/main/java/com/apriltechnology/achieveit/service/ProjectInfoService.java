@@ -1,5 +1,6 @@
 package com.apriltechnology.achieveit.service;
 
+import com.apriltechnology.achieveit.dto.ProjectInfoAdd;
 import com.apriltechnology.achieveit.dto.ProjectInfoSearch;
 import com.apriltechnology.achieveit.entity.ProjectInfo;
 import com.apriltechnology.achieveit.exception.BatchDeleteException;
@@ -42,4 +43,13 @@ public interface ProjectInfoService {
      * @return
      */
     Pair<Boolean,String> deleteProjectInfo(List<Long> projectIds) throws BatchDeleteException;
+
+    /**
+     * 新增项目
+     * @param projectInfoAdd
+     * @param createId
+     * @param status
+     * @return
+     */
+    Pair<Boolean,String> insertProjectInfo(ProjectInfoAdd projectInfoAdd,Long createId,int status);
 }

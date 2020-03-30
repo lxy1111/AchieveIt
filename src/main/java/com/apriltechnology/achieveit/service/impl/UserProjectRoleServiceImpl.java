@@ -1,16 +1,13 @@
 package com.apriltechnology.achieveit.service.impl;
 
 import com.apriltechnology.achieveit.entity.Permission;
-import com.apriltechnology.achieveit.entity.ProjectRole;
 import com.apriltechnology.achieveit.entity.User;
 import com.apriltechnology.achieveit.entity.UserProjectRole;
 import com.apriltechnology.achieveit.mapper.PermissionMapper;
-import com.apriltechnology.achieveit.mapper.UserMapper;
 import com.apriltechnology.achieveit.mapper.UserProjectRoleMapper;
 import com.apriltechnology.achieveit.service.UserProjectRoleService;
-import com.apriltechnology.achieveit.util.JWTUtil;
+import com.apriltechnology.achieveit.util.UserUtil;
 import javafx.util.Pair;
-import org.apache.shiro.SecurityUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -30,9 +27,6 @@ public class UserProjectRoleServiceImpl implements UserProjectRoleService {
     @Autowired
     private PermissionMapper permissionMapper;
 
-    @Autowired
-    private UserMapper userMapper;
-
     @Override
     public List<UserProjectRole> getUserProjectRole(User user, Long id) {
 
@@ -44,8 +38,7 @@ public class UserProjectRoleServiceImpl implements UserProjectRoleService {
     @Override
     public Pair<Boolean,String> judgeUserProjectPermission(Long id, String permission) {
 
-        String token = (String) SecurityUtils.getSubject().getPrincipal();
-        User user = userMapper.getUserByUsername(JWTUtil.getUsername(token));
+        User user = UserUtil.get();
 
         if(null == id || id <= 0){
             return new Pair<>(false,"没有项目信息！");

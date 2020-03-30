@@ -1,7 +1,9 @@
 package com.apriltechnology.achieveit.mapper;
 
+import com.apriltechnology.achieveit.dto.ProjectInfoAdd;
 import com.apriltechnology.achieveit.dto.ProjectInfoSearch;
 import com.apriltechnology.achieveit.entity.ProjectInfo;
+import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
 
 import java.sql.Timestamp;
@@ -44,5 +46,12 @@ public interface ProjectInfoMapper {
      * @return
      */
     int deleteProjectInfo(List<Long> ids);
+
+    /**
+     * 新增项目
+     * @param projectInfo
+     * @return
+     */
+    int insertProjectInfo( ProjectInfo projectInfo);
 
 }

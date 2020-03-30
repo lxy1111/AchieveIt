@@ -1,10 +1,13 @@
 package com.apriltechnology.achieveit.controller;
 
+import com.apriltechnology.achieveit.dto.ProjectInfoAdd;
 import com.apriltechnology.achieveit.dto.ProjectInfoSearch;
 import com.apriltechnology.achieveit.dto.Response;
 import com.apriltechnology.achieveit.entity.ProjectInfo;
+import com.apriltechnology.achieveit.entity.User;
 import com.apriltechnology.achieveit.exception.BatchDeleteException;
 import com.apriltechnology.achieveit.service.ProjectInfoService;
+import com.apriltechnology.achieveit.util.UserUtil;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import javafx.util.Pair;
@@ -31,6 +34,24 @@ public class ProjectInfoController {
 
     @Autowired
     private ProjectInfoService projectInfoService;
+
+    @PostMapping("/Search")
+    @ResponseBody
+    @ApiOperation("查询项目信息")
+    Response projectInfoAdd(@RequestBody ProjectInfoAdd projectInfoAdd){
+
+        Response response = new Response();
+
+        User user = UserUtil.get();
+        Pair<Boolean,String> result = projectInfoService.insertProjectInfo(projectInfoAdd,user.getId(),0);
+        if(!result.getKey()){
+            return Response.createError("1",result.getValue());
+        }
+        //todo 调用邮件服务
+
+        return response;
+    }
+
 
     @PostMapping("/Search")
     @ResponseBody
