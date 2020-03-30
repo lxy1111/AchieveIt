@@ -2,11 +2,15 @@ package com.apriltechnology.achieveit.service.impl;
 
 import com.apriltechnology.achieveit.dto.DeviceSearch;
 import com.apriltechnology.achieveit.entity.Device;
+import com.apriltechnology.achieveit.exception.BatchDeleteException;
 import com.apriltechnology.achieveit.mapper.DeviceMapper;
 import com.apriltechnology.achieveit.service.DeviceService;
 import javafx.util.Pair;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Isolation;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -47,5 +51,23 @@ public class DeviceServiceImpl implements DeviceService {
         }
 
     }
+
+    @Override
+    @Transactional(propagation = Propagation.REQUIRED, isolation = Isolation.READ_COMMITTED,rollbackFor = Exception.class)
+    public Pair<Boolean, String> deleteDevice(List<Long> ids) throws BatchDeleteException {
+
+        if(null != ids && ids.size() > 0){
+            int size = ids.size();
+            int result = deviceMapper.deleteDevice(ids);
+            if(result == size){
+                return new Pair<>(true,"删除成功！");
+            }else{
+                throw new BatchDeleteException("删除失败！");
+            }
+        }
+
+        return new Pair<>(false,"请选择需要删除的项目！");
+    }
+
 
 }

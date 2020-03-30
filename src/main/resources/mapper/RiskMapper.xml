@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.apriltechnology.achieveit.mapper.RiskMapper">
+    <select id="getRiskList" parameterType="String" resultType="Device">
+        SELECT *
+        FROM risk
+        WHERE 1=1
+        <if test="id!=null">
+            AND id = #{id}
+        </if>
+        <if test="projectID!=null and projectID!=''">
+            AND projectID = #{projectID}
+        </if>
+        <if test="description!=null and description!=''">
+            AND description = #{description}
+        </if>
+        <if test="level!=null and level!=''">
+            AND level = #{level}
+        </if>
+        <if test="effect!=null and effect!=''">
+            AND effect = #{effect}
+        </if>
+        <if test="strategy!=null and strategy!=''">
+            AND strategy = #{strategy}
+        </if>
+        <if test="responsible!=null and responsible!=''">
+            AND responsible = #{responsible}
+        </if>
+        <if test="frequency!=null and frequency!=''">
+            AND frequency = #{frequency}
+        </if>
+        <if test="relevant!=null and relevant!=''">
+            AND relevant = #{relevant}
+        </if>
+        LIMIT #{pageFirst},#{pageLast}
+    </select>
+
+    <select id="getRiskCount" parameterType="String" resultType="Integer">
+        SELECT count(*)
+        FROM risk
+        WHERE 1=1
+        <if test="id!=null">
+            AND id = #{id}
+        </if>
+        <if test="projectID!=null and projectID!=''">
+            AND projectID = #{projectID}
+        </if>
+        <if test="description!=null and description!=''">
+            AND description = #{description}
+        </if>
+        <if test="level!=null and level!=''">
+            AND level = #{level}
+        </if>
+        <if test="effect!=null and effect!=''">
+            AND effect = #{effect}
+        </if>
+        <if test="strategy!=null and strategy!=''">
+            AND strategy = #{strategy}
+        </if>
+        <if test="responsible!=null and responsible!=''">
+            AND responsible = #{responsible}
+        </if>
+        <if test="frequency!=null and frequency!=''">
+            AND frequency = #{frequency}
+        </if>
+        <if test="relevant!=null and relevant!=''">
+            AND relevant = #{relevant}
+        </if>
+    </select>
+
+
+
+
+</mapper>

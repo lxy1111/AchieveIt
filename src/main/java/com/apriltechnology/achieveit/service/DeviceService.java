@@ -3,6 +3,7 @@ package com.apriltechnology.achieveit.service;
 
 import com.apriltechnology.achieveit.dto.DeviceSearch;
 import com.apriltechnology.achieveit.entity.Device;
+import com.apriltechnology.achieveit.exception.BatchDeleteException;
 import javafx.util.Pair;
 
 import java.util.List;
@@ -18,5 +19,7 @@ public interface DeviceService {
     Integer getDeviceCount(DeviceSearch deviceSearch);
 
     Pair<Boolean,String> editDevice(DeviceSearch deviceSearch);
+
+    Pair<Boolean,String> deleteDevice(List<Long> ids) throws BatchDeleteException;
 
 }

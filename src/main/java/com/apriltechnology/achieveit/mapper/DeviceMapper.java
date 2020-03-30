@@ -20,4 +20,7 @@ public interface DeviceMapper {
 
     int updateDevice(DeviceSearch deviceSearch);
 
+    int deleteDevice(List<Long> ids);
+
+
 }
