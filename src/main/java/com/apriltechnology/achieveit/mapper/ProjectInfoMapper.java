@@ -2,6 +2,7 @@ package com.apriltechnology.achieveit.mapper;
 
 import com.apriltechnology.achieveit.dto.ProjectInfoSearch;
 import com.apriltechnology.achieveit.entity.ProjectInfo;
+import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
 
 import java.sql.Timestamp;
@@ -44,5 +45,35 @@ public interface ProjectInfoMapper {
      * @return
      */
     int deleteProjectInfo(List<Long> ids);
+
+    /**
+     * 新增项目
+     * @param projectInfo
+     * @return
+     */
+    int insertProjectInfo( ProjectInfo projectInfo);
+
+    /**
+     * 获取项目状态信息
+     * @param projectId
+     * @return
+     */
+    int getProjectStatus(@Param("projectId") Long projectId);
+
+    /**
+     * 改变项目状态信息
+     * @param projectId
+     * @param status
+     * @return
+     */
+    int changeProjectStatus(@Param("projectId")Long projectId,@Param("status")Integer status);
+
+    /**
+     * 查询待审批项目
+     * @param leader
+     * @param status
+     * @return
+     */
+    List<ProjectInfo> getMyTaskProjectInfo(@Param("leader")String leader,@Param("status")Integer status);
 
 }
