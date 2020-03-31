@@ -8,7 +8,6 @@ import org.springframework.stereotype.Service;
  * @Author fjm
  * @Date 2020/3/9
  */
-@Service
 public interface UserService {
 
     /**

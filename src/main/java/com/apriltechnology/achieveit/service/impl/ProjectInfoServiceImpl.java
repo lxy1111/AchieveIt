@@ -88,6 +88,7 @@ public class ProjectInfoServiceImpl implements ProjectInfoService {
 
     }
 
+    //实体类转移
     private ProjectInfo dataChange(ProjectInfoAdd projectInfoAdd,Long createId,int status){
         ProjectInfo projectInfo = new ProjectInfo();
         projectInfo.setCreaterId(createId);
@@ -102,6 +103,32 @@ public class ProjectInfoServiceImpl implements ProjectInfoService {
         projectInfo.setDeliveryTime(projectInfoAdd.getDeliveryTime());
         projectInfo.setStatus(status);
         return projectInfo;
+    }
+
+    @Override
+    public int getProjectStatus(Long projectId) {
+
+        int status = projectInfoMapper.getProjectStatus(projectId);
+        return status;
+    }
+
+    @Override
+    public Pair<Boolean,String> changeProjectStatus(Long projectId, Integer status) {
+
+        int result = projectInfoMapper.changeProjectStatus(projectId,status);
+        if(result > 0){
+            return new Pair<>(true,"状态更新成功！");
+        }else{
+            return new Pair<>(false,"更新失败！");
+        }
+
+    }
+
+    @Override
+    public List<ProjectInfo> searchMyTaskProjectInfo(String leader, Integer status) {
+
+        List<ProjectInfo> projectInfos = projectInfoMapper.getMyTaskProjectInfo(leader,status);
+        return projectInfos;
     }
 
 

@@ -105,4 +105,22 @@
         values (#{createrId},#{projectName},#{customerInfo},#{leader},#{milepost},#{projectFunction},#{technology},#{businessArea},#{status})
     </insert>
 
+    <select id="getProjectStatus" resultType="Integer">
+        select status
+        from projectInfo
+        where id = #{projectId}
+    </select>
+
+    <update id="changeProjectStatus">
+        update projectInfo
+        set status = #{status}
+        where id = #{projectId}
+    </update>
+
+    <select id="getMyTaskProjectInfo" resultType="ProjectInfo">
+        select *
+        from projectInfo
+        where leader = #{leader}
+        and status = #{status}
+    </select>
 </mapper>

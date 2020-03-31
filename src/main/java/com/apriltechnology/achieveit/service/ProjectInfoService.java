@@ -52,4 +52,27 @@ public interface ProjectInfoService {
      * @return
      */
     Pair<Boolean,String> insertProjectInfo(ProjectInfoAdd projectInfoAdd,Long createId,int status);
+
+    /**
+     * 获取项目状态信息
+     * @param projectId
+     * @return
+     */
+    int getProjectStatus(Long projectId);
+
+    /**
+     * 改变项目状态信息
+     * @param projectId
+     * @param status
+     * @return
+     */
+    Pair<Boolean,String> changeProjectStatus(Long projectId,Integer status);
+
+    /**
+     * 查询待审批项目
+     * @param leader
+     * @param status
+     * @return
+     */
+    List<ProjectInfo> searchMyTaskProjectInfo(String leader,Integer status);
 }
