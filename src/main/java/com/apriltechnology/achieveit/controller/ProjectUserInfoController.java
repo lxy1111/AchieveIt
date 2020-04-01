@@ -1,5 +1,6 @@
 package com.apriltechnology.achieveit.controller;
 
+import com.apriltechnology.achieveit.dto.ProjectUserAdd;
 import com.apriltechnology.achieveit.dto.Response;
 import com.apriltechnology.achieveit.entity.ProjectUserInfo;
 import com.apriltechnology.achieveit.entity.WorkHourInfo;
@@ -10,10 +11,7 @@ import javafx.util.Pair;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.HashMap;
 import java.util.List;
@@ -64,6 +62,21 @@ public class ProjectUserInfoController {
         }
         Response response = new Response();
         Pair<Boolean,String> result = projectUserInfoService.projectUserDelete(projectId,userId);
+        if(result.getKey()){
+            response.setCode("0");
+            response.setMsg(result.getValue());
+            return response;
+        }else {
+            return Response.createError("1",result.getValue());
+        }
+    }
+
+    @PostMapping("/Add")
+    @ResponseBody
+    @ApiOperation("添加项目相关组员")
+    public Response projectUserAdd(@RequestBody ProjectUserAdd projectUserAdd){
+        Response response = new Response();
+        Pair<Boolean,String> result = projectUserInfoService.projectUserAdd(projectUserAdd);
         if(result.getKey()){
             response.setCode("0");
             response.setMsg(result.getValue());

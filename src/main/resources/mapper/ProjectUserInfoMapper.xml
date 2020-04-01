@@ -14,6 +14,13 @@
         where u.project_id =#{projectId} and u.role_id=1
     </select>
 
+    <insert id="projectUserAdd" parameterType="com.apriltechnology.achieveit.dto.ProjectUserAdd">
+        insert into userprojectrole (user_id, project_id, role_id)
+        select #{userId} ,#{projectId} ,id
+        from projectrole
+        where description = #{roleDescription}
+    </insert>
+
     <delete id="projectUserDelete">
         DELETE FROM userprojectrole
         WHERE project_id =#{projectId} and user_id =#{userId}
