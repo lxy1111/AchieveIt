@@ -14,10 +14,16 @@ import java.util.List;
 
 @Repository
 public interface ProjectUserInfoMapper {
-    /**
+     /**
      * 通过projectId查询项目成员信息以及项目上级信息
      * @return
      */
-
     List<ProjectUserInfo> getProjectUserInfoList (@Param("projectId")Long projectId);
+
+    /**
+     * 删除项目与用户关联项
+     * @param projectId,userId
+     * @return
+     */
+    int projectUserDelete(@Param("projectId")Long projectId,@Param("userId")Long userId);
 }

@@ -14,4 +14,9 @@
         where u.project_id =#{projectId} and u.role_id=1
     </select>
 
+    <delete id="projectUserDelete">
+        DELETE FROM userprojectrole
+        WHERE project_id =#{projectId} and user_id =#{userId}
+    </delete>
+
 </mapper>
