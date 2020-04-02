@@ -22,7 +22,7 @@ public interface ProjectInfoMapper {
      * @return
      */
     List<ProjectInfo> getProjectInfoList(Long id, String projectName, String customerInfo, String leader, String milepost, String projectFunction,
-                                         String technology, String businessArea, Timestamp scheduleTime, Timestamp deliveryTime, Integer pageFirst, Integer pageLast);
+                                         String technology, String businessArea, Timestamp scheduleTime, Timestamp deliveryTime, Integer offset, Integer limit);
 
     /**
      * 查询项目数量

@@ -35,7 +35,7 @@
         <if test="deliveryTime!=null">
             AND delivery_time = #{deliveryTime}
         </if>
-        LIMIT #{pageFirst},#{pageLast}
+        LIMIT #{offset},#{limit}
     </select>
 
     <select id="getProjectInfoCount" parameterType="String" resultType="Integer">
