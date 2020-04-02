@@ -29,11 +29,11 @@ public class ProjectInfoServiceImpl implements ProjectInfoService {
     @Override
     public List<ProjectInfo> getProjectInfo(ProjectInfoSearch projectInfoSearch) {
 
-        Integer pageFirst = (projectInfoSearch.getPageNum()-1)*projectInfoSearch.getPageSize();
-        Integer pageLast = pageFirst + projectInfoSearch.getPageSize();
+        Integer offset = (projectInfoSearch.getPageNum()-1)*projectInfoSearch.getPageSize();
+        Integer limit = projectInfoSearch.getPageSize();
         List<ProjectInfo> projectInfos = projectInfoMapper.getProjectInfoList(projectInfoSearch.getId(), projectInfoSearch.getProjectName(), projectInfoSearch.getCustomerInfo(),
                 projectInfoSearch.getLeader(), projectInfoSearch.getMilepost(), projectInfoSearch.getProjectFunction(), projectInfoSearch.getTechnology(), projectInfoSearch.getBusinessArea(),
-                projectInfoSearch.getScheduleTime(), projectInfoSearch.getDeliveryTime(),pageFirst,pageLast);
+                projectInfoSearch.getScheduleTime(), projectInfoSearch.getDeliveryTime(),offset,limit);
 
         return projectInfos;
     }
