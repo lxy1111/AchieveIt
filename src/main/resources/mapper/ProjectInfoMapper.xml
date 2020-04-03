@@ -35,6 +35,7 @@
         <if test="deliveryTime!=null">
             AND delivery_time = #{deliveryTime}
         </if>
+        order by id desc
         LIMIT #{offset},#{limit}
     </select>
 
@@ -123,4 +124,11 @@
         where leader = #{leader}
         and status = #{status}
     </select>
+
+    <select id="getMyProjectInfo" resultType="ProjectInfo">
+        select *
+        from projectInfo
+        where creater_Id = #{createrId}
+    </select>
+
 </mapper>

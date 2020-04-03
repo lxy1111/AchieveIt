@@ -4,6 +4,7 @@ import com.apriltechnology.achieveit.dto.ProjectInfoSearch;
 import com.apriltechnology.achieveit.entity.ProjectInfo;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
+import org.springframework.web.bind.annotation.PostMapping;
 
 import java.sql.Timestamp;
 import java.util.List;
@@ -75,5 +76,12 @@ public interface ProjectInfoMapper {
      * @return
      */
     List<ProjectInfo> getMyTaskProjectInfo(@Param("leader")String leader,@Param("status")Integer status);
+
+    /**
+     * 查询我创建的任务
+     * @param createrId
+     * @return
+     */
+    List<ProjectInfo> getMyProjectInfo(@Param("createrId")Long createrId);
 
 }

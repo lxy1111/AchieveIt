@@ -131,5 +131,12 @@ public class ProjectInfoServiceImpl implements ProjectInfoService {
         return projectInfos;
     }
 
+    @Override
+    public List<ProjectInfo> searchMyProjectInfo(Long createrId) {
+
+        List<ProjectInfo> projectInfos = projectInfoMapper.getMyProjectInfo(createrId);
+        return projectInfos;
+    }
+
 
 }
