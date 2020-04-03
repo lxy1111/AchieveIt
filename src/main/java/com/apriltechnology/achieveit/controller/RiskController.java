@@ -54,7 +54,7 @@ public class RiskController {
 
         List<Risk> risks = riskService.getRiskList(riskSearch);
         Map<String,List<Risk>> map = new HashMap<>();
-        map.put("deviceList",risks);
+        map.put("riskList",risks);
 
         response.setCode("0");
         response.setMsg("查询成功");
