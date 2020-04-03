@@ -207,7 +207,42 @@ public class ProjectInfoController {
         map.put("data",projectInfos);
         response.setData(map);
         return response;
+    }
 
+    @PostMapping("/MyProject")
+    @ResponseBody
+    @ApiOperation("我创建的项目")
+    Response searchMyProject(){
+        Response response = new Response();
+        User user = UserUtil.get();
+        List<ProjectInfo> projectInfos = projectInfoService.searchMyProjectInfo(user.getId());
+        response.setCode("0");
+        response.setMsg("查询成功！");
+        Map<String,List<ProjectInfo>> map = new HashMap<>();
+        map.put("data",projectInfos);
+        response.setData(map);
+        return response;
+    }
+
+    @PostMapping("/SetStatus")
+    @ResponseBody
+    @ApiOperation("我创建的项目")
+    Response setProjectStatus(@RequestParam("statusId") Integer statusId,@RequestParam("projectId") Long projectId){
+        Response response = new Response();
+        if(null == statusId || statusId < 0 || statusId > 6){
+            return Response.createError("1","不存在此状态！");
+        }
+
+        Pair<Boolean,String> result = projectInfoService.changeProjectStatus(projectId,statusId);
+        if(result.getKey()){
+            response.setCode("0");
+            response.setMsg(result.getValue());
+            return response;
+        }else{
+            response.setCode("1");
+            response.setMsg(result.getValue());
+            return response;
+        }
     }
 
 

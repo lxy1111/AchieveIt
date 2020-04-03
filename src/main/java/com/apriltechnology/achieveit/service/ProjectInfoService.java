@@ -75,4 +75,12 @@ public interface ProjectInfoService {
      * @return
      */
     List<ProjectInfo> searchMyTaskProjectInfo(String leader,Integer status);
+
+    /**
+     * 查询我创建的项目
+     * @param createrId
+     * @return
+     */
+    List<ProjectInfo> searchMyProjectInfo(Long createrId);
+
 }

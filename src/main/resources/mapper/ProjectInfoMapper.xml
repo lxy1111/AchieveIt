@@ -124,4 +124,11 @@
         where leader = #{leader}
         and status = #{status}
     </select>
+
+    <select id="getMyProjectInfo" resultType="ProjectInfo">
+        select *
+        from projectInfo
+        where creater_Id = #{createrId}
+    </select>
+
 </mapper>
