@@ -14,11 +14,21 @@ public class Device {
 
     private Long deadline;
 
+    private String deviceowner;
+
     private int status;
 
     private Timestamp createTime;
 
     private Timestamp changeTime;
+
+    public String getDeviceowner() {
+        return deviceowner;
+    }
+
+    public void setDeviceowner(String deviceowner) {
+        this.deviceowner = deviceowner;
+    }
 
     public Long getId() {
         return id;
