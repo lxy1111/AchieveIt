@@ -69,6 +69,15 @@ create table projectInfo(
    INDEX project_name_index(project_name)
 )ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8mb4 COMMENT='项目信息表';
 
+create table memberAssign(
+   id bigint NOT NULL AUTO_INCREMENT COMMENT '项目id',
+   project_id bigint NOT NULL  DEFAULT '0' COMMENT '项目id',
+   qa_member int NOT NULL DEFAULT '0' COMMENT '是否分配qa',
+   epg_member int NOT NULL DEFAULT '0' COMMENT '是否分配epg',
+   dev_member int NOT NULL DEFAULT '0' COMMENT '是否分配组员',
+   PRIMARY KEY (id),
+   foreign key (project_id) references projectInfo(id) on delete cascade on update cascade
+)ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8mb4 COMMENT='项目成员分配表';
 
 create table projectFunc(
    id bigint NOT NULL AUTO_INCREMENT COMMENT '功能id',

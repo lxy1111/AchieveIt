@@ -13,6 +13,7 @@ import org.springframework.transaction.annotation.Isolation;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -125,17 +126,56 @@ public class ProjectInfoServiceImpl implements ProjectInfoService {
     }
 
     @Override
-    public List<ProjectInfo> searchMyTaskProjectInfo(String leader, Integer status) {
+    public List<ProjectInfo> searchMyTaskProjectInfo(String leader, Integer status,Integer pageNum,Integer pageSize) {
 
-        List<ProjectInfo> projectInfos = projectInfoMapper.getMyTaskProjectInfo(leader,status);
+        Integer offset = (pageNum - 1)*pageSize;
+        Integer limit = pageSize;
+        List<ProjectInfo> projectInfos = projectInfoMapper.getMyTaskProjectInfo(leader,status,offset,limit);
         return projectInfos;
     }
 
     @Override
-    public List<ProjectInfo> searchMyProjectInfo(Long createrId) {
+    public List<ProjectInfo> searchMyProjectInfo(Long createrId,Integer pageSize,Integer pageNum) {
 
-        List<ProjectInfo> projectInfos = projectInfoMapper.getMyProjectInfo(createrId);
+        Integer offset = (pageNum-1)*pageSize;
+        Integer limit = pageSize;
+
+        List<ProjectInfo> projectInfos = projectInfoMapper.getMyProjectInfo(createrId,offset,limit);
         return projectInfos;
+    }
+
+    @Override
+    public List<ProjectInfo> searchQALeaderProject(Integer pageNum, Integer pageSize) {
+        Integer offset = (pageNum-1)*pageSize;
+        Integer limit = pageSize;
+        List<ProjectInfo> projectInfos = projectInfoMapper.getQALeaderProject(offset,limit,1);
+        return projectInfos;
+    }
+
+    @Override
+    public List<ProjectInfo> searchEPGLeaderProject(Integer pageNum, Integer pageSize) {
+        Integer offset = (pageNum-1)*pageSize;
+        Integer limit = pageSize;
+        List<ProjectInfo> projectInfos = projectInfoMapper.getEPGLeaderProject(offset,limit,1);
+        return projectInfos;
+    }
+
+    @Override
+    public List<ProjectInfo> getMemberProjectInfo(Long userId, Integer pageNum, Integer pageSize) {
+        Integer offset = (pageNum-1)*pageSize;
+        Integer limit = pageSize;
+        List<Long> ids = projectInfoMapper.getMemberProjectIds(offset,limit,userId);
+        if(null == ids || ids.size() <= 0){
+            return  new ArrayList<>();
+        }
+        List<ProjectInfo> projectInfos = projectInfoMapper.getProjectInfosByIds(ids);
+        return projectInfos;
+    }
+
+    @Override
+    public Long getProjectCreaterId(Long projectId) {
+        ProjectInfo projectInfo = projectInfoMapper.getProjectInfoById(projectId);
+        return projectInfo.getCreaterId();
     }
 
 

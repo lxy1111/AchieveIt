@@ -4,7 +4,6 @@ import com.apriltechnology.achieveit.dto.ProjectInfoSearch;
 import com.apriltechnology.achieveit.entity.ProjectInfo;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
-import org.springframework.web.bind.annotation.PostMapping;
 
 import java.sql.Timestamp;
 import java.util.List;
@@ -75,13 +74,52 @@ public interface ProjectInfoMapper {
      * @param status
      * @return
      */
-    List<ProjectInfo> getMyTaskProjectInfo(@Param("leader")String leader,@Param("status")Integer status);
+    List<ProjectInfo> getMyTaskProjectInfo(@Param("leader")String leader,@Param("status")Integer status,@Param("offset")Integer offset,@Param("limit")Integer limit);
 
     /**
      * 查询我创建的任务
      * @param createrId
      * @return
      */
-    List<ProjectInfo> getMyProjectInfo(@Param("createrId")Long createrId);
+    List<ProjectInfo> getMyProjectInfo(@Param("createrId")Long createrId,@Param("offset") Integer offset,@Param("limit") Integer limit);
 
+    /**
+     * 查询QA待分配的项目
+     * @param offset
+     * @param limit
+     * @return
+     */
+    List<ProjectInfo> getQALeaderProject(@Param("offset")Integer offset,@Param("limit")Integer limit,@Param("status")Integer status);
+
+    /**
+     * 查询EPG待分配的项目
+     * @param offset
+     * @param limit
+     * @param status
+     * @return
+     */
+    List<ProjectInfo> getEPGLeaderProject(@Param("offset")Integer offset,@Param("limit")Integer limit,@Param("status")Integer status);
+
+    /**
+     * 项目组员获取自己的项目id
+     * @param offset
+     * @param limit
+     * @param userId
+     * @return
+     */
+    List<Long> getMemberProjectIds(@Param("offset")Integer offset,@Param("limit")Integer limit,@Param("userId")Long userId);
+
+    /**
+     * 根据id列表获取项目信息
+     * @param ids
+     * @return
+     */
+    List<ProjectInfo> getProjectInfosByIds(@Param("list") List<Long> ids);
+
+    /**
+     * 根据id获取项目信息
+     * @param projectId
+     * @return
+     */
+    ProjectInfo getProjectInfoById(@Param("projectId") Long projectId);
 }

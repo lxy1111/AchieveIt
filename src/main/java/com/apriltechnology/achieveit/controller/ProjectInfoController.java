@@ -1,8 +1,6 @@
 package com.apriltechnology.achieveit.controller;
 
-import com.apriltechnology.achieveit.dto.ProjectInfoAdd;
-import com.apriltechnology.achieveit.dto.ProjectInfoSearch;
-import com.apriltechnology.achieveit.dto.Response;
+import com.apriltechnology.achieveit.dto.*;
 import com.apriltechnology.achieveit.entity.ProjectInfo;
 import com.apriltechnology.achieveit.entity.User;
 import com.apriltechnology.achieveit.exception.BatchDeleteException;
@@ -13,6 +11,7 @@ import io.swagger.annotations.ApiOperation;
 import javafx.util.Pair;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.exception.ExceptionUtils;
+import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
@@ -196,11 +195,18 @@ public class ProjectInfoController {
     @PostMapping("/MyTask")
     @ResponseBody
     @ApiOperation("待审批项目")
-    Response searchMyTask(){
+    Response searchMyTask(@RequestBody MyTaskInfo myTaskInfo){
+
+        if(null == myTaskInfo.getPageNum() || myTaskInfo.getPageNum() <= 0){
+            myTaskInfo.setPageNum(1);
+        }
+        if(null == myTaskInfo.getPageSize() || myTaskInfo.getPageSize() <= 0){
+            myTaskInfo.setPageSize(10);
+        }
 
         Response response = new Response();
         User user = UserUtil.get();
-        List<ProjectInfo> projectInfos = projectInfoService.searchMyTaskProjectInfo(user.getUsername(),0);
+        List<ProjectInfo> projectInfos = projectInfoService.searchMyTaskProjectInfo(user.getUsername(),0,myTaskInfo.getPageNum(),myTaskInfo.getPageSize());
         response.setCode("0");
         response.setMsg("查询成功！");
         Map<String,List<ProjectInfo>> map = new HashMap<>();
@@ -212,10 +218,17 @@ public class ProjectInfoController {
     @PostMapping("/MyProject")
     @ResponseBody
     @ApiOperation("我创建的项目")
-    Response searchMyProject(){
+    Response searchMyProject(@RequestBody MyProjectInfo myProjectInfo){
+        if(null == myProjectInfo.getPageNum() || myProjectInfo.getPageNum() <= 0){
+            myProjectInfo.setPageNum(1);
+        }
+        if(null == myProjectInfo.getPageSize() || myProjectInfo.getPageSize() <= 0){
+            myProjectInfo.setPageSize(10);
+        }
+
         Response response = new Response();
         User user = UserUtil.get();
-        List<ProjectInfo> projectInfos = projectInfoService.searchMyProjectInfo(user.getId());
+        List<ProjectInfo> projectInfos = projectInfoService.searchMyProjectInfo(user.getId(),myProjectInfo.getPageSize(),myProjectInfo.getPageNum());
         response.setCode("0");
         response.setMsg("查询成功！");
         Map<String,List<ProjectInfo>> map = new HashMap<>();
@@ -226,7 +239,7 @@ public class ProjectInfoController {
 
     @PostMapping("/SetStatus")
     @ResponseBody
-    @ApiOperation("我创建的项目")
+    @ApiOperation("设置项目状态")
     Response setProjectStatus(@RequestParam("statusId") Integer statusId,@RequestParam("projectId") Long projectId){
         Response response = new Response();
         if(null == statusId || statusId < 0 || statusId > 6){
@@ -245,5 +258,85 @@ public class ProjectInfoController {
         }
     }
 
+    @PostMapping("/GetQALeaderProject")
+    @ResponseBody
+    @ApiOperation("QA经理获取待分配项目")
+    Response getQALeaderProjectInfo(@RequestBody QALeaderProjectInfo qaLeaderProjectInfo){
+
+        if(null == qaLeaderProjectInfo.getPageNum() || qaLeaderProjectInfo.getPageNum() <= 0){
+            qaLeaderProjectInfo.setPageNum(1);
+        }
+        if(null == qaLeaderProjectInfo.getPageSize() || qaLeaderProjectInfo.getPageSize() <= 0){
+            qaLeaderProjectInfo.setPageSize(10);
+        }
+
+        Response response = new Response();
+        List<ProjectInfo> projectInfos = projectInfoService.searchQALeaderProject(qaLeaderProjectInfo.getPageNum(),qaLeaderProjectInfo.getPageSize());
+        response.setCode("0");
+        response.setMsg("查询成功！");
+        Map<String,List<ProjectInfo>> map = new HashMap<>();
+        map.put("data",projectInfos);
+        response.setData(map);
+        return response;
+    }
+
+    @PostMapping("/GetEPGLeaderProject")
+    @ResponseBody
+    @ApiOperation("EPG经理获取待分配项目")
+    Response getEPGLeaderProjectInfo(@RequestBody EPGLeaderProjectInfo epgLeaderProjectInfo){
+
+        if(null == epgLeaderProjectInfo.getPageNum() || epgLeaderProjectInfo.getPageNum() <= 0){
+            epgLeaderProjectInfo.setPageNum(1);
+        }
+        if(null == epgLeaderProjectInfo.getPageSize() || epgLeaderProjectInfo.getPageSize() <= 0){
+            epgLeaderProjectInfo.setPageSize(10);
+        }
+
+        Response response = new Response();
+        List<ProjectInfo> projectInfos = projectInfoService.searchEPGLeaderProject(epgLeaderProjectInfo.getPageNum(),epgLeaderProjectInfo.getPageSize());
+        response.setCode("0");
+        response.setMsg("查询成功！");
+        Map<String,List<ProjectInfo>> map = new HashMap<>();
+        map.put("data",projectInfos);
+        response.setData(map);
+        return response;
+    }
+
+    @PostMapping("/GetMemberProject")
+    @ResponseBody
+    @ApiOperation("项目组员获取自己的项目")
+    Response getMemberProjectInfo(@RequestBody MemberProjectInfo memberProjectInfo){
+
+        if(null == memberProjectInfo.getPageNum() || memberProjectInfo.getPageNum() <= 0){
+            memberProjectInfo.setPageNum(1);
+        }
+        if(null == memberProjectInfo.getPageSize() || memberProjectInfo.getPageSize() <= 0){
+            memberProjectInfo.setPageSize(10);
+        }
+
+        Response response = new Response();
+        User user = UserUtil.get();
+        List<ProjectInfo> projectInfos = projectInfoService.getMemberProjectInfo(user.getId(),memberProjectInfo.getPageNum(),memberProjectInfo.getPageSize());
+        response.setCode("0");
+        response.setMsg("查询成功！");
+        Map<String,List<ProjectInfo>> map = new HashMap<>();
+        map.put("data",projectInfos);
+        response.setData(map);
+        return response;
+    }
+
+    @PostMapping("/GetCreater")
+    @ResponseBody
+    @ApiOperation("获取项目创建者id")
+    Response getCreaterId(@RequestParam("projectId")Long projectId){
+        Response response = new Response();
+        Long id = projectInfoService.getProjectCreaterId(projectId);
+        response.setCode("0");
+        response.setMsg("查询成功！");
+        Map<String,Long> map = new HashMap<>();
+        map.put("data",id);
+        response.setData(map);
+        return response;
+    }
 
 }

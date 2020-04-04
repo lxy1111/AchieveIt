@@ -74,13 +74,44 @@ public interface ProjectInfoService {
      * @param status
      * @return
      */
-    List<ProjectInfo> searchMyTaskProjectInfo(String leader,Integer status);
+    List<ProjectInfo> searchMyTaskProjectInfo(String leader,Integer status,Integer pageNum,Integer pageSize);
 
     /**
      * 查询我创建的项目
      * @param createrId
      * @return
      */
-    List<ProjectInfo> searchMyProjectInfo(Long createrId);
+    List<ProjectInfo> searchMyProjectInfo(Long createrId,Integer pageSize,Integer pageNum);
 
+    /**
+     * 查询QALeader待分配项目
+     * @param pageNum
+     * @param pageSize
+     * @return
+     */
+    List<ProjectInfo> searchQALeaderProject(Integer pageNum,Integer pageSize );
+
+    /**
+     * 查询EPGLeader待分配项目
+     * @param pageNum
+     * @param pageSize
+     * @return
+     */
+    List<ProjectInfo> searchEPGLeaderProject(Integer pageNum,Integer pageSize);
+
+    /**
+     * 项目组员获取自己的项目信息
+     * @param userId
+     * @param pageNum
+     * @param pageSize
+     * @return
+     */
+    List<ProjectInfo> getMemberProjectInfo(Long userId,Integer pageNum,Integer pageSize);
+
+    /**
+     * 获取项目创建者id
+     * @param projectId
+     * @return
+     */
+    Long getProjectCreaterId(Long projectId);
 }
