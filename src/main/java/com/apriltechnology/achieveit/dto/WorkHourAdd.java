@@ -1,25 +1,19 @@
-package com.apriltechnology.achieveit.entity;
+package com.apriltechnology.achieveit.dto;
 
-import java.sql.Time;
 import java.sql.Timestamp;
 
 /**
- * @Description 工时信息类
+ * @Description 工时增加
  * @Author br
- * @Date 2020/3/24
+ * @Date 2020/4/4
  */
 
-public class WorkHourInfo {
-
-    private long id;
-
+public class WorkHourAdd {
     private long projectId;
 
     private long userId;
 
     private String userName;
-
-    private String userRole;
 
     private String finishedFunction;
 
@@ -29,18 +23,12 @@ public class WorkHourInfo {
 
     private Timestamp finishTime;
 
-    private Integer status;
-
-    private Timestamp creatTime;
-
-    private Timestamp changeTime;
-
-    public long getId() {
-        return id;
+    public long getProjectId() {
+        return projectId;
     }
 
-    public void setId(long id) {
-        this.id = id;
+    public void setProjectId(long projectId) {
+        this.projectId = projectId;
     }
 
     public long getUserId() {
@@ -57,14 +45,6 @@ public class WorkHourInfo {
 
     public void setUserName(String userName) {
         this.userName = userName;
-    }
-
-    public String getUserRole() {
-        return userRole;
-    }
-
-    public void setUserRole(String userRole) {
-        this.userRole = userRole;
     }
 
     public String getFinishedFunction() {
@@ -97,37 +77,5 @@ public class WorkHourInfo {
 
     public void setFinishTime(Timestamp finishTime) {
         this.finishTime = finishTime;
-    }
-
-    public Timestamp getCreatTime() {
-        return creatTime;
-    }
-
-    public void setCreatTime(Timestamp creatTime) {
-        this.creatTime = creatTime;
-    }
-
-    public Timestamp getChangeTime() {
-        return changeTime;
-    }
-
-    public void setChangeTime(Timestamp changeTime) {
-        this.changeTime = changeTime;
-    }
-
-    public Integer getStatus() {
-        return status;
-    }
-
-    public void setStatus(Integer status) {
-        this.status = status;
-    }
-
-    public long getProjectId() {
-        return projectId;
-    }
-
-    public void setProjectId(long projectId) {
-        this.projectId = projectId;
     }
 }

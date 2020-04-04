@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.apriltechnology.achieveit.mapper.WorkHourInfoMapper">
-    <select id="getWorkHourInfoList"  resultType="WorkHourInfo">
-        select result.id,result.user_id,result.user_name,projectrole.description as user_role,result.finished_function,
-        result.finished_activity,result.start_time,result.finish_time,result.create_time as creatTime,result.change_time
+    <select id="managerGetWorkHourInfoList"  resultType="WorkHourInfo">
+        select result.id,result.project_id,result.user_id,result.user_name,projectrole.description as user_role,result.finished_function,
+        result.finished_activity,result.start_time,result.finish_time,result.status,result.create_time as creatTime,result.change_time
         from
-        (select a.id,a.user_id,a.user_name,a.finished_function,a.finished_activity,a.start_time,a.finish_time,
+        (select a.id,a.project_id,a.user_id,a.user_name,a.finished_function,a.finished_activity,a.start_time,a.finish_time,a.status,
                 a.create_time,a.change_time,b.role_id
         from workhourinfo a
         left join userprojectrole b
@@ -15,4 +15,44 @@
             where result.role_id = projectrole.id
     </select>
 
+    <select id="userGetWorkHourInfoList" resultType="WorkHourInfo">
+        select result.id,result.project_id,result.user_id,result.user_name,projectrole.description as user_role,result.finished_function,
+        result.finished_activity,result.start_time,result.finish_time,result.status,result.create_time as creatTime,result.change_time
+        from
+        (select a.id,a.project_id,a.user_id,a.user_name,a.finished_function,a.finished_activity,a.start_time,a.finish_time,a.status,
+                a.create_time,a.change_time,b.role_id
+        from workhourinfo a
+        left join userprojectrole b
+        on a.user_id = b.user_id
+        where b.project_id = #{projectId}
+        and a.project_id = #{projectId}
+        and  a.user_id =#{userId}) as result,projectrole
+            where result.role_id = projectrole.id
+    </select>
+
+    <update id="acceptWorkHourInfo" parameterType="Long">
+        update workhourinfo
+        set status = 1
+        where id = #{workHourId}
+    </update>
+
+    <update id="rejectWorkHourInfo" parameterType="Long">
+        update workhourinfo
+        set status = 2
+        where id = #{workHourId}
+    </update>
+
+    <insert id="workHourInfoAdd" parameterType="com.apriltechnology.achieveit.dto.WorkHourAdd">
+        insert into workhourinfo(project_id, user_id, user_name, finished_function, finished_activity, start_time, finish_time)
+        values (#{projectId},#{userId},#{userName},#{finishedFunction},#{finishedActivity},#{startTime},#{finishTime})
+    </insert>
+
+    <update id="workHourInfoEdit" parameterType="com.apriltechnology.achieveit.dto.WorkHourEdit">
+        update workhourinfo
+        set finished_function =#{finishedFunction},
+            finished_activity =#{finishedActivity},
+            start_time =#{startTime},
+            finish_time =#{finishTime}
+        where id = #{workHourId}
+    </update>
 </mapper>
