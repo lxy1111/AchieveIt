@@ -63,8 +63,8 @@ public class WorkHourInfoServiceImpl implements WorkHourInfoService {
     public Pair<Boolean,String> workHourInfoEdit(WorkHourEdit workHourEdit){
         int result = workHourInfoMapper.workHourInfoEdit(workHourEdit);
         if(result <= 0){
-            return new Pair<>(false,"工时添加失败！");
+            return new Pair<>(false,"工时编辑失败！");
         }
-        return new Pair<>(true,"工时添加成功！");
+        return new Pair<>(true,"工时编辑成功！");
     }
 }
