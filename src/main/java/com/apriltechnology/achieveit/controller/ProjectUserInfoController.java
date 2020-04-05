@@ -4,6 +4,7 @@ import com.apriltechnology.achieveit.dto.ProjectUserAdd;
 import com.apriltechnology.achieveit.dto.Response;
 import com.apriltechnology.achieveit.entity.ProjectUserInfo;
 import com.apriltechnology.achieveit.entity.WorkHourInfo;
+import com.apriltechnology.achieveit.service.ProjectMemberService;
 import com.apriltechnology.achieveit.service.ProjectUserInfoService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -16,6 +17,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.prefs.PreferenceChangeEvent;
 
 /**
  * @Description 组员信息控制层
@@ -31,6 +33,8 @@ import java.util.Map;
 public class ProjectUserInfoController {
     @Autowired
     private ProjectUserInfoService projectUserInfoService;
+    @Autowired
+    private ProjectMemberService projectMemberService;
 
     @PostMapping("/Search")
     @ResponseBody
@@ -74,15 +78,41 @@ public class ProjectUserInfoController {
     @PostMapping("/Add")
     @ResponseBody
     @ApiOperation("添加项目相关组员")
-    public Response projectUserAdd(@RequestBody ProjectUserAdd projectUserAdd){
+    public Response projectUserAdd(@RequestBody ProjectUserAdd projectUserAdd,@RequestParam(value = "id")Long id) {
         Response response = new Response();
-        Pair<Boolean,String> result = projectUserInfoService.projectUserAdd(projectUserAdd);
-        if(result.getKey()){
-            response.setCode("0");
-            response.setMsg(result.getValue());
-            return response;
-        }else {
-            return Response.createError("1",result.getValue());
+        Pair<Boolean, String> result1 = projectUserInfoService.projectUserAdd(projectUserAdd);
+        //3->epg 4->QA 5->PM
+        long projectId = projectUserAdd.getProjectId();
+        if (id == 3) {
+            Pair<Boolean, String> result2 = projectMemberService.adjustEPGMemberAssign(projectId);
+            if (result1.getKey() && result2.getKey()) {
+                response.setCode("0");
+                response.setMsg(result1.getValue());
+                return response;
+            } else {
+                return Response.createError("1", result1.getValue());
+            }
+        } else if (id == 4) {
+            Pair<Boolean, String> result2 = projectMemberService.adjustQAMemberAssign(projectId);
+            if (result1.getKey() && result2.getKey()) {
+                response.setCode("0");
+                response.setMsg(result1.getValue());
+                return response;
+            } else {
+                return Response.createError("1", result1.getValue());
+            }
+        } else if (id == 5) {
+            Pair<Boolean, String> result2 = projectMemberService.adjustDEVMemberAssign(projectId);
+            if (result1.getKey() && result2.getKey()) {
+                response.setCode("0");
+                response.setMsg(result1.getValue());
+                return response;
+            } else {
+                return Response.createError("1", result1.getValue());
+            }
+        }else{
+            return Response.createError("1","该用户不可分配成员");
         }
     }
+
 }

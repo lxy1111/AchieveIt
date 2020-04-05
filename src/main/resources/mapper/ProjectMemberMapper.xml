@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.apriltechnology.achieveit.mapper.ProjectMemberMapper">
+    <update id="adjustQAMemberAssign" parameterType="Long">
+        update memberassign
+        set qa_member = 1
+        where project_id =#{projectId}
+    </update>
+
+    <update id="adjustEPGMemberAssign" parameterType="Long">
+        update memberassign
+        set epg_member = 1
+        where project_id =#{projectId}
+    </update>
+
+    <update id="adjustDEVMemberAssign" parameterType="Long">
+        update memberassign
+        set dev_member = 1
+        where project_id =#{projectId}
+    </update>
+</mapper>
