@@ -1,6 +1,7 @@
 package com.apriltechnology.achieveit.entity;
 
 import java.sql.Timestamp;
+import java.util.List;
 
 /**
  * @Description 项目子功能实体类
@@ -19,6 +20,8 @@ public class ProjectFunc {
     private Timestamp createTime;
 
     private Timestamp changeTime;
+
+    private List<ProjectSubFunc> projectSubFuncs;
 
     public Long getId() {
         return id;
@@ -66,5 +69,13 @@ public class ProjectFunc {
 
     public void setChangeTime(Timestamp changeTime) {
         this.changeTime = changeTime;
+    }
+
+    public List<ProjectSubFunc> getProjectSubFuncs() {
+        return projectSubFuncs;
+    }
+
+    public void setProjectSubFuncs(List<ProjectSubFunc> projectSubFuncs) {
+        this.projectSubFuncs = projectSubFuncs;
     }
 }

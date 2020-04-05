@@ -77,11 +77,26 @@ public interface ProjectInfoMapper {
     List<ProjectInfo> getMyTaskProjectInfo(@Param("leader")String leader,@Param("status")Integer status,@Param("offset")Integer offset,@Param("limit")Integer limit);
 
     /**
+     * 查询待审批项目数量
+     * @param leader
+     * @param status
+     * @return
+     */
+    Integer getMyTaskProjectInfoCount(@Param("leader")String leader,@Param("status")Integer status);
+
+    /**
      * 查询我创建的任务
      * @param createrId
      * @return
      */
     List<ProjectInfo> getMyProjectInfo(@Param("createrId")Long createrId,@Param("offset") Integer offset,@Param("limit") Integer limit);
+
+    /**
+     * 查询我创建的任务数量
+     * @param createrId
+     * @return
+     */
+    Integer getMyProjectInfoCount(@Param("createrId")Long createrId);
 
     /**
      * 查询QA待分配的项目
@@ -90,6 +105,13 @@ public interface ProjectInfoMapper {
      * @return
      */
     List<ProjectInfo> getQALeaderProject(@Param("offset")Integer offset,@Param("limit")Integer limit,@Param("status")Integer status);
+
+    /**
+     * 查询QA待分配的项目数量
+     * @param status
+     * @return
+     */
+    Integer getQALeaderProjectCount(@Param("status")Integer status);
 
     /**
      * 查询EPG待分配的项目
@@ -101,6 +123,13 @@ public interface ProjectInfoMapper {
     List<ProjectInfo> getEPGLeaderProject(@Param("offset")Integer offset,@Param("limit")Integer limit,@Param("status")Integer status);
 
     /**
+     * 查询EPG待分配的项目数量
+     * @param status
+     * @return
+     */
+    Integer getEPGLeaderProjectCount(@Param("status")Integer status);
+
+    /**
      * 项目组员获取自己的项目id
      * @param offset
      * @param limit
@@ -108,6 +137,13 @@ public interface ProjectInfoMapper {
      * @return
      */
     List<Long> getMemberProjectIds(@Param("offset")Integer offset,@Param("limit")Integer limit,@Param("userId")Long userId);
+
+    /**
+     * 项目组员获取自己的项目数量
+     * @param userId
+     * @return
+     */
+    Integer getMemberProjectIdsCount(@Param("userId")Long userId);
 
     /**
      * 根据id列表获取项目信息

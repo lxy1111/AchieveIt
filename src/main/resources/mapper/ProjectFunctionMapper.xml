@@ -19,11 +19,32 @@
         where id = #{id}
     </update>
 
-    <select id="projectFunctionSearch"  resultType="ProjectFunc">
-        SELECT *
-        FROM projectfunc
-        where project_id = #{id}
+    <select id="projectFunctionSearch"  resultMap="projectFuncMap">
+        SELECT A.id as A_id,A.project_Id as A_project_Id,A.function_name as A_function_name,
+        A.person_charge as A_person_charge,A.create_time as A_create_time,A.change_time as A_change_time,
+        B.id as B_id,B.func_id as B_func_id,B.function_name as B_function_name,
+        B.person_charge as B_person_charge,B.create_time as B_create_time,B.change_time as B_change_time
+        FROM projectfunc as A left join projectSubFunc as B
+        on B.func_id = A.id
+        where A.project_id = #{id}
     </select>
+
+    <resultMap id="projectFuncMap" type="ProjectFunc">
+        <id column="A_id" property="id"/>
+        <result column="A_project_Id" property="projectId"/>
+        <result column="A_function_name" property="functionName"/>
+        <result column="A_person_charge" property="personCharge"/>
+        <result column="A_create_time" property="createTime"/>
+        <result column="A_change_time" property="changeTime"/>
+        <collection property="projectSubFuncs" ofType="ProjectSubFunc">
+            <id column="B_id" property="id"/>
+            <result column="B_func_id" property="funcId"/>
+            <result column="B_function_name" property="functionName"/>
+            <result column="B_person_charge" property="personCharge"/>
+            <result column="B_create_time" property="createTime"/>
+            <result column="B_change_time" property="changeTime"/>
+        </collection>
+    </resultMap>
 
     <select id="projectFunctionSearchById"  resultType="ProjectFunc">
         SELECT *

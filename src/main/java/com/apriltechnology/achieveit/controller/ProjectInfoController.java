@@ -206,12 +206,14 @@ public class ProjectInfoController {
 
         Response response = new Response();
         User user = UserUtil.get();
+        int count = projectInfoService.searchMyTaskProjectInfoCount(user.getUsername(),0);
         List<ProjectInfo> projectInfos = projectInfoService.searchMyTaskProjectInfo(user.getUsername(),0,myTaskInfo.getPageNum(),myTaskInfo.getPageSize());
         response.setCode("0");
         response.setMsg("查询成功！");
         Map<String,List<ProjectInfo>> map = new HashMap<>();
         map.put("data",projectInfos);
         response.setData(map);
+        response.setCount(count);
         return response;
     }
 
@@ -228,12 +230,14 @@ public class ProjectInfoController {
 
         Response response = new Response();
         User user = UserUtil.get();
+        int count = projectInfoService.searchMyProjectInfoCount(user.getId());
         List<ProjectInfo> projectInfos = projectInfoService.searchMyProjectInfo(user.getId(),myProjectInfo.getPageSize(),myProjectInfo.getPageNum());
         response.setCode("0");
         response.setMsg("查询成功！");
         Map<String,List<ProjectInfo>> map = new HashMap<>();
         map.put("data",projectInfos);
         response.setData(map);
+        response.setCount(count);
         return response;
     }
 
@@ -271,12 +275,14 @@ public class ProjectInfoController {
         }
 
         Response response = new Response();
+        int count = projectInfoService.searchQALeaderProjectCount();
         List<ProjectInfo> projectInfos = projectInfoService.searchQALeaderProject(qaLeaderProjectInfo.getPageNum(),qaLeaderProjectInfo.getPageSize());
         response.setCode("0");
         response.setMsg("查询成功！");
         Map<String,List<ProjectInfo>> map = new HashMap<>();
         map.put("data",projectInfos);
         response.setData(map);
+        response.setCount(count);
         return response;
     }
 
@@ -293,12 +299,14 @@ public class ProjectInfoController {
         }
 
         Response response = new Response();
+        int count = projectInfoService.searchEPGLeaderProjectCount();
         List<ProjectInfo> projectInfos = projectInfoService.searchEPGLeaderProject(epgLeaderProjectInfo.getPageNum(),epgLeaderProjectInfo.getPageSize());
         response.setCode("0");
         response.setMsg("查询成功！");
         Map<String,List<ProjectInfo>> map = new HashMap<>();
         map.put("data",projectInfos);
         response.setData(map);
+        response.setCount(count);
         return response;
     }
 
@@ -316,12 +324,14 @@ public class ProjectInfoController {
 
         Response response = new Response();
         User user = UserUtil.get();
+        int count = projectInfoService.getMemberProjectInfoCount(user.getId());
         List<ProjectInfo> projectInfos = projectInfoService.getMemberProjectInfo(user.getId(),memberProjectInfo.getPageNum(),memberProjectInfo.getPageSize());
         response.setCode("0");
         response.setMsg("查询成功！");
         Map<String,List<ProjectInfo>> map = new HashMap<>();
         map.put("data",projectInfos);
         response.setData(map);
+        response.setCount(count);
         return response;
     }
 

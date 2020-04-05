@@ -77,11 +77,26 @@ public interface ProjectInfoService {
     List<ProjectInfo> searchMyTaskProjectInfo(String leader,Integer status,Integer pageNum,Integer pageSize);
 
     /**
+     * 查询待审批项目数量
+     * @param leader
+     * @param status
+     * @return
+     */
+    int searchMyTaskProjectInfoCount(String leader,Integer status);
+
+    /**
      * 查询我创建的项目
      * @param createrId
      * @return
      */
     List<ProjectInfo> searchMyProjectInfo(Long createrId,Integer pageSize,Integer pageNum);
+
+    /**
+     * 查询我创建的项目数量
+     * @param createrId
+     * @return
+     */
+    int searchMyProjectInfoCount(Long createrId);
 
     /**
      * 查询QALeader待分配项目
@@ -92,12 +107,24 @@ public interface ProjectInfoService {
     List<ProjectInfo> searchQALeaderProject(Integer pageNum,Integer pageSize );
 
     /**
+     * 查询QALeader待分配项目数量
+     * @return
+     */
+    int searchQALeaderProjectCount();
+
+    /**
      * 查询EPGLeader待分配项目
      * @param pageNum
      * @param pageSize
      * @return
      */
     List<ProjectInfo> searchEPGLeaderProject(Integer pageNum,Integer pageSize);
+
+    /**
+     * 查询EPGLeader待分配项目数量
+     * @return
+     */
+    int searchEPGLeaderProjectCount();
 
     /**
      * 项目组员获取自己的项目信息
@@ -109,9 +136,17 @@ public interface ProjectInfoService {
     List<ProjectInfo> getMemberProjectInfo(Long userId,Integer pageNum,Integer pageSize);
 
     /**
+     * 项目组员获取自己的项目信息数量
+     * @param userId
+     * @return
+     */
+    int getMemberProjectInfoCount(Long userId);
+
+    /**
      * 获取项目创建者id
      * @param projectId
      * @return
      */
     Long getProjectCreaterId(Long projectId);
+
 }

@@ -135,6 +135,15 @@ public class ProjectInfoServiceImpl implements ProjectInfoService {
     }
 
     @Override
+    public int searchMyTaskProjectInfoCount(String leader, Integer status) {
+        Integer count = projectInfoMapper.getMyTaskProjectInfoCount(leader,status);
+        if(null == count || count < 0){
+            return 0;
+        }
+        return count;
+    }
+
+    @Override
     public List<ProjectInfo> searchMyProjectInfo(Long createrId,Integer pageSize,Integer pageNum) {
 
         Integer offset = (pageNum-1)*pageSize;
@@ -142,6 +151,15 @@ public class ProjectInfoServiceImpl implements ProjectInfoService {
 
         List<ProjectInfo> projectInfos = projectInfoMapper.getMyProjectInfo(createrId,offset,limit);
         return projectInfos;
+    }
+
+    @Override
+    public int searchMyProjectInfoCount(Long createrId) {
+        Integer count = projectInfoMapper.getMyProjectInfoCount(createrId);
+        if(null == count || count < 0){
+            return 0;
+        }
+        return count;
     }
 
     @Override
@@ -153,11 +171,29 @@ public class ProjectInfoServiceImpl implements ProjectInfoService {
     }
 
     @Override
+    public int searchQALeaderProjectCount() {
+        Integer count = projectInfoMapper.getQALeaderProjectCount(1);
+        if(null == count || count < 0){
+            return 0;
+        }
+        return count;
+    }
+
+    @Override
     public List<ProjectInfo> searchEPGLeaderProject(Integer pageNum, Integer pageSize) {
         Integer offset = (pageNum-1)*pageSize;
         Integer limit = pageSize;
         List<ProjectInfo> projectInfos = projectInfoMapper.getEPGLeaderProject(offset,limit,1);
         return projectInfos;
+    }
+
+    @Override
+    public int searchEPGLeaderProjectCount() {
+        Integer count = projectInfoMapper.getEPGLeaderProjectCount(1);
+        if(null == count || count < 0){
+            return 0;
+        }
+        return count;
     }
 
     @Override
@@ -170,6 +206,15 @@ public class ProjectInfoServiceImpl implements ProjectInfoService {
         }
         List<ProjectInfo> projectInfos = projectInfoMapper.getProjectInfosByIds(ids);
         return projectInfos;
+    }
+
+    @Override
+    public int getMemberProjectInfoCount(Long userId) {
+        Integer count = projectInfoMapper.getMemberProjectIdsCount(userId);
+        if(null == count || count < 0){
+            return 0;
+        }
+        return count;
     }
 
     @Override

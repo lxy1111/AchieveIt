@@ -127,12 +127,25 @@
         limit #{offset},#{limit}
     </select>
 
+    <select id="getMyTaskProjectInfoCount" resultType="Integer">
+        select count(*)
+        from projectInfo
+        where leader = #{leader}
+        and status = #{status}
+    </select>
+
     <select id="getMyProjectInfo" resultType="ProjectInfo">
         select *
         from projectInfo
         where creater_Id = #{createrId}
         order by id desc
         limit #{offset},#{limit}
+    </select>
+
+    <select id="getMyProjectInfoCount" resultType="Integer">
+        select count(*)
+        from projectInfo
+        where creater_Id = #{createrId}
     </select>
 
     <select id="getQALeaderProject" resultType="ProjectInfo">
@@ -147,6 +160,15 @@
         limit #{offset},#{limit}
     </select>
 
+    <select id="getQALeaderProjectCount" resultType="Integer">
+        select count(*)
+        from projectInfo as A
+        left join memberassign as B
+        on A.id = B.project_Id
+        where B.qa_Member = 0
+        and A.status = #{status}
+    </select>
+
     <select id="getEPGLeaderProject" resultType="ProjectInfo">
         select A.id,A.creater_id,A.project_name,A.customer_info,A.leader,A.milepost,A.project_function,
         A.technology,A.business_area,A.schedule_time,A.delivery_time,A.status,A.create_time,A.change_time
@@ -159,12 +181,27 @@
         limit #{offset},#{limit}
     </select>
 
+    <select id="getEPGLeaderProjectCount" resultType="Integer">
+        select count(*)
+        from projectInfo as A
+        left join memberassign as B
+        on A.id = B.project_Id
+        where B.epg_Member = 0
+        and A.status = #{status}
+    </select>
+
     <select id="getMemberProjectIds" resultType="Long">
         select distinct project_id
         from userprojectrole
         where user_id = #{userId}
         order by project_id desc
         limit #{offset},#{limit}
+    </select>
+
+    <select id="getMemberProjectIdsCount" resultType="Integer">
+        select count(distinct project_id)
+        from userprojectrole
+        where user_id = #{userId}
     </select>
 
     <select id="getProjectInfosByIds" resultType="ProjectInfo">
