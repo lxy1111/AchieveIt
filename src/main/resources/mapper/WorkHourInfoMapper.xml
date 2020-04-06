@@ -11,6 +11,7 @@
         left join userprojectrole b
         on a.user_id = b.user_id
         where b.project_id = #{projectId}
+        and a.project_id = #{projectId}
         and  DATE(a.start_time) = #{date}) as result,projectrole
             where result.role_id = projectrole.id
     </select>
