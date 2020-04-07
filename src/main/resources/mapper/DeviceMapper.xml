@@ -3,8 +3,8 @@
 <mapper namespace="com.apriltechnology.achieveit.mapper.DeviceMapper">
 
     <insert id="insertDevice" parameterType="com.apriltechnology.achieveit.entity.Device">
-        insert into device(projectID,deviceowner,deadline,status)
-        values (#{projectID},#{deviceowner},#{deadline},#{status})
+        insert into device(deviceowner,deadline,status)
+        values (#{deviceowner},#{deadline},#{status})
     </insert>
 
 
@@ -15,9 +15,7 @@
         <if test="id!=null">
             AND id = #{id}
         </if>
-        <if test="projectID!=null and projectID!=''">
-            AND projectID = #{projectID}
-        </if>
+
         <if test="deviceowner!=null and deviceowner!=''">
             AND deviceowner = #{deviceowner}
         </if>
@@ -37,9 +35,7 @@
         <if test="id!=null">
             AND id = #{id}
         </if>
-        <if test="projectID!=null and projectID!=''">
-            AND projectID = #{projectID}
-        </if>
+
         <if test="deviceowner!=null and deviceowner!=''">
             AND deviceowner = #{deviceowner}
         </if>
@@ -54,7 +50,7 @@
 
     <update id="updateDevice"  parameterType="com.apriltechnology.achieveit.dto.DeviceSearch">
         update device
-        SET projectID = #{projectID},
+        SET
         deviceowner = #{deviceowner},
         deadline = #{deadline},
         status = #{status}

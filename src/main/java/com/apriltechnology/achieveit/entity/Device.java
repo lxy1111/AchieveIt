@@ -10,7 +10,6 @@ public class Device {
 
     private Long id;
 
-    private Long projectID;
 
     private Long deadline;
 
@@ -38,13 +37,6 @@ public class Device {
         this.id = id;
     }
 
-    public Long getProjectID() {
-        return projectID;
-    }
-
-    public void setProjectID(Long projectID) {
-        this.projectID = projectID;
-    }
 
     public Long getDeadline() {
         return deadline;

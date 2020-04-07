@@ -7,7 +7,6 @@ import java.sql.Timestamp;
  * @Date: 2020/4/7 17:53
  */
 public class DeviceAdd {
-    private Long projectID;
 
     private Long deadline;
 
@@ -17,13 +16,7 @@ public class DeviceAdd {
 
 
 
-    public Long getProjectID() {
-        return projectID;
-    }
 
-    public void setProjectID(Long projectID) {
-        this.projectID = projectID;
-    }
 
     public Long getDeadline() {
         return deadline;
