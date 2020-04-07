@@ -6,4 +6,12 @@
         FROM projectRole
     </select>
 
+    <select id="getRoleNameByIds"  resultType="String">
+        SELECT role_name
+        FROM projectRole
+        where id in
+        <foreach collection="list" item="id" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </select>
 </mapper>

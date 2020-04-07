@@ -20,6 +20,6 @@ public interface UserProjectRoleMapper {
      * @param projectId
      * @return
      */
-    List<UserProjectRole> getUserProjectRole(@Param("userId") Long userId, @Param("projectId") Long projectId);
+    List<Long> getUserProjectRole(@Param("userId") Long userId, @Param("projectId") Long projectId);
 
 }

@@ -50,7 +50,7 @@ public class ProjectSubFunctionController {
     @RequiresRoles("PM")
     public Response editProjectSubFunction(@RequestBody ProjectSubFunctionEdit projectSubFunctionEdit, BindingResult results){
 
-        Pair<Boolean,String> auth = userProjectRoleService.judgeUserProjectPermission(projectSubFunctionEdit.getProjectId(),"personManage");
+        Pair<Boolean,String> auth = userProjectRoleService.judgeUserProjectPermission(projectSubFunctionEdit.getProjectId(),"PM");
         if(!auth.getKey()){
             return Response.createError("1",auth.getValue());
         }

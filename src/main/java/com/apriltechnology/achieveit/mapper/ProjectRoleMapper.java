@@ -1,6 +1,7 @@
 package com.apriltechnology.achieveit.mapper;
 
 import com.apriltechnology.achieveit.entity.ProjectRole;
+import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -19,4 +20,10 @@ public interface ProjectRoleMapper {
      */
     List<ProjectRole> getAllProjectRoles();
 
+    /**
+     * 根据id查询角色名称
+     * @param ids
+     * @return
+     */
+    List<String> getRoleNameByIds(@Param("list")List<Long> ids);
 }

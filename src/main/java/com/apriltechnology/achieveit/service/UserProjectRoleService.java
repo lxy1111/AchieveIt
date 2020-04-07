@@ -18,7 +18,7 @@ public interface UserProjectRoleService {
      * @param user
      * @return
      */
-    List<UserProjectRole> getUserProjectRole(User user, Long id) ;
+    List<Long> getUserProjectRole(User user, Long id) ;
 
     /**
      * 判断用户项目的权限

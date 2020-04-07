@@ -1,7 +1,6 @@
 package com.apriltechnology.achieveit.shiro;
 
 import com.apriltechnology.achieveit.entity.User;
-import com.apriltechnology.achieveit.service.PermissionService;
 import com.apriltechnology.achieveit.service.UserService;
 import com.apriltechnology.achieveit.util.JWTUtil;
 import com.apriltechnology.achieveit.util.UserUtil;
@@ -24,9 +23,6 @@ public class JWTRealm extends AuthorizingRealm {
 
     @Autowired
     private UserService userService;
-
-    @Autowired
-    private PermissionService permissionService;
 
     @Override
     public boolean supports(AuthenticationToken token){
