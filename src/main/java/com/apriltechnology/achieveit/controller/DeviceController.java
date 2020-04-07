@@ -1,12 +1,12 @@
 package com.apriltechnology.achieveit.controller;
 
-import com.apriltechnology.achieveit.dto.DeviceSearch;
-import com.apriltechnology.achieveit.dto.ProjectInfoSearch;
-import com.apriltechnology.achieveit.dto.Response;
+import com.apriltechnology.achieveit.dto.*;
 import com.apriltechnology.achieveit.entity.Device;
 import com.apriltechnology.achieveit.entity.ProjectInfo;
+import com.apriltechnology.achieveit.entity.User;
 import com.apriltechnology.achieveit.exception.BatchDeleteException;
 import com.apriltechnology.achieveit.service.DeviceService;
+import com.apriltechnology.achieveit.util.UserUtil;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import javafx.util.Pair;
@@ -33,6 +33,31 @@ public class DeviceController {
 
     @Autowired
     private DeviceService deviceService;
+
+
+    @PostMapping("/Add")
+    @ResponseBody
+    @ApiOperation("新增设备信息")
+    Response deviceInfoAdd(@RequestBody DeviceAdd deviceAdd){
+
+        Response response = new Response();
+
+        User user = UserUtil.get();
+        Pair<Boolean,String> result = deviceService.insertDevice(deviceAdd);
+        if(!result.getKey()){
+            return Response.createError("1",result.getValue());
+        }
+
+        if(result.getKey()){
+            response.setCode("0");
+            response.setMsg(result.getValue());
+            return response;
+        }else{
+            response.setCode("1");
+            response.setMsg(result.getValue());
+            return response;
+        }
+    }
 
     @PostMapping("/Search")
     @ResponseBody

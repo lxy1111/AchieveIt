@@ -1,7 +1,10 @@
 package com.apriltechnology.achieveit.service.impl;
 
+import com.apriltechnology.achieveit.dto.DeviceAdd;
 import com.apriltechnology.achieveit.dto.DeviceSearch;
+import com.apriltechnology.achieveit.dto.ProjectInfoAdd;
 import com.apriltechnology.achieveit.entity.Device;
+import com.apriltechnology.achieveit.entity.ProjectInfo;
 import com.apriltechnology.achieveit.exception.BatchDeleteException;
 import com.apriltechnology.achieveit.mapper.DeviceMapper;
 import com.apriltechnology.achieveit.service.DeviceService;
@@ -32,6 +35,28 @@ public class DeviceServiceImpl implements DeviceService {
                 deviceSearch.getDeviceowner(),deviceSearch.getDeadline(),deviceSearch.getStatus(),pageFirst,pageLast);
         return devicelist;
 
+    }
+
+    @Override
+    public Pair<Boolean, String> insertDevice(DeviceAdd deviceAdd) {
+
+        Device deviceInfo = this.dataChange(deviceAdd);
+        int count = deviceMapper.insertDevice(deviceInfo);
+        if(count > 0){
+            return new Pair<>(true,"新增成功！");
+        }else{
+            return new Pair<>(false,"新增失败！");
+        }
+
+    }
+
+    private Device dataChange(DeviceAdd deviceAdd){
+        Device deviceInfo = new Device();
+        deviceInfo.setProjectID(deviceAdd.getProjectID());
+        deviceInfo.setStatus(deviceAdd.getStatus());
+        deviceInfo.setDeviceowner(deviceAdd.getDeviceowner());
+        deviceInfo.setDeadline(deviceAdd.getDeadline());
+        return deviceInfo;
     }
 
     @Override
