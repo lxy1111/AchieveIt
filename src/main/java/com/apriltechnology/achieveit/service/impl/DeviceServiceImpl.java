@@ -14,7 +14,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Isolation;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.List;
 
@@ -79,7 +78,7 @@ public class DeviceServiceImpl implements DeviceService {
 
     @Override
     @Transactional(propagation = Propagation.REQUIRED, isolation = Isolation.READ_COMMITTED,rollbackFor = Exception.class)
-    public Pair<Boolean, String> deleteDevice(@RequestParam("ids") List<Long> ids) throws BatchDeleteException {
+    public Pair<Boolean, String> deleteDevice(List<Long> ids) throws BatchDeleteException {
 
         if(null != ids && ids.size() > 0){
             int size = ids.size();

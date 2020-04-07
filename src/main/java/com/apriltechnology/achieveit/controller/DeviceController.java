@@ -108,7 +108,7 @@ public class DeviceController {
     @PostMapping("/Delete")
     @ResponseBody
     @ApiOperation("删除设备")
-    Response deleteDevices(@RequestParam("ids[]") List<Long> ids){
+    Response deleteDevices(@RequestBody List<Long> ids){
 
         Response response = new Response();
 
