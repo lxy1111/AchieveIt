@@ -37,6 +37,12 @@
         where id = #{workHourId}
     </update>
 
+    <update id="resetWorkHourInfo" parameterType="Long">
+        update workhourinfo
+        set status = 0
+        where id = #{workHourId}
+    </update>
+
     <update id="rejectWorkHourInfo" parameterType="Long">
         update workhourinfo
         set status = 2
