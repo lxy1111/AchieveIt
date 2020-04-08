@@ -2,11 +2,13 @@ package com.apriltechnology.achieveit.service.impl;
 
 import com.apriltechnology.achieveit.dto.ProjectInfoAdd;
 import com.apriltechnology.achieveit.dto.ProjectInfoSearch;
+import com.apriltechnology.achieveit.entity.MemberAssign;
 import com.apriltechnology.achieveit.entity.ProjectInfo;
 import com.apriltechnology.achieveit.entity.User;
 import com.apriltechnology.achieveit.entity.UserProjectRole;
 import com.apriltechnology.achieveit.exception.BatchDeleteException;
 import com.apriltechnology.achieveit.exception.InsertException;
+import com.apriltechnology.achieveit.mapper.MemberAssignMapper;
 import com.apriltechnology.achieveit.mapper.ProjectInfoMapper;
 import com.apriltechnology.achieveit.mapper.UserMapper;
 import com.apriltechnology.achieveit.mapper.UserProjectRoleMapper;
@@ -35,6 +37,9 @@ public class ProjectInfoServiceImpl implements ProjectInfoService {
 
     @Autowired
     private UserMapper userMapper;
+
+    @Autowired
+    private MemberAssignMapper memberAssignMapper;
 
     @Autowired
     private UserProjectRoleMapper userProjectRoleMapper;
@@ -118,6 +123,17 @@ public class ProjectInfoServiceImpl implements ProjectInfoService {
         userProjectRole2.setUserId(pm.getId());
         userProjectRole2.setRoleId(5L);
         userProjectRoles.add(userProjectRole2);
+
+        MemberAssign memberAssign = new MemberAssign();
+        memberAssign.setProjectId(projectInfo.getId());
+        memberAssign.setQaMember(0);
+        memberAssign.setEpgMember(0);
+        memberAssign.setDevMember(0);
+
+        int result = memberAssignMapper.insertMapperAssign(memberAssign);
+        if(result <= 0){
+            throw new InsertException("插入失败！");
+        }
 
         int num = userProjectRoleMapper.batchInsertUserProjectRole(userProjectRoles);
         if(num != 2){
