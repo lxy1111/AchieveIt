@@ -134,6 +134,7 @@ public class WorkHourInfoController {
     @ApiOperation("修改工时信息")
     public Response workHourInfoEdit(@RequestBody WorkHourEdit workHourEdit){
         Timestamp timestamp = workHourEdit.getStartTime();
+        Long id = workHourEdit.getWorkHourId();
         Date ts = new Date(timestamp.getTime());
         Date currentTime = new Date();
         long day = (currentTime.getTime()-ts.getTime())/(24*60*60*1000);
@@ -141,13 +142,14 @@ public class WorkHourInfoController {
             return Response.createError("1","工时报告最多延期三天，请重新修改！");
         }
         Response response = new Response();
-        Pair<Boolean,String> result = workHourInfoService.workHourInfoEdit(workHourEdit);
-        if(result.getKey()){
+        Pair<Boolean,String> result1 = workHourInfoService.workHourInfoEdit(workHourEdit);
+        Pair<Boolean,String> result2 = workHourInfoService.resetWorkHourInfo(id);
+        if(result1.getKey()&&result2.getKey()){
             response.setCode("0");
-            response.setMsg(result.getValue());
+            response.setMsg(result1.getValue());
             return response;
         }else {
-            return Response.createError("1",result.getValue());
+            return Response.createError("1",result1.getValue());
         }
     }
 

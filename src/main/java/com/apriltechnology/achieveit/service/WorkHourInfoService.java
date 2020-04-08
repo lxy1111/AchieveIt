@@ -21,6 +21,8 @@ public interface WorkHourInfoService {
 
     Pair<Boolean,String> acceptWorkHourInfo(Long workHourId);
 
+    Pair<Boolean,String> resetWorkHourInfo(Long workHourId);
+
     Pair<Boolean,String> rejectWorkHourInfo(Long workHourId);
 
     Pair<Boolean,String> workHourInfoAdd(WorkHourAdd workHourAdd);

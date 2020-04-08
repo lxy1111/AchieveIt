@@ -51,6 +51,15 @@ public class WorkHourInfoServiceImpl implements WorkHourInfoService {
     }
 
     @Override
+    public Pair<Boolean,String> resetWorkHourInfo(Long workHourId){
+        int result = workHourInfoMapper.resetWorkHourInfo(workHourId);
+        if(result <= 0){
+            return new Pair<>(false,"状态重置失败！");
+        }
+        return new Pair<>(true,"状态重置成功！");
+    }
+
+    @Override
     public Pair<Boolean,String> workHourInfoAdd(WorkHourAdd workHourAdd){
         int result = workHourInfoMapper.workHourInfoAdd(workHourAdd);
         if(result <= 0){

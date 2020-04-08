@@ -39,4 +39,7 @@ public interface WorkHourInfoMapper {
 
     //项目成员修改工时信息
     int workHourInfoEdit(WorkHourEdit workHourEdit);
+
+    //重置工时状态
+    int resetWorkHourInfo(@Param("workHourId") Long workHourId);
 }
