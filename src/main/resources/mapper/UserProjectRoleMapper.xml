@@ -9,4 +9,16 @@
         and project_id = #{projectId}
     </select>
 
+    <insert id="batchInsertUserProjectRole">
+        insert into userprojectrole (user_id, project_id, role_id)
+        values
+        <foreach collection="list" item="item"  separator=",">
+            (
+            #{item.userId},
+            #{item.projectId},
+            #{item.roleId}
+            )
+        </foreach>
+    </insert>
+
 </mapper>
