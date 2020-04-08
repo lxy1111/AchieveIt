@@ -4,6 +4,7 @@ import com.apriltechnology.achieveit.dto.ProjectInfoAdd;
 import com.apriltechnology.achieveit.dto.ProjectInfoSearch;
 import com.apriltechnology.achieveit.entity.ProjectInfo;
 import com.apriltechnology.achieveit.exception.BatchDeleteException;
+import com.apriltechnology.achieveit.exception.InsertException;
 import javafx.util.Pair;
 
 import java.util.List;
@@ -51,7 +52,7 @@ public interface ProjectInfoService {
      * @param status
      * @return
      */
-    Pair<Boolean,String> insertProjectInfo(ProjectInfoAdd projectInfoAdd,Long createId,int status);
+    Pair<Boolean,String> insertProjectInfo(ProjectInfoAdd projectInfoAdd,Long createId,int status) throws InsertException;
 
     /**
      * 获取项目状态信息

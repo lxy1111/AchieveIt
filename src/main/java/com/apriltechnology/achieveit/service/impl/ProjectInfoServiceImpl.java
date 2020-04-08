@@ -3,9 +3,15 @@ package com.apriltechnology.achieveit.service.impl;
 import com.apriltechnology.achieveit.dto.ProjectInfoAdd;
 import com.apriltechnology.achieveit.dto.ProjectInfoSearch;
 import com.apriltechnology.achieveit.entity.ProjectInfo;
+import com.apriltechnology.achieveit.entity.User;
+import com.apriltechnology.achieveit.entity.UserProjectRole;
 import com.apriltechnology.achieveit.exception.BatchDeleteException;
+import com.apriltechnology.achieveit.exception.InsertException;
 import com.apriltechnology.achieveit.mapper.ProjectInfoMapper;
+import com.apriltechnology.achieveit.mapper.UserMapper;
+import com.apriltechnology.achieveit.mapper.UserProjectRoleMapper;
 import com.apriltechnology.achieveit.service.ProjectInfoService;
+import com.apriltechnology.achieveit.util.UserUtil;
 import javafx.util.Pair;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -26,6 +32,12 @@ public class ProjectInfoServiceImpl implements ProjectInfoService {
 
     @Autowired
     private ProjectInfoMapper projectInfoMapper;
+
+    @Autowired
+    private UserMapper userMapper;
+
+    @Autowired
+    private UserProjectRoleMapper userProjectRoleMapper;
 
     @Override
     public List<ProjectInfo> getProjectInfo(ProjectInfoSearch projectInfoSearch) {
@@ -77,15 +89,42 @@ public class ProjectInfoServiceImpl implements ProjectInfoService {
     }
 
     @Override
-    public Pair<Boolean, String> insertProjectInfo(ProjectInfoAdd projectInfoAdd, Long createId, int status) {
+    @Transactional(propagation = Propagation.REQUIRED, isolation = Isolation.READ_COMMITTED,rollbackFor = Exception.class)
+    public Pair<Boolean, String> insertProjectInfo(ProjectInfoAdd projectInfoAdd, Long createId, int status) throws InsertException{
+
+        User leader = userMapper.getUserByUsername(projectInfoAdd.getLeader());
+        if(null == leader){
+            return new Pair<>(false,"项目上级不存在！");
+        }
 
         ProjectInfo projectInfo = this.dataChange(projectInfoAdd,createId,status);
         int count = projectInfoMapper.insertProjectInfo(projectInfo);
-        if(count > 0){
-            return new Pair<>(true,"新增成功！");
-        }else{
-            return new Pair<>(false,"新增失败！");
+
+        if(count <= 0){
+            throw new InsertException("插入失败！");
         }
+
+        User pm = UserUtil.get();
+        List<UserProjectRole> userProjectRoles = new ArrayList<>();
+
+        UserProjectRole userProjectRole1 = new UserProjectRole();
+        userProjectRole1.setProjectId(projectInfo.getId());
+        userProjectRole1.setUserId(leader.getId());
+        userProjectRole1.setRoleId(1L);
+        userProjectRoles.add(userProjectRole1);
+
+        UserProjectRole userProjectRole2 = new UserProjectRole();
+        userProjectRole2.setProjectId(projectInfo.getId());
+        userProjectRole2.setUserId(pm.getId());
+        userProjectRole2.setRoleId(5L);
+        userProjectRoles.add(userProjectRole2);
+
+        int num = userProjectRoleMapper.batchInsertUserProjectRole(userProjectRoles);
+        if(num != 2){
+            throw new InsertException("插入失败!");
+        }
+
+        return new Pair<>(true,"插入成功！");
 
     }
 

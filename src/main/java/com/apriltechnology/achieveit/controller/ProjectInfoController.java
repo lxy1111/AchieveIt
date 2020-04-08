@@ -3,8 +3,11 @@ package com.apriltechnology.achieveit.controller;
 import com.apriltechnology.achieveit.dto.*;
 import com.apriltechnology.achieveit.entity.ProjectInfo;
 import com.apriltechnology.achieveit.entity.User;
+import com.apriltechnology.achieveit.entity.UserProjectRole;
 import com.apriltechnology.achieveit.exception.BatchDeleteException;
+import com.apriltechnology.achieveit.exception.InsertException;
 import com.apriltechnology.achieveit.service.ProjectInfoService;
+import com.apriltechnology.achieveit.service.UserService;
 import com.apriltechnology.achieveit.util.UserUtil;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -16,6 +19,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
+import java.sql.Timestamp;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -34,19 +39,39 @@ public class ProjectInfoController {
     @Autowired
     private ProjectInfoService projectInfoService;
 
+    @Autowired
+    private UserService userService;
+
     @PostMapping("/Add")
     @ResponseBody
     @ApiOperation("新增项目信息")
     Response projectInfoAdd(@RequestBody ProjectInfoAdd projectInfoAdd){
 
+        if(null == projectInfoAdd.getScheduleTime()){
+            Timestamp time = new Timestamp(System.currentTimeMillis());
+            projectInfoAdd.setScheduleTime(time);
+        }
+
+        if(null == projectInfoAdd.getDeliveryTime()){
+            Timestamp time = new Timestamp(System.currentTimeMillis());
+            projectInfoAdd.setDeliveryTime(time);
+        }
+
         Response response = new Response();
 
         User user = UserUtil.get();
-        Pair<Boolean,String> result = projectInfoService.insertProjectInfo(projectInfoAdd,user.getId(),0);
-        if(!result.getKey()){
-            return Response.createError("1",result.getValue());
+        Pair<Boolean,String> result = null;
+        try {
+            result = projectInfoService.insertProjectInfo(projectInfoAdd,user.getId(),0);
+        } catch (InsertException e) {
+            log.error("projectInfoAdd",ExceptionUtils.getStackTrace(e));
+            response.setCode("1");
+            response.setMsg(e.getMessage());
+            return response;
         }
+
         //todo 调用邮件服务
+
         if(result.getKey()){
             response.setCode("0");
             response.setMsg(result.getValue());
@@ -92,6 +117,16 @@ public class ProjectInfoController {
     @ResponseBody
     @ApiOperation("更新项目信息")
     Response editProjectInfo(@RequestBody ProjectInfoSearch projectInfoSearch){
+
+        if(null == projectInfoSearch.getScheduleTime()){
+            Timestamp time = new Timestamp(System.currentTimeMillis());
+            projectInfoSearch.setScheduleTime(time);
+        }
+
+        if(null == projectInfoSearch.getDeliveryTime()){
+            Timestamp time = new Timestamp(System.currentTimeMillis());
+            projectInfoSearch.setDeliveryTime(time);
+        }
 
         Response response = new Response();
 

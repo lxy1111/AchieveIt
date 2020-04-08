@@ -22,4 +22,10 @@ public interface UserProjectRoleMapper {
      */
     List<Long> getUserProjectRole(@Param("userId") Long userId, @Param("projectId") Long projectId);
 
+    /**
+     * 批量插入关联信息
+     * @param userProjectRoles
+     * @return
+     */
+    int batchInsertUserProjectRole(@Param("list")List<UserProjectRole> userProjectRoles);
 }
