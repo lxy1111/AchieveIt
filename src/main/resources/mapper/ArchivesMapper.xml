@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.apriltechnology.achieveit.mapper.ArchivesMapper">
+    <select id="getArchivesList"  parameterType="Long" resultType="Archives">
+        select archives.id,archives.project_id,archives.project_basic_table,archives.project_proposal,
+        archives.project_price,archives.project_estimate,archives.project_schedule,
+        archives.project_process,archives.project_cost,archives.project_demand,archives.project_risk,
+        archives.accept_problem,archives.accept_report,archives.project_summary,archives.best_experience,
+        archives.develop_tool,archives.develop_model,archives.examine,archives.qa_summary,archives.create_time,
+        archives.change_time
+        from archives left join projectinfo p on archives.project_id = p.id
+        where p.status=5 and archives.project_id=#{projectId}
+    </select>
+
+    <insert id="archivesAdd" parameterType="Long">
+        insert into archives(project_id)
+        value (#{projectId})
+    </insert>
+
+    <update id="acceptProjectBasicTable" parameterType="Long">
+        update archives
+        set project_basic_table = 1
+        where project_id = #{projectId}
+    </update>
+
+    <update id="acceptProjectProposal" parameterType="Long">
+        update archives
+        set project_proposal = 1
+        where project_id = #{projectId}
+    </update>
+
+    <update id="acceptProjectPrice" parameterType="Long">
+        update archives
+        set project_price = 1
+        where project_id = #{projectId}
+    </update>
+
+    <update id="acceptProjectEstimate" parameterType="Long">
+        update archives
+        set project_estimate = 1
+        where project_id = #{projectId}
+    </update>
+
+    <update id="acceptProjectSchedule" parameterType="Long">
+        update archives
+        set project_schedule = 1
+        where project_id = #{projectId}
+    </update>
+
+    <update id="acceptProjectProcess" parameterType="Long">
+        update archives
+        set project_process = 1
+        where project_id = #{projectId}
+    </update>
+
+    <update id="acceptProjectCost" parameterType="Long">
+        update archives
+        set project_cost = 1
+        where project_id = #{projectId}
+    </update>
+
+    <update id="acceptProjectDemand" parameterType="Long">
+        update archives
+        set project_demand = 1
+        where project_id = #{projectId}
+    </update>
+
+    <update id="acceptProjectRisk" parameterType="Long">
+        update archives
+        set project_risk = 1
+        where project_id = #{projectId}
+    </update>
+
+    <update id="acceptProblem" parameterType="Long">
+        update archives
+        set accept_problem = 1
+        where project_id = #{projectId}
+    </update>
+
+    <update id="acceptReport" parameterType="Long">
+        update archives
+        set accept_report = 1
+        where project_id = #{projectId}
+    </update>
+
+    <update id="acceptProjectSummary" parameterType="Long">
+        update archives
+        set project_summary = 1
+        where project_id = #{projectId}
+    </update>
+
+    <update id="acceptBestExperience" parameterType="Long">
+        update archives
+        set best_experience = 1
+        where project_id = #{projectId}
+    </update>
+
+    <update id="acceptDevelopTool" parameterType="Long">
+        update archives
+        set develop_tool = 1
+        where project_id = #{projectId}
+    </update>
+
+    <update id="acceptDevelopModel" parameterType="Long">
+        update archives
+        set develop_model = 1
+        where project_id = #{projectId}
+    </update>
+
+    <update id="acceptExamine" parameterType="Long">
+        update archives
+        set examine = 1
+        where project_id = #{projectId}
+    </update>
+
+    <update id="acceptQASummary" parameterType="Long">
+        update archives
+        set qa_summary = 1
+        where project_id = #{projectId}
+    </update>
+
+</mapper>
