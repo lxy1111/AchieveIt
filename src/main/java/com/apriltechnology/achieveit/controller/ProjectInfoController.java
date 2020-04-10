@@ -6,6 +6,7 @@ import com.apriltechnology.achieveit.entity.User;
 import com.apriltechnology.achieveit.entity.UserProjectRole;
 import com.apriltechnology.achieveit.exception.BatchDeleteException;
 import com.apriltechnology.achieveit.exception.InsertException;
+import com.apriltechnology.achieveit.service.ArchiveService;
 import com.apriltechnology.achieveit.service.ProjectInfoService;
 import com.apriltechnology.achieveit.service.UserService;
 import com.apriltechnology.achieveit.util.UserUtil;
@@ -41,6 +42,9 @@ public class ProjectInfoController {
 
     @Autowired
     private UserService userService;
+
+    @Autowired
+    private ArchiveService archiveService;
 
     @PostMapping("/Add")
     @ResponseBody
@@ -286,7 +290,11 @@ public class ProjectInfoController {
         }
 
         Pair<Boolean,String> result = projectInfoService.changeProjectStatus(projectId,statusId);
+
         if(result.getKey()){
+            if(statusId == 5){
+                archiveService.archivesAdd(projectId);
+            }
             response.setCode("0");
             response.setMsg(result.getValue());
             return response;
