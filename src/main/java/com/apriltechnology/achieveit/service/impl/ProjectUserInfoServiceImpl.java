@@ -2,6 +2,7 @@ package com.apriltechnology.achieveit.service.impl;
 
 import com.apriltechnology.achieveit.dto.ProjectUserAdd;
 import com.apriltechnology.achieveit.entity.ProjectUserInfo;
+import com.apriltechnology.achieveit.entity.UserProjectRole;
 import com.apriltechnology.achieveit.mapper.ProjectUserInfoMapper;
 import com.apriltechnology.achieveit.service.ProjectUserInfoService;
 import javafx.util.Pair;
@@ -35,6 +36,16 @@ public class ProjectUserInfoServiceImpl implements ProjectUserInfoService {
         }
 
         return new Pair<>(true,"删除成功！");
+    }
+
+    @Override
+    public Pair<Boolean,String> judgeProjectUserInfo(ProjectUserAdd projectUserAdd) {
+        List<UserProjectRole> projectUserInfos = projectUserInfoMapper.judgeProjectUserInfo(projectUserAdd);
+        int result = projectUserInfos.size();
+        if(result==0){
+            return new Pair<>(true,"无重复项");
+        }
+        return new Pair<>(false,"该成员已经分配，请重新检查");
     }
 
     @Override
