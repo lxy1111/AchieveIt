@@ -29,6 +29,7 @@ public interface ProjectUserInfoService {
      */
     Pair<Boolean,String> projectUserDelete(Long projectId,Long userId);
 
+    Pair<Boolean,String> judgeProjectUserInfo(ProjectUserAdd projectUserAdd);
 
     /**
      * 添加组员信息
