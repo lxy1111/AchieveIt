@@ -13,6 +13,8 @@ import java.util.List;
 @Repository
 public interface RiskMapper {
 
+    int insertRisk(Risk riskInfo);
+
     List<Risk> getRiskList(Long id, Long projectID, String type, String description, Long level, Long effect, String strategy, Long status, String responsible, Long frequency, String relevant, Integer pageFirst, Integer pageLast);
 
     Integer getRiskCount(Long id, Long projectID, String type, String description, Long level,Long effect,String strategy,Long status, String responsible,Long frequency,String relevant);
