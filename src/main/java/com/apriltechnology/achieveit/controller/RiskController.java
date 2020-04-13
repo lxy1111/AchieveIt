@@ -62,6 +62,23 @@ public class RiskController {
         }
     }
 
+    @PostMapping("/Edit")
+    @ResponseBody
+    @ApiOperation("更新风险信息")
+    Response editRisk(@RequestBody RiskSearch riskSearch){
+
+        Response response = new Response();
+
+        Pair<Boolean,String> result = riskService.editRisk(riskSearch);
+        if(result.getKey()){
+            response.setCode("0");
+            response.setMsg(result.getValue());
+            return response;
+        }else{
+            return Response.createError("`1",result.getValue());
+        }
+    }
+
 
 
     @PostMapping("/Search")

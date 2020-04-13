@@ -76,6 +76,18 @@
     </select>
 
 
+    <update id="updateRisk"  parameterType="com.apriltechnology.achieveit.dto.RiskSearch">
+        update risk
+        SET
+        type=#{type},description=#{description},
+        level=#{level},effect=#{effect},
+        strategy=#{strategy},status=#{status},
+        responsible=#{responsible},frequency=#{frequency},
+        relevant=#{relevant},
+        projectID=#{projectID}
+        where id = #{id}
+    </update>
+
 
 
 </mapper>

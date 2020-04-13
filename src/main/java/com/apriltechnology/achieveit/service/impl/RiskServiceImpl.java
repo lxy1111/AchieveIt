@@ -25,6 +25,17 @@ public class RiskServiceImpl implements RiskService {
     @Autowired
     private RiskMapper riskMapper;
 
+
+    @Override
+    public Pair<Boolean,String> editRisk(RiskSearch riskSearch){
+        int result = riskMapper.updateRisk(riskSearch);
+        if(result <= 0){
+            return new Pair<>(false,"更新失败！");
+        }else{
+            return new Pair<>(true,"更新成功！");
+        }
+    }
+
     @Override
     public Pair<Boolean,String> insertRisk(RiskAdd riskAdd){
 

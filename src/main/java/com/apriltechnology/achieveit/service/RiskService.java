@@ -22,4 +22,6 @@ public interface RiskService {
     List<Risk> getRiskList(RiskSearch riskSearch);
 
     Integer getRiskCount(RiskSearch riskSearch);
+
+    Pair<Boolean,String> editRisk(RiskSearch riskSearch);
 }
