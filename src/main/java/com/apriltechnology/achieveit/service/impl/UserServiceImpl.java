@@ -6,6 +6,8 @@ import com.apriltechnology.achieveit.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 /**
  * @Description 用户信息service实现层
  * @Author fjm
@@ -23,5 +25,11 @@ public class UserServiceImpl implements UserService {
         User user = userMapper.getUserByUsername(username);
 
         return user;
+    }
+
+    @Override
+    public List<User> searchUserByUserName(String username) {
+        List<User> users = userMapper.searchUserByUsername(username);
+        return users;
     }
 }

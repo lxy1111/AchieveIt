@@ -38,17 +38,18 @@ create table userProjectRole(
    FOREIGN KEY (role_id) references projectRole(id) on delete cascade on update cascade
 )ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='用户项目角色信息关联表';
 
+create table userProjectPermission(
+   user_id bigint NOT NULL DEFAULT '0' COMMENT '关联用户id',
+   project_id bigint NOT NULL DEFAULT '0' COMMENT '关联项目id',
+   git_permission int NOT NULL DEFAULT '0' COMMENT 'git权限 0有，1无',
+   mail_permissiom int NOT NULL DEFAULT '0' COMMENT 'mail权限 0有，1无',
+   file_permissiom int NOT NULL DEFAULT '0' COMMENT 'file权限 0有，1无',
+   PRIMARY KEY (user_id,project_id),
+   FOREIGN KEY (user_id) references user(id) on delete cascade on update cascade,
+   FOREIGN KEY (project_id) references projectInfo(id) on delete cascade on update cascade
+)ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='用户项目权限表';
 
-create table permission(
-   id bigint NOT NULL AUTO_INCREMENT COMMENT '权限id',
-   role_id bigint NOT NULL  DEFAULT '0' COMMENT '关联角色id',
-   permission_name varchar(120) NOT NULL  DEFAULT '' COMMENT '权限名',
-   description varchar(300) NOT NULL DEFAULT '' COMMENT '权限描述',
-   create_time TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
-   change_time TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更改时间',
-   PRIMARY KEY (id),
-   foreign key (role_id) references projectRole(id) on delete cascade on update cascade
-)ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8mb4 COMMENT='权限信息表';
+
 
 create table projectInfo(
    id bigint NOT NULL AUTO_INCREMENT COMMENT '项目id',

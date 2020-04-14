@@ -4,6 +4,8 @@ import com.apriltechnology.achieveit.entity.User;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
+
 /**
  * @Description user类mapper接口
  * @Author fjm
@@ -19,4 +21,10 @@ public interface UserMapper {
      */
     User getUserByUsername(@Param("username") String username);
 
+    /**
+     * 模糊查询用户信息
+     * @param username
+     * @return
+     */
+    List<User> searchUserByUsername(@Param("username")String username);
 }

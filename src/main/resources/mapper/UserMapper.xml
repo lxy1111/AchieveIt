@@ -7,4 +7,9 @@
         WHERE user_name = #{username}
     </select>
 
+    <select id="searchUserByUsername" parameterType="String" resultType="User">
+        SELECT *
+        FROM user
+        WHERE user_name like concat('%',#{username},'%')
+    </select>
 </mapper>
