@@ -80,39 +80,49 @@ public class ProjectUserInfoController {
     @ApiOperation("添加项目相关组员")
     public Response projectUserAdd(@RequestBody ProjectUserAdd projectUserAdd,@RequestParam(value = "id")Long id) {
         Response response = new Response();
-        Pair<Boolean, String> result1 = projectUserInfoService.projectUserAdd(projectUserAdd);
-        //3->epg 4->QA 5->PM
-        long projectId = projectUserAdd.getProjectId();
-        if (id == 3) {
-            Pair<Boolean, String> result2 = projectMemberService.adjustEPGMemberAssign(projectId);
-            if (result1.getKey() && result2.getKey()) {
-                response.setCode("0");
-                response.setMsg(result1.getValue());
-                return response;
-            } else {
-                return Response.createError("1", result1.getValue());
+        Pair<Boolean, String> result = projectUserInfoService.judgeProjectUserInfo(projectUserAdd);
+        if(result.getKey()){
+            //3->epg 4->QA 5->PM
+            if (id == 3) {
+                Pair<Boolean, String> result1 = projectUserInfoService.projectUserAdd(projectUserAdd);
+                long projectId = projectUserAdd.getProjectId();
+                Pair<Boolean, String> result2 = projectMemberService.adjustEPGMemberAssign(projectId);
+                if (result1.getKey() && result2.getKey()) {
+                    response.setCode("0");
+                    response.setMsg(result1.getValue());
+                    return response;
+                } else {
+                    return Response.createError("1", result1.getValue());
+                }
+            } else if (id == 4) {
+                Pair<Boolean, String> result1 = projectUserInfoService.projectUserAdd(projectUserAdd);
+                long projectId = projectUserAdd.getProjectId();
+                Pair<Boolean, String> result2 = projectMemberService.adjustQAMemberAssign(projectId);
+                if (result1.getKey() && result2.getKey()) {
+                    response.setCode("0");
+                    response.setMsg(result1.getValue());
+                    return response;
+                } else {
+                    return Response.createError("1", result1.getValue());
+                }
+            } else if (id == 5) {
+                Pair<Boolean, String> result1 = projectUserInfoService.projectUserAdd(projectUserAdd);
+                long projectId = projectUserAdd.getProjectId();
+                Pair<Boolean, String> result2 = projectMemberService.adjustDEVMemberAssign(projectId);
+                if (result1.getKey() && result2.getKey()) {
+                    response.setCode("0");
+                    response.setMsg(result1.getValue());
+                    return response;
+                } else {
+                    return Response.createError("1", result1.getValue());
+                }
+            }else{
+                return Response.createError("1","该用户不可分配成员");
             }
-        } else if (id == 4) {
-            Pair<Boolean, String> result2 = projectMemberService.adjustQAMemberAssign(projectId);
-            if (result1.getKey() && result2.getKey()) {
-                response.setCode("0");
-                response.setMsg(result1.getValue());
-                return response;
-            } else {
-                return Response.createError("1", result1.getValue());
-            }
-        } else if (id == 5) {
-            Pair<Boolean, String> result2 = projectMemberService.adjustDEVMemberAssign(projectId);
-            if (result1.getKey() && result2.getKey()) {
-                response.setCode("0");
-                response.setMsg(result1.getValue());
-                return response;
-            } else {
-                return Response.createError("1", result1.getValue());
-            }
-        }else{
-            return Response.createError("1","该用户不可分配成员");
+        }else {
+            return Response.createError("1",result.getValue());
         }
+
     }
 
 }

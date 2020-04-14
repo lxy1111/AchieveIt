@@ -14,6 +14,16 @@
         where u.project_id =#{projectId} and u.role_id=1
     </select>
 
+    <select id="judgeProjectUserInfo" parameterType="com.apriltechnology.achieveit.dto.ProjectUserAdd" resultType="UserProjectRole">
+        select userprojectrole.user_id,userprojectrole.project_id,userprojectrole.role_id,
+        userprojectrole.create_time,userprojectrole.change_time
+        from userprojectrole, (select id
+        from projectrole
+        where description = #{roleDescription}) as result
+        where userprojectrole.role_id = result.id and userprojectrole.user_id=#{userId}
+        and userprojectrole.project_id = #{projectId}
+    </select>
+
     <insert id="projectUserAdd" parameterType="com.apriltechnology.achieveit.dto.ProjectUserAdd">
         insert into userprojectrole (user_id, project_id, role_id)
         select #{userId} ,#{projectId} ,id

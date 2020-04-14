@@ -1,11 +1,14 @@
 package com.apriltechnology.achieveit.service.impl;
 
+import com.apriltechnology.achieveit.dto.DeviceAdd;
 import com.apriltechnology.achieveit.dto.DeviceSearch;
+import com.apriltechnology.achieveit.dto.RiskAdd;
 import com.apriltechnology.achieveit.dto.RiskSearch;
 import com.apriltechnology.achieveit.entity.Device;
 import com.apriltechnology.achieveit.entity.Risk;
 import com.apriltechnology.achieveit.mapper.RiskMapper;
 import com.apriltechnology.achieveit.service.RiskService;
+import javafx.util.Pair;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -21,6 +24,46 @@ public class RiskServiceImpl implements RiskService {
 
     @Autowired
     private RiskMapper riskMapper;
+
+
+    @Override
+    public Pair<Boolean,String> editRisk(RiskSearch riskSearch){
+        int result = riskMapper.updateRisk(riskSearch);
+        if(result <= 0){
+            return new Pair<>(false,"更新失败！");
+        }else{
+            return new Pair<>(true,"更新成功！");
+        }
+    }
+
+    @Override
+    public Pair<Boolean,String> insertRisk(RiskAdd riskAdd){
+
+
+        Risk riskInfo = this.dataChange(riskAdd);
+        int count = riskMapper.insertRisk(riskInfo);
+        if(count > 0){
+            return new Pair<>(true,"新增成功！");
+        }else{
+            return new Pair<>(false,"新增失败！");
+        }
+
+    }
+
+    private Risk dataChange(RiskAdd riskAdd){
+        Risk riskInfo = new Risk();
+        riskInfo.setDescription(riskAdd.getDescription());
+        riskInfo.setEffect(riskAdd.getEffect());
+        riskInfo.setFrequency(riskAdd.getFrequency());
+        riskInfo.setLevel(riskAdd.getLevel());
+        riskInfo.setProjectID(riskAdd.getProjectID());
+        riskInfo.setRelevant(riskAdd.getRelevant());
+        riskInfo.setResponsible(riskAdd.getResponsible());
+        riskInfo.setStatus(riskAdd.getStatus());
+        riskInfo.setStrategy(riskAdd.getStrategy());
+        riskInfo.setType(riskAdd.getType());
+        return riskInfo;
+    }
 
     @Override
     public List<Risk> getRiskList(RiskSearch riskSearch){

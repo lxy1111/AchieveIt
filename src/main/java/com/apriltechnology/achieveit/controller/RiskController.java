@@ -1,14 +1,15 @@
 package com.apriltechnology.achieveit.controller;
 
-import com.apriltechnology.achieveit.dto.DeviceSearch;
-import com.apriltechnology.achieveit.dto.Response;
-import com.apriltechnology.achieveit.dto.RiskSearch;
+import com.apriltechnology.achieveit.dto.*;
 import com.apriltechnology.achieveit.entity.Device;
 import com.apriltechnology.achieveit.entity.Risk;
+import com.apriltechnology.achieveit.entity.User;
 import com.apriltechnology.achieveit.service.DeviceService;
 import com.apriltechnology.achieveit.service.RiskService;
+import com.apriltechnology.achieveit.util.UserUtil;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
+import javafx.util.Pair;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -34,6 +35,51 @@ public class RiskController {
 
     @Autowired
     private RiskService riskService;
+
+
+
+    @PostMapping("/Add")
+    @ResponseBody
+    @ApiOperation("新增风险信息")
+    Response riskInfoAdd(@RequestBody RiskAdd riskAdd){
+
+        Response response = new Response();
+
+        User user = UserUtil.get();
+        Pair<Boolean,String> result = riskService.insertRisk(riskAdd);
+        if(!result.getKey()){
+            return Response.createError("1",result.getValue());
+        }
+
+        if(result.getKey()){
+            response.setCode("0");
+            response.setMsg(result.getValue());
+            return response;
+        }else{
+            response.setCode("1");
+            response.setMsg(result.getValue());
+            return response;
+        }
+    }
+
+    @PostMapping("/Edit")
+    @ResponseBody
+    @ApiOperation("更新风险信息")
+    Response editRisk(@RequestBody RiskSearch riskSearch){
+
+        Response response = new Response();
+
+        Pair<Boolean,String> result = riskService.editRisk(riskSearch);
+        if(result.getKey()){
+            response.setCode("0");
+            response.setMsg(result.getValue());
+            return response;
+        }else{
+            return Response.createError("`1",result.getValue());
+        }
+    }
+
+
 
     @PostMapping("/Search")
     @ResponseBody
