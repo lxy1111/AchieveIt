@@ -42,8 +42,8 @@ create table userProjectPermission(
    user_id bigint NOT NULL DEFAULT '0' COMMENT '关联用户id',
    project_id bigint NOT NULL DEFAULT '0' COMMENT '关联项目id',
    git_permission int NOT NULL DEFAULT '0' COMMENT 'git权限 0有，1无',
-   mail_permissiom int NOT NULL DEFAULT '0' COMMENT 'mail权限 0有，1无',
-   file_permissiom int NOT NULL DEFAULT '0' COMMENT 'file权限 0有，1无',
+   mail_permission int NOT NULL DEFAULT '0' COMMENT 'mail权限 0有，1无',
+   file_permission int NOT NULL DEFAULT '0' COMMENT 'file权限 0有，1无',
    PRIMARY KEY (user_id,project_id),
    FOREIGN KEY (user_id) references user(id) on delete cascade on update cascade,
    FOREIGN KEY (project_id) references projectInfo(id) on delete cascade on update cascade
