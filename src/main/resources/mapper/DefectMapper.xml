@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.apriltechnology.achieveit.mapper.DefectMapper">
+    <select id="getDefectInfo" parameterType="Long" resultType="Defect">
+        select *
+        from defect
+        where project_id=#{projectId}
+    </select>
+
+    <insert id="defectAdd" parameterType="com.apriltechnology.achieveit.dto.DefectAdd">
+        insert into defect(project_id, charger_id, content)
+        values (#{projectId},#{chargerId},#{content})
+    </insert>
+
+    <delete id="defectDelete" parameterType="Long">
+        delete from defect
+        where id = #{defectId}
+    </delete>
+</mapper>
