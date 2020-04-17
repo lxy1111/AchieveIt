@@ -2,9 +2,12 @@ package com.apriltechnology.achieveit.controller;
 
 import com.apriltechnology.achieveit.dto.ProjectUserAdd;
 import com.apriltechnology.achieveit.dto.Response;
+import com.apriltechnology.achieveit.dto.UserProjectPermissionInfo;
 import com.apriltechnology.achieveit.entity.ProjectUserInfo;
+import com.apriltechnology.achieveit.entity.UserProjectPermission;
 import com.apriltechnology.achieveit.entity.WorkHourInfo;
 import com.apriltechnology.achieveit.service.ProjectMemberService;
+import com.apriltechnology.achieveit.service.ProjectPermissionService;
 import com.apriltechnology.achieveit.service.ProjectUserInfoService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -33,6 +36,8 @@ import java.util.prefs.PreferenceChangeEvent;
 public class ProjectUserInfoController {
     @Autowired
     private ProjectUserInfoService projectUserInfoService;
+    @Autowired
+    private ProjectPermissionService projectPermissionService;
     @Autowired
     private ProjectMemberService projectMemberService;
 
@@ -81,13 +86,20 @@ public class ProjectUserInfoController {
     public Response projectUserAdd(@RequestBody ProjectUserAdd projectUserAdd,@RequestParam(value = "id")Long id) {
         Response response = new Response();
         Pair<Boolean, String> result = projectUserInfoService.judgeProjectUserInfo(projectUserAdd);
+        UserProjectPermissionInfo userProjectPermissionInfo = new UserProjectPermissionInfo();
+        userProjectPermissionInfo.setProjectId(projectUserAdd.getProjectId());
+        userProjectPermissionInfo.setUserId(projectUserAdd.getUserId());
+        userProjectPermissionInfo.setFilePermission(0);
+        userProjectPermissionInfo.setGitPermission(0);
+        userProjectPermissionInfo.setMailPermission(0);
         if(result.getKey()){
             //3->epg 4->QA 5->PM
             if (id == 3) {
                 Pair<Boolean, String> result1 = projectUserInfoService.projectUserAdd(projectUserAdd);
                 long projectId = projectUserAdd.getProjectId();
                 Pair<Boolean, String> result2 = projectMemberService.adjustEPGMemberAssign(projectId);
-                if (result1.getKey() && result2.getKey()) {
+                Pair<Boolean,String> result3 = projectPermissionService.addUserProjectPermission(userProjectPermissionInfo);
+                if (result1.getKey() && result2.getKey() && result3.getKey()) {
                     response.setCode("0");
                     response.setMsg(result1.getValue());
                     return response;
@@ -98,7 +110,8 @@ public class ProjectUserInfoController {
                 Pair<Boolean, String> result1 = projectUserInfoService.projectUserAdd(projectUserAdd);
                 long projectId = projectUserAdd.getProjectId();
                 Pair<Boolean, String> result2 = projectMemberService.adjustQAMemberAssign(projectId);
-                if (result1.getKey() && result2.getKey()) {
+                Pair<Boolean,String> result3 = projectPermissionService.addUserProjectPermission(userProjectPermissionInfo);
+                if (result1.getKey() && result2.getKey()&& result3.getKey()) {
                     response.setCode("0");
                     response.setMsg(result1.getValue());
                     return response;
@@ -109,7 +122,8 @@ public class ProjectUserInfoController {
                 Pair<Boolean, String> result1 = projectUserInfoService.projectUserAdd(projectUserAdd);
                 long projectId = projectUserAdd.getProjectId();
                 Pair<Boolean, String> result2 = projectMemberService.adjustDEVMemberAssign(projectId);
-                if (result1.getKey() && result2.getKey()) {
+                Pair<Boolean,String> result3 = projectPermissionService.addUserProjectPermission(userProjectPermissionInfo);
+                if (result1.getKey() && result2.getKey()&& result3.getKey()) {
                     response.setCode("0");
                     response.setMsg(result1.getValue());
                     return response;
