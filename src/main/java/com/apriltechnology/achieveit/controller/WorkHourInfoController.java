@@ -37,6 +37,25 @@ public class WorkHourInfoController {
     @Autowired
     private WorkHourInfoService workHourInfoService;
 
+    @PostMapping("/SearchWorkHours")
+    @ResponseBody
+    @ApiOperation("通过项目id查询工时信息")
+    public Response getInfo(@RequestParam(value = "projectId")Long projectId){
+        Response response = new Response();
+        List<WorkHourInfo> workHourInfos = workHourInfoService.getInfo(projectId);
+
+        response.setCode("0");
+        response.setMsg("查询成功！");
+        Map<String,List<WorkHourInfo>> map = new HashMap<>();
+        map.put("工时信息列表",workHourInfos);
+
+        response.setData(map);
+        response.setCount(workHourInfos.size());
+
+        return response;
+    }
+
+
     @PostMapping("/Search")
     @ResponseBody
     @ApiOperation("项目经理查询工时信息")

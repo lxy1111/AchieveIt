@@ -19,6 +19,8 @@ public interface WorkHourInfoService {
 
     List<WorkHourInfo> userGetWorkHourInfo(Long projectId,Long userId);
 
+    List<WorkHourInfo> getInfo(Long projectId);
+
     Pair<Boolean,String> acceptWorkHourInfo(Long workHourId);
 
     Pair<Boolean,String> resetWorkHourInfo(Long workHourId);

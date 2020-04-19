@@ -34,6 +34,12 @@ public class WorkHourInfoServiceImpl implements WorkHourInfoService {
     }
 
     @Override
+    public List<WorkHourInfo> getInfo(Long projectId) {
+        List<WorkHourInfo> workHourInfos = workHourInfoMapper.getInfoList(projectId);
+        return workHourInfos;
+    }
+
+    @Override
     public Pair<Boolean,String> acceptWorkHourInfo(Long workHourId){
         int result = workHourInfoMapper.acceptWorkHourInfo(workHourId);
         if(result <= 0){

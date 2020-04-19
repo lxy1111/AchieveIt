@@ -31,6 +31,21 @@
             where result.role_id = projectrole.id
     </select>
 
+    <select id="getInfoList" resultType="WorkHourInfo">
+select result.id,result.project_id,result.user_id,result.user_name,projectrole.description as user_role,result.finished_function,
+        result.finished_activity,result.start_time,result.finish_time,result.status,result.create_time as creatTime,result.change_time
+        from
+        (select a.id,a.project_id,a.user_id,a.user_name,a.finished_function,a.finished_activity,a.start_time,a.finish_time,a.status,
+                a.create_time,a.change_time,b.role_id
+        from workhourinfo a
+        left join userprojectrole b
+        on a.user_id = b.user_id
+        where b.project_id = #{projectId}
+        and a.project_id = #{projectId}
+        ) as result,projectrole
+            where result.role_id = projectrole.id
+    </select>
+
     <update id="acceptWorkHourInfo" parameterType="Long">
         update workhourinfo
         set status = 1

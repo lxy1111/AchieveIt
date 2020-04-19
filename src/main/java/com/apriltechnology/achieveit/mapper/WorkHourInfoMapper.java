@@ -28,6 +28,8 @@ public interface WorkHourInfoMapper {
      */
     List<WorkHourInfo> userGetWorkHourInfoList (@Param("projectId") Long projectId, @Param("userId") Long userId);
 
+    List<WorkHourInfo> getInfoList(@Param("projectId")Long projectId);
+
     //项目经理审批通过
     int acceptWorkHourInfo (@Param("workHourId") Long workHourId);
 
