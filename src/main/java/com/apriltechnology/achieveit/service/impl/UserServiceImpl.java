@@ -32,4 +32,10 @@ public class UserServiceImpl implements UserService {
         List<User> users = userMapper.searchUserByUsername(username);
         return users;
     }
+
+    @Override
+    public List<User> searchProjectSuperiors(String username) {
+        List<User> users = userMapper.searchProjectSuperiorsByUsername(username);
+        return users;
+    }
 }

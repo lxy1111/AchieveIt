@@ -62,7 +62,7 @@ public class ProjectInfoController {
         }
 
         if(projectInfoAdd.getDeliveryTime().before(projectInfoAdd.getScheduleTime())){
-            return Response.createError("1","项目交付时间早于预定时间");
+            return Response.createError("1","项目交付时间早于预定时间！");
         }
 
         Response response = new Response();

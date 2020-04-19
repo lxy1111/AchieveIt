@@ -31,5 +31,5 @@ public interface ProjectPermissionService {
      * @param userId
      * @return
      */
-    UserProjectPermission searchUserProhectPermission(Long projectId,Long userId);
+    UserProjectPermission searchUserProjectPermission(Long projectId,Long userId);
 }

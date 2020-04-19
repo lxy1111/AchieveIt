@@ -16,7 +16,7 @@ public interface MemberAssignMapper {
      * @param memberAssign
      * @return
      */
-    int insertMapperAssign(MemberAssign memberAssign);
+    int insertMemberAssign(MemberAssign memberAssign);
 
     /**
      * 查询角色分配信息

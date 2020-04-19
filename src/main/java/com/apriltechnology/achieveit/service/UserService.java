@@ -26,4 +26,10 @@ public interface UserService {
      */
     List<User> searchUserByUserName(String username);
 
+    /**
+     * 根据名称模糊查询项目上级
+     * @param username
+     * @return
+     */
+    List<User> searchProjectSuperiors(String username);
 }
