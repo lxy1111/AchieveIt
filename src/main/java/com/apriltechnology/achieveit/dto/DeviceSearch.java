@@ -14,6 +14,8 @@ public class DeviceSearch {
 
     private Long deadline;
 
+    private String deviceId;
+
     private int status;
 
     private Integer pageNum;
@@ -30,6 +32,14 @@ public class DeviceSearch {
 
     public Long getProjectID() {
         return projectID;
+    }
+
+    public String getDeviceId() {
+        return deviceId;
+    }
+
+    public void setDeviceId(String deviceId) {
+        this.deviceId = deviceId;
     }
 
     public void setProjectID(Long projectID) {

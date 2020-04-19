@@ -17,9 +17,9 @@ public interface DeviceMapper {
 
     int insertDevice( Device deviceInfo);
 
-    List<Device> getDeviceList(Long id, String deviceowner, Long deadline, int status, Integer pageFirst,Integer pageLast);
+    List<Device> getDeviceList(Long id, String deviceowner, String deviceId,Long deadline, int status, Integer pageFirst,Integer pageLast);
 
-    Integer getDeviceCount(Long id,String deviceowner,Long deadline,int status);
+    Integer getDeviceCount(Long id,String deviceowner, String deviceId,Long deadline,int status);
 
     int updateDevice(DeviceSearch deviceSearch);
 

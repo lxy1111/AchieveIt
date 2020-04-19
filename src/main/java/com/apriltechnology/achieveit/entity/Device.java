@@ -10,6 +10,7 @@ public class Device {
 
     private Long id;
 
+    private String deviceId;
 
     private Long deadline;
 
@@ -20,6 +21,14 @@ public class Device {
     private Timestamp createTime;
 
     private Timestamp changeTime;
+
+    public String getDeviceId() {
+        return deviceId;
+    }
+
+    public void setDeviceId(String deviceId) {
+        this.deviceId = deviceId;
+    }
 
     public String getDeviceowner() {
         return deviceowner;

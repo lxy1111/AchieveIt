@@ -32,7 +32,7 @@ public class DeviceServiceImpl implements DeviceService {
         Integer pageFirst = (deviceSearch.getPageNum()-1)*deviceSearch.getPageSize();
         Integer pageLast = pageFirst + deviceSearch.getPageSize();
         List<Device> devicelist=deviceMapper.getDeviceList(deviceSearch.getId(),
-                deviceSearch.getDeviceowner(),deviceSearch.getDeadline(),deviceSearch.getStatus(),pageFirst,pageLast);
+                deviceSearch.getDeviceowner(),deviceSearch.getDeviceId(),deviceSearch.getDeadline(),deviceSearch.getStatus(),pageFirst,pageLast);
         return devicelist;
 
     }
@@ -61,7 +61,7 @@ public class DeviceServiceImpl implements DeviceService {
     @Override
     public Integer getDeviceCount(DeviceSearch deviceSearch){
         Integer cnt=deviceMapper.getDeviceCount(deviceSearch.getId(),
-                deviceSearch.getDeviceowner(),deviceSearch.getDeadline(),deviceSearch.getStatus());
+                deviceSearch.getDeviceowner(),deviceSearch.getDeviceId(),deviceSearch.getDeadline(),deviceSearch.getStatus());
         return cnt;
     }
 

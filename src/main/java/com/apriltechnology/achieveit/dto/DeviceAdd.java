@@ -14,9 +14,15 @@ public class DeviceAdd {
 
     private int status;
 
+    private String deviceId;
 
+    public String getDeviceId() {
+        return deviceId;
+    }
 
-
+    public void setDeviceId(String deviceId) {
+        this.deviceId = deviceId;
+    }
 
     public Long getDeadline() {
         return deadline;

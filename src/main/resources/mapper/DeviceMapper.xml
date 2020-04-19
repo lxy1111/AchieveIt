@@ -3,8 +3,8 @@
 <mapper namespace="com.apriltechnology.achieveit.mapper.DeviceMapper">
 
     <insert id="insertDevice" parameterType="com.apriltechnology.achieveit.entity.Device">
-        insert into device(deviceowner,deadline,status)
-        values (#{deviceowner},#{deadline},#{status})
+        insert into device(deviceId,deviceowner,deadline,status)
+        values (#{deviceId},#{deviceowner},#{deadline},#{status})
     </insert>
 
 
@@ -24,6 +24,9 @@
         </if>
         <if test="status!=null and status!=''">
             AND status = #{status}
+        </if>
+        <if test="deviceId!=null and deviceId!=''">
+            AND deviced  = #{deviceId}
         </if>
         LIMIT #{pageFirst},#{pageLast}
     </select>
@@ -45,6 +48,9 @@
         <if test="status!=null and status!=''">
             AND status = #{status}
         </if>
+        <if test="deviceId!=null and deviceId!=''">
+            AND deviced  = #{deviceId}
+        </if>
     </select>
 
 
@@ -53,7 +59,8 @@
         SET
         deviceowner = #{deviceowner},
         deadline = #{deadline},
-        status = #{status}
+        status = #{status},
+        deviceId=#{deviceId}
         where id = #{id}
     </update>
 
