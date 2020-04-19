@@ -48,4 +48,14 @@ public class ProjectPermissionServiceImpl implements ProjectPermissionService {
         return userProjectPermission;
     }
 
+    @Override
+    public Pair<Boolean, String> deleteUserProjectPermission(Long projectId, Long userId) {
+        int count = userProjectPermissionMapper.deleteUserProjectPermission(projectId,userId);
+        if(count <= 0){
+            return new Pair<>(false,"删除失败！");
+        }else{
+            return new Pair<>(true,"删除成功！");
+        }
+    }
+
 }

@@ -1,5 +1,7 @@
 package com.apriltechnology.achieveit.entity;
 
+import java.util.List;
+
 /**
  * @Description 组员管理类信息
  * @Author br
@@ -12,7 +14,7 @@ public class ProjectUserInfo {
 
     private String userName;
 
-    private String userRole;
+    private List<Long> userRole;
 
     private String userMail;
 
@@ -36,14 +38,6 @@ public class ProjectUserInfo {
 
     public void setUserName(String userName) {
         this.userName = userName;
-    }
-
-    public String getUserRole() {
-        return userRole;
-    }
-
-    public void setUserRole(String userRole) {
-        this.userRole = userRole;
     }
 
     public String getUserMail() {
@@ -76,5 +70,13 @@ public class ProjectUserInfo {
 
     public void setUserTel(String userTel) {
         this.userTel = userTel;
+    }
+
+    public List<Long> getUserRole() {
+        return userRole;
+    }
+
+    public void setUserRole(List<Long> userRole) {
+        this.userRole = userRole;
     }
 }

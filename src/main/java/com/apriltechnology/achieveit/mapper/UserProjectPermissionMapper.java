@@ -34,4 +34,12 @@ public interface UserProjectPermissionMapper {
      * @return
      */
     UserProjectPermission searchUserProjectPermission(@Param("projectId")Long projectId,@Param("userId")Long userId);
+
+    /**
+     * 删除用户项目权限信息
+     * @param projectId
+     * @param userId
+     * @return
+     */
+    int deleteUserProjectPermission(@Param("projectId")Long projectId,@Param("userId")Long userId);
 }
