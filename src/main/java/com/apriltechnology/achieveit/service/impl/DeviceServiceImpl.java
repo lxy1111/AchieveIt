@@ -52,6 +52,7 @@ public class DeviceServiceImpl implements DeviceService {
 
     private Device dataChange(DeviceAdd deviceAdd){
         Device deviceInfo = new Device();
+        deviceInfo.setDeviceId(deviceAdd.getDeviceId());
         deviceInfo.setStatus(deviceAdd.getStatus());
         deviceInfo.setDeviceowner(deviceAdd.getDeviceowner());
         deviceInfo.setDeadline(deviceAdd.getDeadline());
