@@ -31,5 +31,16 @@ public interface ProjectPermissionService {
      * @param userId
      * @return
      */
+
     UserProjectPermission searchUserProjectPermission(Long projectId,Long userId);
+
+
+    /**
+     * 删除用户项目权限信息
+     * @param projectId
+     * @param userId
+     * @return
+     */
+    Pair<Boolean,String> deleteUserProjectPermission(Long projectId,Long userId);
+
 }

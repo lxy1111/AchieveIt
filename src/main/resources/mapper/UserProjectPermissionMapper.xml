@@ -23,4 +23,9 @@
         limit 1
     </select>
 
+    <delete id="deleteUserProjectPermission">
+        delete from userprojectpermission
+        where user_id = #{userId}
+        and project_id = #{projectId}
+    </delete>
 </mapper>

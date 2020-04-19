@@ -9,6 +9,7 @@ import com.apriltechnology.achieveit.entity.WorkHourInfo;
 import com.apriltechnology.achieveit.service.ProjectMemberService;
 import com.apriltechnology.achieveit.service.ProjectPermissionService;
 import com.apriltechnology.achieveit.service.ProjectUserInfoService;
+import com.sun.org.apache.xpath.internal.operations.Bool;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import javafx.util.Pair;
@@ -72,9 +73,104 @@ public class ProjectUserInfoController {
         Response response = new Response();
         Pair<Boolean,String> result = projectUserInfoService.projectUserDelete(projectId,userId);
         if(result.getKey()){
-            response.setCode("0");
-            response.setMsg(result.getValue());
-            return response;
+            Pair<Boolean,String> result1 = projectPermissionService.deleteUserProjectPermission(projectId,userId);
+            if(result1.getKey()){
+                response.setCode("0");
+                response.setMsg(result1.getValue());
+                return response;
+            }else{
+                return Response.createError("1",result1.getValue());
+            }
+        }else {
+            return Response.createError("1",result.getValue());
+        }
+    }
+
+    @PostMapping("/AddEPG")
+    @ResponseBody
+    @ApiOperation("添加EPG")
+    public Response epgAdd(@RequestBody ProjectUserAdd projectUserAdd){
+        Response response = new Response();
+        //判断同一个人是否担任了同一个角色
+        Pair<Boolean, String> result = projectUserInfoService.judgeProjectUserInfo(projectUserAdd);
+        //新建有关userprojectpermission这个表
+        UserProjectPermissionInfo userProjectPermissionInfo = new UserProjectPermissionInfo();
+        userProjectPermissionInfo.setProjectId(projectUserAdd.getProjectId());
+        userProjectPermissionInfo.setUserId(projectUserAdd.getUserId());
+        userProjectPermissionInfo.setFilePermission(0);
+        userProjectPermissionInfo.setGitPermission(0);
+        userProjectPermissionInfo.setMailPermission(0);
+        //如果没有冗余情况
+        if(result.getKey()){
+            //新增成员
+            Pair<Boolean, String> result1 = projectUserInfoService.projectUserAdd(projectUserAdd);
+            //如果新增epg成功
+            if (result1.getKey()) {
+                //调整memberassign和permission
+                long projectId = projectUserAdd.getProjectId();
+                long userId = projectUserAdd.getUserId();
+                Pair<Boolean, String> result2 = projectMemberService.adjustEPGMemberAssign(projectId);
+                if(judge(projectId,userId)){
+                    Pair<Boolean,String> result3 = projectPermissionService.addUserProjectPermission(userProjectPermissionInfo);
+                    response.setCode("0");
+                    response.setMsg(result3.getValue());
+                    return response;
+                }
+                else{
+                    response.setCode("0");
+                    response.setMsg(result2.getValue());
+                    return response;
+                }
+            //新增epg失败
+            } else {
+                return Response.createError("1", result1.getValue());
+            }
+        //如果有冗余情况
+        }else {
+            return Response.createError("1",result.getValue());
+        }
+    }
+
+    @PostMapping("/AddQA")
+    @ResponseBody
+    @ApiOperation("添加QA")
+    public Response qaAdd(@RequestBody ProjectUserAdd projectUserAdd){
+        Response response = new Response();
+        //判断同一个人是否担任了同一个角色
+        Pair<Boolean, String> result = projectUserInfoService.judgeProjectUserInfo(projectUserAdd);
+        //新建有关userprojectpermission这个表
+        UserProjectPermissionInfo userProjectPermissionInfo = new UserProjectPermissionInfo();
+        userProjectPermissionInfo.setProjectId(projectUserAdd.getProjectId());
+        userProjectPermissionInfo.setUserId(projectUserAdd.getUserId());
+        userProjectPermissionInfo.setFilePermission(0);
+        userProjectPermissionInfo.setGitPermission(0);
+        userProjectPermissionInfo.setMailPermission(0);
+        //如果没有冗余情况
+        if(result.getKey()){
+            //新增成员
+            Pair<Boolean, String> result1 = projectUserInfoService.projectUserAdd(projectUserAdd);
+            //如果新增epg成功
+            if (result1.getKey()) {
+                //调整memberassign和permission
+                long projectId = projectUserAdd.getProjectId();
+                long userId = projectUserAdd.getUserId();
+                Pair<Boolean, String> result2 = projectMemberService.adjustQAMemberAssign(projectId);
+                if(judge(projectId,userId)){
+                    Pair<Boolean,String> result3 = projectPermissionService.addUserProjectPermission(userProjectPermissionInfo);
+                    response.setCode("0");
+                    response.setMsg(result3.getValue());
+                    return response;
+                }
+                else{
+                    response.setCode("0");
+                    response.setMsg(result2.getValue());
+                    return response;
+                }
+                //新增epg失败
+            } else {
+                return Response.createError("1", result1.getValue());
+            }
+            //如果有冗余情况
         }else {
             return Response.createError("1",result.getValue());
         }
@@ -92,41 +188,32 @@ public class ProjectUserInfoController {
         userProjectPermissionInfo.setFilePermission(0);
         userProjectPermissionInfo.setGitPermission(0);
         userProjectPermissionInfo.setMailPermission(0);
+        //判断冗余
         if(result.getKey()){
-            //3->epg 4->QA 5->PM
-            if (id == 3) {
+            //项目经理分配组员
+            if (id == 5) {
                 Pair<Boolean, String> result1 = projectUserInfoService.projectUserAdd(projectUserAdd);
-                long projectId = projectUserAdd.getProjectId();
-                Pair<Boolean, String> result2 = projectMemberService.adjustEPGMemberAssign(projectId);
-                Pair<Boolean,String> result3 = projectPermissionService.addUserProjectPermission(userProjectPermissionInfo);
-                if (result1.getKey() && result2.getKey() && result3.getKey()) {
-                    response.setCode("0");
-                    response.setMsg(result1.getValue());
-                    return response;
-                } else {
-                    return Response.createError("1", result1.getValue());
-                }
-            } else if (id == 4) {
-                Pair<Boolean, String> result1 = projectUserInfoService.projectUserAdd(projectUserAdd);
-                long projectId = projectUserAdd.getProjectId();
-                Pair<Boolean, String> result2 = projectMemberService.adjustQAMemberAssign(projectId);
-                Pair<Boolean,String> result3 = projectPermissionService.addUserProjectPermission(userProjectPermissionInfo);
-                if (result1.getKey() && result2.getKey()&& result3.getKey()) {
-                    response.setCode("0");
-                    response.setMsg(result1.getValue());
-                    return response;
-                } else {
-                    return Response.createError("1", result1.getValue());
-                }
-            } else if (id == 5) {
-                Pair<Boolean, String> result1 = projectUserInfoService.projectUserAdd(projectUserAdd);
-                long projectId = projectUserAdd.getProjectId();
-                Pair<Boolean, String> result2 = projectMemberService.adjustDEVMemberAssign(projectId);
-                Pair<Boolean,String> result3 = projectPermissionService.addUserProjectPermission(userProjectPermissionInfo);
-                if (result1.getKey() && result2.getKey()&& result3.getKey()) {
-                    response.setCode("0");
-                    response.setMsg(result1.getValue());
-                    return response;
+                //添加组员成功
+                if (result1.getKey()) {
+                    long projectId = projectUserAdd.getProjectId();
+                    long userId = projectUserAdd.getUserId();
+                    //调整DEV
+                    Pair<Boolean, String> result2 = projectMemberService.adjustDEVMemberAssign(projectId);
+                    //调整权限
+                    if(judge(projectId,userId)){
+                        //没有该成员就插入
+                        Pair<Boolean,String> result3 = projectPermissionService.addUserProjectPermission(userProjectPermissionInfo);
+                        response.setCode("0");
+                        response.setMsg(result3.getValue());
+                        return response;
+                    }
+                    //不然就放弃插入这一条数据
+                    else{
+                        response.setCode("0");
+                        response.setMsg(result2.getValue());
+                        return response;
+                    }
+                //添加组员失败
                 } else {
                     return Response.createError("1", result1.getValue());
                 }
@@ -139,4 +226,9 @@ public class ProjectUserInfoController {
 
     }
 
+    private Boolean judge(Long projectId, Long userId){
+        UserProjectPermission userProjectPermission = projectPermissionService.searchUserProhectPermission(projectId,userId);
+        if (userProjectPermission==null)return true;
+        else return false;
+    }
 }
