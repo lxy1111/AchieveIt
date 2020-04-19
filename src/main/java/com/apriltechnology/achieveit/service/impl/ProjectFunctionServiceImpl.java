@@ -80,7 +80,7 @@ public class ProjectFunctionServiceImpl implements ProjectFunctionService {
             return new Pair<>(false,"负责人不存在！");
         }
 
-        UserProjectPermission userProjectPermission = projectPermissionService.searchUserProhectPermission(projectId,user.getId());
+        UserProjectPermission userProjectPermission = projectPermissionService.searchUserProjectPermission(projectId,user.getId());
         if(null == userProjectPermission) {
             return new Pair<>(false, "负责人'" + personCharge + "'不是此项目成员！");
         }

@@ -78,4 +78,31 @@ public class UserController {
         }
     }
 
+    @PostMapping("/ProjectSuperiors")
+    @ResponseBody
+    @ApiOperation("查询项目上级信息")
+    Response searchProjectSuperiors(@RequestParam("username")String username){
+        Response response = new Response();
+        List<User> users = userService.searchProjectSuperiors(username);
+
+        Map<String,List<User>> map = new HashMap<>();
+
+        if(null == users){
+            response.setCode("0");
+            response.setCount(0);
+            map.put("data",new ArrayList<>());
+            response.setData(map);
+            response.setMsg("没有数据！");
+            return response;
+        }
+
+        map.put("data",users);
+        response.setData(map);
+        response.setCode("0");
+        response.setCount(users.size());
+        response.setMsg("查询成功！");
+        return response;
+    }
+
+
 }

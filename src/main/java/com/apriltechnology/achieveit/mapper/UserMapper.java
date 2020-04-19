@@ -27,4 +27,11 @@ public interface UserMapper {
      * @return
      */
     List<User> searchUserByUsername(@Param("username")String username);
+
+    /**
+     * 根据名称模糊查询项目上级
+     * @param username
+     * @return
+     */
+    List<User> searchProjectSuperiorsByUsername(@Param("username")String username);
 }

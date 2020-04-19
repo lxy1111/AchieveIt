@@ -12,4 +12,11 @@
         FROM user
         WHERE user_name like concat('%',#{username},'%')
     </select>
+
+    <select id="searchProjectSuperiorsByUsername" parameterType="String" resultType="User">
+        SELECT *
+        FROM user
+        WHERE roles = 'Superior'
+        and user_name like concat('%',#{username},'%')
+    </select>
 </mapper>
