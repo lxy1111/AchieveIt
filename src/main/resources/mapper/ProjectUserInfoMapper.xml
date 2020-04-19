@@ -48,4 +48,9 @@
         WHERE project_id =#{projectId} and user_id =#{userId}
     </delete>
 
+    <update id="projectUserEdit" parameterType="com.apriltechnology.achieveit.dto.ProjectUserEdit">
+        update userprojectrole
+        set role_id = #{newRoleId}
+        where user_id=#{userId} and project_id = #{projectId} and role_id=#{usedRoleId}
+    </update>
 </mapper>

@@ -1,6 +1,7 @@
 package com.apriltechnology.achieveit.service.impl;
 
 import com.apriltechnology.achieveit.dto.ProjectUserAdd;
+import com.apriltechnology.achieveit.dto.ProjectUserEdit;
 import com.apriltechnology.achieveit.entity.ProjectUserInfo;
 import com.apriltechnology.achieveit.entity.UserProjectRole;
 import com.apriltechnology.achieveit.mapper.ProjectUserInfoMapper;
@@ -56,5 +57,14 @@ public class ProjectUserInfoServiceImpl implements ProjectUserInfoService {
         }
 
         return new Pair<>(true,"新增成功！");
+    }
+
+    @Override
+    public Pair<Boolean, String> projectUserEdit(ProjectUserEdit projectUserEdit) {
+        int result = projectUserInfoMapper.projectUserEdit(projectUserEdit);
+        if(result <= 0){
+            return new Pair<>(false,"编辑失败！");
+        }
+        return new Pair<>(true,"编辑成功！");
     }
 }

@@ -1,6 +1,7 @@
 package com.apriltechnology.achieveit.service;
 
 import com.apriltechnology.achieveit.dto.ProjectUserAdd;
+import com.apriltechnology.achieveit.dto.ProjectUserEdit;
 import com.apriltechnology.achieveit.entity.ProjectUserInfo;
 import javafx.util.Pair;
 import org.apache.ibatis.annotations.Param;
@@ -37,4 +38,6 @@ public interface ProjectUserInfoService {
      * @return
      */
     Pair<Boolean,String> projectUserAdd(ProjectUserAdd projectUserAdd);
+
+    Pair<Boolean,String> projectUserEdit(ProjectUserEdit projectUserEdit);
 }

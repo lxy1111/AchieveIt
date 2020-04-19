@@ -1,6 +1,7 @@
 package com.apriltechnology.achieveit.mapper;
 
 import com.apriltechnology.achieveit.dto.ProjectUserAdd;
+import com.apriltechnology.achieveit.dto.ProjectUserEdit;
 import com.apriltechnology.achieveit.entity.ProjectUserInfo;
 import com.apriltechnology.achieveit.entity.UserProjectRole;
 import org.apache.ibatis.annotations.Param;
@@ -37,4 +38,6 @@ public interface ProjectUserInfoMapper {
     int projectUserDelete(@Param("projectId")Long projectId,@Param("userId")Long userId);
 
     List<UserProjectRole> judgeProjectUserInfo(ProjectUserAdd projectUserAdd);
+
+    int projectUserEdit(ProjectUserEdit projectUserEdit);
 }

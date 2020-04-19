@@ -1,6 +1,7 @@
 package com.apriltechnology.achieveit.controller;
 
 import com.apriltechnology.achieveit.dto.ProjectUserAdd;
+import com.apriltechnology.achieveit.dto.ProjectUserEdit;
 import com.apriltechnology.achieveit.dto.Response;
 import com.apriltechnology.achieveit.dto.UserProjectPermissionInfo;
 import com.apriltechnology.achieveit.entity.ProjectUserInfo;
@@ -18,6 +19,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
+import javax.swing.text.StyledEditorKit;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -175,6 +177,28 @@ public class ProjectUserInfoController {
             return Response.createError("1",result.getValue());
         }
     }
+
+    @PostMapping("/Edit")
+    @ResponseBody
+    @ApiOperation("编辑项目相关组员")
+    public Response projectUserEdit(@RequestBody ProjectUserEdit projectUserEdit, @RequestParam(value = "id")Long id) {
+        Response response = new Response();
+        if(id==5){
+            Pair<Boolean,String> result = projectUserInfoService.projectUserEdit(projectUserEdit);
+            if(result.getKey()){
+                response.setCode("0");
+                response.setMsg(result.getValue());
+                return response;
+            }else {
+                return Response.createError("1",result.getValue());
+            }
+        }else{
+            return Response.createError("1","该用户不可分配成员");
+        }
+
+    }
+
+
 
     @PostMapping("/Add")
     @ResponseBody
