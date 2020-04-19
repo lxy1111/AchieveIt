@@ -49,7 +49,7 @@
             AND status = #{status}
         </if>
         <if test="deviceId!=null and deviceId!=''">
-            AND deviced  = #{deviceId}
+            AND deviceId  = #{deviceId}
         </if>
     </select>
 
