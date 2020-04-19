@@ -227,7 +227,7 @@ public class ProjectUserInfoController {
     }
 
     private Boolean judge(Long projectId, Long userId){
-        UserProjectPermission userProjectPermission = projectPermissionService.searchUserProhectPermission(projectId,userId);
+        UserProjectPermission userProjectPermission = projectPermissionService.searchUserProjectPermission(projectId,userId);
         if (userProjectPermission==null)return true;
         else return false;
     }
