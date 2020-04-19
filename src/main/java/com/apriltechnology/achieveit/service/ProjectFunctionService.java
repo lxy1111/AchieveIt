@@ -43,5 +43,12 @@ public interface ProjectFunctionService {
      */
     List<ProjectFunc> projectFunctionSearch(Long id);
 
+    /**
+     * 判断负责人是否正确
+     * @param personCharge
+     * @param projectId
+     * @return
+     */
+    Pair<Boolean,String> judgeChargePerson(String personCharge,Long projectId);
 
 }

@@ -5,6 +5,7 @@ import com.apriltechnology.achieveit.dto.ProjectInfoSearch;
 import com.apriltechnology.achieveit.entity.ProjectInfo;
 import com.apriltechnology.achieveit.exception.BatchDeleteException;
 import com.apriltechnology.achieveit.exception.InsertException;
+import com.sun.org.apache.xpath.internal.operations.Bool;
 import javafx.util.Pair;
 
 import java.util.List;
@@ -150,4 +151,10 @@ public interface ProjectInfoService {
      */
     Long getProjectCreaterId(Long projectId);
 
+    /**
+     * 判断epg,qa是否分配完毕
+     * @param projectId
+     * @return
+     */
+    Pair<Boolean,String> judgeRolesAssignment(Long projectId);
 }

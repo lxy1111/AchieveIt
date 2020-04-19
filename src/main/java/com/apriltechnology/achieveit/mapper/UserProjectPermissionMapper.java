@@ -34,4 +34,6 @@ public interface UserProjectPermissionMapper {
      * @return
      */
     UserProjectPermission searchUserProjectPermission(@Param("projectId")Long projectId,@Param("userId")Long userId);
+
+
 }

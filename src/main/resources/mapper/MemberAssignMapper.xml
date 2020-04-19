@@ -6,4 +6,9 @@
         values (#{projectId},#{qaMember},#{epgMember},#{devMember})
     </insert>
 
+    <select id="searchMemberAssign" parameterType="Long" resultType="MemberAssign">
+        SELECT *
+        FROM memberAssign
+        WHERE project_id = #{projectId}
+    </select>
 </mapper>

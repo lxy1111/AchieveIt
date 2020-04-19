@@ -61,6 +61,10 @@ public class ProjectInfoController {
             projectInfoAdd.setDeliveryTime(time);
         }
 
+        if(projectInfoAdd.getDeliveryTime().before(projectInfoAdd.getScheduleTime())){
+            return Response.createError("1","项目交付时间早于预定时间");
+        }
+
         Response response = new Response();
 
         User user = UserUtil.get();
@@ -304,6 +308,29 @@ public class ProjectInfoController {
             return response;
         }
     }
+
+
+    @PostMapping("/JudgeAssign")
+    @ResponseBody
+    @ApiOperation("判断EGP和QA是否分配成功")
+    Response judgeAssignmemnt(@RequestParam("projectId") Long projectId){
+
+        Response response = new Response();
+        Pair<Boolean,String> result = projectInfoService.judgeRolesAssignment(projectId);
+
+        if(result.getKey()){
+            response.setCode("0");
+            response.setMsg(result.getValue());
+            return response;
+        }else{
+            response.setCode("1");
+            response.setMsg(result.getValue());
+            return response;
+        }
+    }
+
+
+
 
     @PostMapping("/GetQALeaderProject")
     @ResponseBody
