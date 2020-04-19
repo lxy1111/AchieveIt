@@ -43,7 +43,7 @@ public class ProjectPermissionServiceImpl implements ProjectPermissionService {
     }
 
     @Override
-    public UserProjectPermission searchUserProhectPermission(Long projectId, Long userId) {
+    public UserProjectPermission searchUserProjectPermission(Long projectId, Long userId) {
         UserProjectPermission userProjectPermission = userProjectPermissionMapper.searchUserProjectPermission(projectId,userId);
         return userProjectPermission;
     }

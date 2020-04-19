@@ -2,19 +2,15 @@ package com.apriltechnology.achieveit.service.impl;
 
 import com.apriltechnology.achieveit.dto.ProjectInfoAdd;
 import com.apriltechnology.achieveit.dto.ProjectInfoSearch;
-import com.apriltechnology.achieveit.entity.MemberAssign;
-import com.apriltechnology.achieveit.entity.ProjectInfo;
-import com.apriltechnology.achieveit.entity.User;
-import com.apriltechnology.achieveit.entity.UserProjectRole;
+import com.apriltechnology.achieveit.dto.UserProjectPermissionInfo;
+import com.apriltechnology.achieveit.entity.*;
 import com.apriltechnology.achieveit.exception.BatchDeleteException;
 import com.apriltechnology.achieveit.exception.InsertException;
-import com.apriltechnology.achieveit.mapper.MemberAssignMapper;
-import com.apriltechnology.achieveit.mapper.ProjectInfoMapper;
-import com.apriltechnology.achieveit.mapper.UserMapper;
-import com.apriltechnology.achieveit.mapper.UserProjectRoleMapper;
+import com.apriltechnology.achieveit.mapper.*;
 import com.apriltechnology.achieveit.service.ProjectInfoService;
 import com.apriltechnology.achieveit.util.UserUtil;
 import javafx.util.Pair;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Isolation;
@@ -43,6 +39,9 @@ public class ProjectInfoServiceImpl implements ProjectInfoService {
 
     @Autowired
     private UserProjectRoleMapper userProjectRoleMapper;
+
+    @Autowired
+    private UserProjectPermissionMapper userProjectPermissionMapper;
 
     @Override
     public List<ProjectInfo> getProjectInfo(ProjectInfoSearch projectInfoSearch) {
@@ -130,7 +129,31 @@ public class ProjectInfoServiceImpl implements ProjectInfoService {
         memberAssign.setEpgMember(0);
         memberAssign.setDevMember(0);
 
-        int result = memberAssignMapper.insertMapperAssign(memberAssign);
+        UserProjectPermissionInfo userProjectPermission1 = new UserProjectPermissionInfo();
+        userProjectPermission1.setUserId(pm.getId());
+        userProjectPermission1.setProjectId(projectInfo.getId());
+        userProjectPermission1.setMailPermission(1);
+        userProjectPermission1.setFilePermission(1);
+        userProjectPermission1.setGitPermission(1);
+
+        UserProjectPermissionInfo userProjectPermission2 = new UserProjectPermissionInfo();
+        userProjectPermission2.setUserId(leader.getId());
+        userProjectPermission2.setProjectId(projectInfo.getId());
+        userProjectPermission2.setMailPermission(1);
+        userProjectPermission2.setFilePermission(1);
+        userProjectPermission2.setGitPermission(1);
+
+        int cc = userProjectPermissionMapper.insertUserProjectPermission(userProjectPermission1);
+        if(cc <= 0){
+            throw new InsertException("插入失败");
+        }
+
+        cc = userProjectPermissionMapper.insertUserProjectPermission(userProjectPermission2);
+        if(cc <= 0){
+            throw new InsertException("插入失败");
+        }
+
+        int result = memberAssignMapper.insertMemberAssign(memberAssign);
         if(result <= 0){
             throw new InsertException("插入失败！");
         }
@@ -138,6 +161,7 @@ public class ProjectInfoServiceImpl implements ProjectInfoService {
         int num = userProjectRoleMapper.batchInsertUserProjectRole(userProjectRoles);
         if(num != 2){
             throw new InsertException("插入失败!");
+
         }
 
         return new Pair<>(true,"插入成功！");

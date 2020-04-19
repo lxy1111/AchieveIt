@@ -119,7 +119,7 @@ public class ProjectPermissionController {
     Response searchUserProjectPermission(@RequestParam("projectId")Long projectId,@RequestParam("userId")Long userId){
 
         Response response = new Response();
-        UserProjectPermission userProjectPermission = projectPermissionService.searchUserProhectPermission(projectId,userId);
+        UserProjectPermission userProjectPermission = projectPermissionService.searchUserProjectPermission(projectId,userId);
         if(null == userProjectPermission){
             return Response.createError("1","还未分配该用户权限信息！");
         }else {
