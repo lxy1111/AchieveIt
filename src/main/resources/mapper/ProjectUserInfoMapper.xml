@@ -9,7 +9,7 @@
                 from userprojectrole left join user
                 on user.id = userprojectrole.user_id
                 where userprojectrole.project_id=#{projectId}
-                and userprojectrole.role_id != 1) as result,
+                and userprojectrole.role_id != 1 and userprojectrole.role_id != 5) as result,
         userprojectrole u left join user on user.id = u.user_id
         where u.project_id =#{projectId} and u.role_id=1
     </select>
