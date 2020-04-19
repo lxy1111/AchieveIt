@@ -44,6 +44,9 @@ public class ProjectSubFunctionServiceImpl implements ProjectSubFunctionService 
     @Autowired
     private ProjectFunctionMapper projectFunctionMapper;
 
+    @Autowired
+    private ProjectFunctionService projectFunctionService;
+
     @Override
     public Pair<Boolean, String> projectSubFunctionAdd(ProjectSubFunctionAdd projectSubFunctionAdd) {
 
@@ -91,19 +94,23 @@ public class ProjectSubFunctionServiceImpl implements ProjectSubFunctionService 
 
         try {
 
-
             Sheet sheet = new Sheet(1,1, ProjectSubFunctionModel.class);
             List<Object> readList = EasyExcelFactory.read(new BufferedInputStream(file.getInputStream()),sheet);
+
+            List<ProjectSubFunctionModel> modelLists = new ArrayList<>();
+            for(Object obj : readList){
+                ProjectSubFunctionModel projectSubFunctionModel = (ProjectSubFunctionModel) obj;
+                Pair<Boolean,String> result = projectFunctionService.judgeChargePerson(projectSubFunctionModel.getPersonCharge(),id);
+                if(!result.getKey()){
+                    return new Pair<>(false,result.getValue());
+                }
+                modelLists.add(projectSubFunctionModel);
+            }
 
             projectSubFunctionMapper.deleteAllSubFunctionById(id);
 
             if(null == readList || readList.size() <= 0){
                 return new Pair<>(true,"导入成功，无数据！");
-            }
-
-            List<ProjectSubFunctionModel> modelLists = new ArrayList<>();
-            for(Object obj : readList){
-                modelLists.add((ProjectSubFunctionModel) obj);
             }
 
             projectSubFunctionMapper.projectSubFunctionExcelImport(modelLists,id);

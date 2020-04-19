@@ -4,8 +4,12 @@ import com.apriltechnology.achieveit.dto.ProjectFunctionAdd;
 import com.apriltechnology.achieveit.dto.ProjectFunctionEdit;
 import com.apriltechnology.achieveit.dto.Response;
 import com.apriltechnology.achieveit.entity.ProjectFunc;
+import com.apriltechnology.achieveit.entity.User;
+import com.apriltechnology.achieveit.entity.UserProjectPermission;
 import com.apriltechnology.achieveit.service.ProjectFunctionService;
+import com.apriltechnology.achieveit.service.ProjectPermissionService;
 import com.apriltechnology.achieveit.service.UserProjectRoleService;
+import com.apriltechnology.achieveit.service.UserService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import javafx.util.Pair;
@@ -33,9 +37,6 @@ public class ProjectFunctionController {
     @Autowired
     private ProjectFunctionService projectFunctionService;
 
-    @Autowired
-    private UserProjectRoleService userProjectRoleService;
-
     @PostMapping("/Edit")
     @ResponseBody
     @ApiOperation("编辑项目功能信息")
@@ -44,6 +45,11 @@ public class ProjectFunctionController {
         if(results.hasErrors()){
             log.error("editProjectFunction bindingResult",results.getFieldError().getField());
             return Response.createError("1",results.getFieldError().getField());
+        }
+
+        Pair<Boolean,String> judge = projectFunctionService.judgeChargePerson(projectFunctionEdit.getPersonCharge(),projectFunctionEdit.getProjectId());
+        if(!judge.getKey()){
+            return Response.createError("1",judge.getValue());
         }
 
         Response response = new Response();
@@ -57,6 +63,7 @@ public class ProjectFunctionController {
             return Response.createError("1",result.getValue());
         }
     }
+
 
     @PostMapping("/Delete")
     @ResponseBody
@@ -88,6 +95,11 @@ public class ProjectFunctionController {
         if(results.hasErrors()){
             log.error("addProjectFunction bindingResult",results.getFieldError().getField());
             return Response.createError("1",results.getFieldError().getField());
+        }
+
+        Pair<Boolean,String> judge = projectFunctionService.judgeChargePerson(projectFunctionAdd.getPersonCharge(),projectFunctionAdd.getProjectId());
+        if(!judge.getKey()){
+            return Response.createError("1",judge.getValue());
         }
 
         Response response = new Response();

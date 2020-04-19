@@ -278,5 +278,18 @@ public class ProjectInfoServiceImpl implements ProjectInfoService {
         return projectInfo.getCreaterId();
     }
 
+    @Override
+    public Pair<Boolean, String> judgeRolesAssignment(Long projectId) {
+        MemberAssign memberAssign = memberAssignMapper.searchMemberAssign(projectId);
+        if(null == memberAssign){
+            return new Pair<>(false,"项目不存在！");
+        }
+        if(memberAssign.getQaMember().equals(0) || memberAssign.getEpgMember().equals(0)){
+            return new Pair<>(false,"EPG 和 QA 还未分配！");
+        }
+
+        return new Pair<>(true,"EPG 和 QA 均已分配成功！");
+    }
+
 
 }

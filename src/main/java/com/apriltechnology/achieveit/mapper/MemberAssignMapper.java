@@ -17,4 +17,11 @@ public interface MemberAssignMapper {
      * @return
      */
     int insertMapperAssign(MemberAssign memberAssign);
+
+    /**
+     * 查询角色分配信息
+     * @param projectId
+     * @return
+     */
+    MemberAssign searchMemberAssign(Long projectId);
 }

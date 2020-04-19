@@ -4,9 +4,10 @@ import com.apriltechnology.achieveit.dto.ProjectSubFunctionAdd;
 import com.apriltechnology.achieveit.dto.ProjectSubFunctionEdit;
 import com.apriltechnology.achieveit.dto.Response;
 import com.apriltechnology.achieveit.entity.ProjectSubFunc;
+import com.apriltechnology.achieveit.entity.User;
+import com.apriltechnology.achieveit.entity.UserProjectPermission;
 import com.apriltechnology.achieveit.model.ProjectSubFunctionModel;
-import com.apriltechnology.achieveit.service.ProjectSubFunctionService;
-import com.apriltechnology.achieveit.service.UserProjectRoleService;
+import com.apriltechnology.achieveit.service.*;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import javafx.util.Pair;
@@ -42,7 +43,8 @@ public class ProjectSubFunctionController {
     private ProjectSubFunctionService projectSubFunctionService;
 
     @Autowired
-    private UserProjectRoleService userProjectRoleService;
+    private ProjectFunctionService projectFunctionService;
+
 
     @PostMapping("/SubEdit")
     @ResponseBody
@@ -50,14 +52,14 @@ public class ProjectSubFunctionController {
     @RequiresRoles("PM")
     public Response editProjectSubFunction(@RequestBody ProjectSubFunctionEdit projectSubFunctionEdit, BindingResult results){
 
-        Pair<Boolean,String> auth = userProjectRoleService.judgeUserProjectPermission(projectSubFunctionEdit.getProjectId(),"PM");
-        if(!auth.getKey()){
-            return Response.createError("1",auth.getValue());
-        }
-
         if(results.hasErrors()){
             log.error("editProjectSubFunction bindingResult",results.getFieldError().getField());
             return Response.createError("1",results.getFieldError().getField());
+        }
+
+        Pair<Boolean,String> judge = projectFunctionService.judgeChargePerson(projectSubFunctionEdit.getPersonCharge(),projectSubFunctionEdit.getProjectId());
+        if(!judge.getKey()){
+            return Response.createError("1",judge.getValue());
         }
 
         Response response = new Response();
@@ -106,6 +108,11 @@ public class ProjectSubFunctionController {
             return Response.createError("1",results.getFieldError().getField());
         }
 
+        Pair<Boolean,String> judge =  projectFunctionService.judgeChargePerson(projectSubFunctionAdd.getPersonCharge(),projectSubFunctionAdd.getProjectId());
+        if(!judge.getKey()){
+            return Response.createError("1",judge.getValue());
+        }
+
         Response response = new Response();
 
         Pair<Boolean,String> result = projectSubFunctionService.projectSubFunctionAdd(projectSubFunctionAdd);
@@ -121,7 +128,7 @@ public class ProjectSubFunctionController {
 
     @PostMapping("/SubSearch")
     @ResponseBody
-    @ApiOperation("添加项目子功能信息")
+    @ApiOperation("查询项目子功能信息")
     public Response searchProjectSubFunction(@RequestParam(value = "id")Long id){
 
         if(null == id || id <= 0){
