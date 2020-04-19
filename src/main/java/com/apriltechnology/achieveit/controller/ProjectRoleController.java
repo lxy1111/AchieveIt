@@ -16,6 +16,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import java.util.HashMap;
@@ -62,7 +63,7 @@ public class ProjectRoleController {
     @PostMapping("/SearchUserProjectRoles")
     @ResponseBody
     @ApiOperation("查询用户项目下的角色列表")
-    public Response UserProjectRoles(@Param("projectId")Long projectId){
+    public Response UserProjectRoles(@RequestParam("projectId")Long projectId){
 
         Response response = new Response();
 
