@@ -47,6 +47,7 @@ public class ProjectSubFunctionServiceImpl implements ProjectSubFunctionService 
     @Autowired
     private ProjectFunctionService projectFunctionService;
 
+
     @Override
     public Pair<Boolean, String> projectSubFunctionAdd(ProjectSubFunctionAdd projectSubFunctionAdd) {
 
@@ -100,7 +101,8 @@ public class ProjectSubFunctionServiceImpl implements ProjectSubFunctionService 
             List<ProjectSubFunctionModel> modelLists = new ArrayList<>();
             for(Object obj : readList){
                 ProjectSubFunctionModel projectSubFunctionModel = (ProjectSubFunctionModel) obj;
-                Pair<Boolean,String> result = projectFunctionService.judgeChargePerson(projectSubFunctionModel.getPersonCharge(),id);
+                ProjectFunc projectFunc = projectFunctionMapper.projectFunctionSearchById(id);
+                Pair<Boolean,String> result = projectFunctionService.judgeChargePerson(projectSubFunctionModel.getPersonCharge(),projectFunc.getProjectId());
                 if(!result.getKey()){
                     return new Pair<>(false,result.getValue());
                 }
